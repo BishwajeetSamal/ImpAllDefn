@@ -9,7 +9,7 @@ TechSolvo
 intro on call then que of any update
 
 
-/*
+
 mid level and high level prgoramming difference
 8.58sgpa
 
@@ -57,17 +57,6 @@ Strength:-
  on deadline.i like to keep things organised I can adapt to new 
  things new environments easily and making new friends also goes 
  quite smooth with me.
-
-
-
-
-
-
-Family:-
- there are four family members in my family including me
- my father is a teacher as well as a fssarmer too
- my mother is a homemaker
- i have a younger sister she is currently prepraning for upsc
 
 
 
@@ -199,6 +188,152 @@ thats it
 
 
 JAVA
+---------------------------------------------------------------------------------------
+Extra Que-- Wrapper Classes
+===========================
+1.A Wrapper class is a class whose object wraps or contains primitive data types. 
+2. This class encapsulates a single value for the primitive data type.
+For instance the wrapper class for "int" is Integer,for "float" is Float and so on.
+boolean->Boolean
+byte->Byte
+char->Character
+short->Short
+int ->Integer
+long->Long
+float->Float
+double->Double
+
+Some methods of wrapper classes are here-
+valueOf() --static method.
+parseXxx() -- static method  //converts the string to respective format. 
+ for example =====>  int a = Integer.parseInt("123");
+xxxValue() --Instance method of wrapper class. // this is used for to get the value from wrapper Class to value
+
+for example --
+Integer i1 = Integer.valueOf("123"); //need to pass as string
+Double d1 = Double.valueOf("1.23");
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+JAVA ACCESS MODIFIERS
+=====================
+Java supports four categories of accessibility
+1.private 
+2. protected
+3.public 
+4.default
+
+Note -- Outer class can be only of public or default.
+Inner class can be of any access modifiers. 
+
+---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+INITIALIZATION BLOCK
+====================
+There are two types of initialization blocks.
+1. Instance Initialization Block
+2.Static Initialization Block
+
+1. Instance Initialization Block
+--------------------------------
+private class Test{
+	private int x;
+
+
+	//This is initalization block. 
+|------------------------------------------------------|	
+|	{												   |
+|	System.out.println("Initialixation block:x="+x);   |
+|	x=5;											   |
+|	}  												   |
+|------------------------------------------------------|
+
+	public static void main(String []args){
+		Test t1=new Test();
+	}
+}
+1. Initalization block can be multiple in the class.
+2. It will be executed when an instance of class is created.
+3. Multiple block are converted in as one block by compiler and written in the very initial line inside 
+constructor.
+4. Return keyword cannot be used in Initialization block.
+
+2. Static Initialization Block
+-------------------------------
+public class Test{
+	private static int k;
+	//This is static initialization block
+|------------------------------------------------------|	
+|	static {										   |
+|	System.out.println("Initialixation block:x="+x);   |
+|	x=50;											   |
+|	}  												   |
+|------------------------------------------------------|
+	public static void main(String []args){
+		Test t1=new Test();
+	}
+}
+1. A static initializer declared in a class is executed prior to when the class is initialized.
+2. Static initializers may be used to initialize the class variables of the class.
+3. return keyword cannot be used in static initialization block.
+4.this or super can not be used in static block.
+---------------------------------------------------------------------------------------
+CONSTRUCTOR
+===========
+1.We use constructors to initialize the object with the default or initial state.
+2.The name of the constructor is same as the class name.
+3. It has no return type.
+4.  It is not mandatory for the programmer to write a constructor for the class.Compiler implicitly provide
+a default constructor for the class.
+5. Constructor can be overloaded and can be parametrized.
+
+There are two types of constructors in Java:
+1.Parametrized Constructor
+2.Default Constructor
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+FINAL keyword
+============
+1. final instance variable
+2. final static variable
+3. final local variable
+4. final class
+5. final methods
+
+1. final instance variable
+----------------------------
+A java variable can be declared using the keyword final.Then the final variable can be assigned only once.
+
+A variable that is declared as final and not initailzed is called a blank final variable. 
+A blank final varibale forces either the constructors to initailze it or initialization block to do this job.
+
+Note==>>> We can  initailze only for once.
+*******************************************
+public class Example{
+	private int x; // instance member variable. It will contain 0 instead of garbage value.
+	private final int y; //final instance variable. It will be blank varible until you initialize it.
+	private static int z; //static member variable. It will contain 0 instead of garbage value.
+	private static int z1; //static final variable.It will be blank varible until you initialize it.
+}
+I can initalize the final variable by initialization block. {x=5}.
+Also we can initalize through constructor.
+
+2. final static variable
+-------------------------
+1. Static member variable when qualified with final keyword, it becomes blank until initailzed.
+2. Final static variable can be initailzed during declaration or written the static block.
+Only two ways to initalize the static final variable . First at the time of initialization and  static block.
+
+I can initalize the final variable by initialization block. static {z1=5}.
+
+3. final local variable
+-----------------------
+public void fun(){
+	int k; 
+	int l; //final local variable
+	k=k+1;
+}
+Local variables that are final must be initailzed 
+---------------------------------------------------------------------------------------
 
 QUE 1 : what is a class
 a class is a logical entity
@@ -230,15 +365,15 @@ behaviour is bark sleep eat etc
 
 
 
-QUE 3: what do you mean by polymorphism
+QUE 3: what do you mean by polymorphism ?
 The process of representing one Entity in multiple forms is known as polymorphism. 
 2 types: 
 1. Compile time polymorphism:  Whenever an object is bound with their functionality at 
 the compile-time, this is known as the compile-time polymorphism. At compile-time, java 
-knows which method to call by checking the method signatures. So this is called compile-time 
+knows which method to call by checking the method signatures . So this is called compile-time 
 polymorphism or statiic or early binding. Compile-time polymorphism is achieved through method 
 overloading. Method Overloading says you can have more than one function with the same name 
-in one class having a different prototype.
+in one class having a different prototype(means arguments).
 2. Runtime polymorphism:  Whenever an object is bound with the functionality at run time, 
 this is known as runtime polymorphism. The runtime polymorphism can be achieved by method 
 overriding. Java virtual machine determines the proper method to call at the runtime, not 
@@ -799,11 +934,11 @@ memory. The effects of the transaction, thus, are never lost.
 
 
 Que 26: Why final variable is blank?
-	if we will store zero in final variable likr insstance and static variable
+	if we will store zero in final variable like instance and static variable
 	then this will be of no use for us bcoz in this case zero will become final
 	and we wont be able to update this value later..
 	thats why in order to assign a value on run time we left it blank
-	or later in the program accorfing to our need
+	or later in the program according to our need
 
 Que 27: Instanceof keyword ?
 		this is used to check weater a given variable is a instance of a given class 
