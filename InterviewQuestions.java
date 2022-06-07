@@ -105,7 +105,7 @@ initialization is used to write this static method.
     =========================================================================================
     |private static Test t = new Test(); //This approach is wrong by using new keyword because constructor is private.
     =========================================================================================
-    private static Test t = null;
+    private static Test t; //Its default value is null
     //private constructor
     private Test() {        
     }
@@ -126,4 +126,74 @@ Advantage of Singleton class
 1. Memory performance Improvement.
 2. Reuse same object for every similiar requirement.
 3. Singleton prevents other objects from instantiating their own copies of the Singleton object, ensuring that all objects access the single instance. 
+
+Que5.Difference between string stringbuffer and stringbuilder ?
+//Strings are one of the most popular classes used while programming in Java by developers. 
+//But, since Strings are immutable, Java came up with two utility classes: StringBuilder and StringBuffer 
+//to make the String manipulations easy.
+Ans5. Java provides three classes to represent a sequence of characters: String, StringBuffer, and 
+StringBuilder.
+1. String is immutable whereas StringBuffer and StringBuilder are mutable classes.
+2. StringBuffer is thread-safe and synchronized whereas StringBuilder is not. It means two threads cannot call the methods of StringBuffer simultaneously.
+3. StringBuffer is less efficient than StringBuilder and StringBuilder is faster than StringBuffer. 
+4. StringBuffer was introduced in Java 1.0 
+5. String concatenation operator (+) internally uses StringBuffer or StringBuilder class.
+
+Que6. String pool in Java?
+Ans 6.  1.String Pool in Java is a pool of Strings which is stored in Java Heap Memory. String Pool is a storage area in Java heap.
+2. It is also known as String Intern Pool or String Constant Pool.
+3.By default, it is empty and privately maintained by the Java String class.
+4.Whenever we create a string the string object occupies some space in the heap memory. Creating 
+a number of strings may increase the cost and memory too which may reduce the performance also.
+5.The JVM performs some steps during the initialization of string literals that increase the performance and decrease the memory load. To decrease the number of String objects 
+created in the JVM the String class keeps a pool of strings.
+
+Que7. What is thread-safe in Java ?
+Ans7 . As we know Java has a feature, Multithreading, which is a process of running multiple threads 
+simultaneously. When multiple threads are working on the same data, and the value of our data is changing, that
+ scenario is not thread-safe and we will get inconsistent results. When a thread is already working on an 
+ object and preventing another thread on working on the same object, this process is called Thread-Safety.
+
+ How to achieve Thread Safety
+There are four ways to achieve Thread Safety in Java. These are:
+
+1. Using Synchronization -Synchronization is the process of allowing only one thread at a time to complete the particular task.
+2. Using Volatile Keyword.
+3. Using Atomic Variable.
+4. Using Final Keyword.-Final Variables are also thread-safe in java because once assigned some reference of an object It cannot point to reference of another object. 
+
+Que8. Difference between final, finally and finalize ?
+Ans8. The final, finally, and finalize are keywords in Java that are used in exception handling.
+------------------------------------------------------------ 
+1. final(lowercase) is a reserved keyword in java.
+	Use with variables ,methodsa nd class.We cannot change value after the first initialization.
+	final int a=10;
+	a=a+20; //error -----//cannot change value
+	* final method cannot be override but can overloaded.
+	*private, static, final // we can overload but cannot be overrided.
+	* If the class is final then we will not able to inherit that.
+	--------------------------------------------------------
+	2. finally
+	It is a block i.e.
+	finally{
+
+	}
+
+	Use it with either try or try_catch block.
+	try{}finally{}   
+	//or
+	try{}catch(){}finally{}
+	It is used to realease the resource or we write the cleanup code.
+If i do not want to use finally then just terminate the program.
+We can do it by using // System.exit(0); 
+	---------------------------------------------------------------
+	3. finalize(){}
+	It is a method .Finalize() is the method of Object class. Perform clean-up activities and minimize memory leaks.
+	* It is executed just before Garbage Collector.
+	Any resource that is open it can be closed by using finalize() method.
+	----------------------------------------------------------------------------------
+	----------------------------------------------------------------------------------
+	
+
+
 
