@@ -1497,7 +1497,17 @@ Binary Search tree
 A tree is a hierarchical data structure defined as a collection of nodes. Nodes represent value and nodes are connected by edges.
 
 
-
+1.1. What is concurrency?
+Concurrency is the ability to run several programs or several parts of a program in parallel. 
+If a time consuming task can be performed asynchronously or in parallel, this improves the throughput
+ and the interactivity of the program.
+ The simplest way to avoid problems with concurrency is to share only immutable data between threads. 
+ Immutable data is data which cannot be changed.
+ To make a class immutable define the class and all its fields as final.
+ Java runnable is an interface used to execute code on a concurrent thread. 
+ ----------------------------------
+ * Concurrency is the ability to run several or multi programs or applications in parallel.
+ ----------------------------------
 
 
 

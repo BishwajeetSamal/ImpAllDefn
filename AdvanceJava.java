@@ -66,25 +66,220 @@ List<ChatMessage> chatMessagesList = chatMessageRepository.findBySenderUserIdAnd
 first we short the data according to the short by condition then we retrive the data
 
 *******************************************************************************************
+Spring:-
+---------
+1. Spring is the most popular application development framework of Java. 
+2. The main feature of the Spring Framework is dependency Injection or Inversion of Control (IoC).
+3. With the help of Spring Framework, we can develop a loosely coupled application. 
+
+4.Spring is a widely used Java EE framework for building applications.
+5.The developer writes a lot of code to do the minimal task.
+6.To test the Spring project, we need to set up the sever explicitly.
+7.It does not provide support for an in-memory database.
+8.Developers manually define dependencies for the Spring project in pom.xml.
+
+Spring Boot:-
+-------------
+1.Spring Boot is a module of Spring Framework. Spring Boot makes it easy to quickly bootstrap and start 
+  developing a Spring-based application.  
+2.It allows us to build a stand-alone application with minimal or zero configurations.
+  It hides a lot of complexity behind the scene so that the developer can quickly get started and develop 
+  Spring-based applications easily.
+3.Spring Boot Framework is widely used to develop REST APIs.
+4.The primary key feature of Spring Boot is Autoconfiguration. 
+5.It automatically configures the classes based on the requirement.
+6.It reduces boilerplate code.
+7.Spring Boot offers embedded server such as Jetty and Tomcat, etc.
+8.It offers several plugins for working with an embedded and in-memory database such as H2.
+9.Spring Boot comes with the concept of starter in pom.xml file that internally takes care 
+of downloading the dependencies JARs based on Spring Boot Requirement.
+
+Spring MVC:-
+------------
+1.A Spring MVC is a Java framework which is used to build web applications.
+2. It follows the Model-View-Controller design pattern.
+3. It implements all the basic features of a core spring framework like Inversion of Control, Dependency Injection.
+4.A Spring MVC provides an elegant solution to use MVC in spring framework by the help of DispatcherServlet.
+5.Here, DispatcherServlet is a class that receives the incoming request and maps it to the right resource such as controllers, models, and views.
+5.DispatcherServlet class works as the front controller. It is responsible to manage the flow of the Spring MVC application.
 
 
+
+Dependency Injection:- //This is not language dependent. It is a concept of design patterns.
+-----------------------
+1. It is a design pattern(we follow this pattern to make application.). 
+Dependency Injection is a fundamental aspect of the Spring framework, through which the Spring container 
+“injects” objects into other objects or “dependencies”.
+
+Simply put, this allows for loose coupling of components and moves the responsibility of managing
+ components onto the container.
+
+ Bean:-
+ -------
+ In Spring, a bean is an object that the Spring container instantiates, assembles, and manages.
 
 **************************************Annotations*****************************************
+----------------------------------
+1.@SpringBootApplication
+2.@EnableAutoConfiguration
+3.@Configuration
+4.@ComponentScan
+5.@Bean
+6.@Autowired
+7.@Component
+8.@Controller
+9.@Service
+10.@Repository
+11.Qualifier
+12.@Lazy
+13.@RequestMapping
+14.@ResponseBody
+15.@RequestBody
+16.@RestController
+17.@PathVariable
+18.@RequestParam
 
-@SpringBootApplication
-@SpringBootApplication is used in the entry point of the application add the class it 
-resides in needs to have to the application main method The annotation is needed and 
-will provide each of the other two annotations to your Spring Boot application since 
-the @SpringBootApplication includes both inside.
-@EnableAutoConfiguration
-The @EnableAutoConfiguration does just that it provides each of the 
-representing class with the Automatic Configuration capability
-@ComponentScan
-Lastly the @ComponentScan will at initialization scan all the beans and package declarations.
-@Configuration
-allow to register extra beans in the context or import additional configuration classes
+----------------------------------
+
+1.@SpringBootApplication = @EnableAutoConfiguration + @Configuration + @ComponentScan
+======================
+1.The @SpringBootApplication annotation is a convenience annotation that combines the 
+( @EnableAutoConfiguration,@Configuration and the @ComponentScan ) annotations in a Spring Boot application.
+2.@SpringBootApplication is used as the entry point of the application.
+
+(i.) @EnableAutoConfiguration
+------------------------------
+The @EnableAutoConfiguration annotation enables Spring Boot to auto-configure the application context.
+For example, when we define the spring-boot-starter-web dependency in our classpath, Spring boot 
+auto-configures Tomcat and Spring MVC
+									
+(ii.) @Configuration
+---------------------
+Configuration class marks a class as a source of bean/method bean.
+Those objects of beans are managed by Spring.
+Example --->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
+@Bean  //this marks it as a bean , Thus we don't need to create the object of this returned bean. 
+//We can directly autowired.
+public Student getStudent(){
+	return new Student();
+}
+
+//and if we want to access the the object then use
+@Autowired
+private Student student;
+Example End ----->>>>>>>>>>>>>>>>>>>>>>>>>
+Thus, Bean object managed by spring Container.
+It helps inside class to identify for all the  bean declared.
+Spring @Configuration annotation indicates that the class has @Bean definition methods. 
+So Spring container can process the class and generate Spring Beans to be used in the application.
+
+(iii.) @ComponentScan
+----------------------
+we can pass package and all classes in that package or subpackages, get scans for spring beans.
+for example ->> @ComponentScan(basePackages={"other_package"}). It also scan the sub packages of it.
+This annotation enables component-scanning so that the web controller classes and other components 
+you create will be automatically discovered and registered as beans in Springs Application Context.
+
+2. @Component
+-------------
+@Bean for Method and as like this @Component is for class.
+@Component is a class level annotation. 
+During the component scan, Spring Framework automatically detects classes annotated with @Component.
+
+3. @Controller
+---------------
+It behaves as a @Component and MVC controller mapping.
+
+4. @Service
+------------
+We use to write the business logic.
+
+5.@Repository
+----------------
+It will behave as Component and provide some facilities for DAO. (Data access objects)
+
+6.@Qualifier
+-------------
+The @Qualifier is used to resolve ambiguous dependencies i.e, it helps @Autowired annotations to choose one of the dependency.
+If there are multiple implementations for single interface then we can use @Qualifier to choose required implementation at runtime
+
+For Example ---->>>>>
+@Bean("student1")
+@Lazy //this will not execute
+public Student getStudent(){
+	return new Student("student1");
+}
 
 
+@Bean("student2")
+public Student cerateStudent(){
+	return new Student("student2");
+}
+By  using @Autowired
+private Student student;// this will make problem
+//because IOC container will get confuse which bean to be called because it have 2 beans with same name.
+//Thus, to get a particular bean object we use Qualifier.
+@Qualifier("student2")
+private Student student;
+
+7. @RequestMapping
+-------------------
+ 1. It is used to map web requests onto specific handler classes and/or handler methods. or
+ Simply put, the annotation is used to map web requests to Spring Controller methods.
+ @RequestMapping — by Path ---> @RequestMapping(value="/home",method=RequestMethod.GET)  //We cann use GET,POST,PUT etc.	
+
+ @RequestMapping — the HTTP Method---> @RequestMapping("/api/v1") with @GetMapping,@PostMapping etc.
+
+8. @ResponseBody
+----------------
+1.If we want to send the JSON response. It invokes the controller that the object return is automatically 
+serialized into JSON and passed back to as HTTP response.  
+
+9. @RequestBody
+---------------
+1. It is used inside the @RequestMapping. When backend applications get data in body of request as a json then
+ RequestBody automatically deserialize into the java object. (Frontend JSON to Backend simple java Object).
+Or we can say,@RequestBody annotation maps the HttpRequest body to a transfer or domain object, enabling 
+automatic deserialization of the inbound HttpRequest body onto a Java object.
+
+10. @RestController
+-------------------
+1. We can use @RestController instead of @Controller and @ResponseBody.
+It eliminates the need to annotate every request handling method of the controller class with the
+ @ResponseBody annotation.
+
+11. @PathVariable
+------------------
+1. When we get data in url. We use @PathVariable. // like url is localhost:3000/v1/api/243/132
+//Here we can get 243 and 132 in @PathVariable.
+So we can get like  --->>>
+ @RequestMapping(value="/v1/api/{userId}/{pageNo}")
+ public String user(@PathVariable("userId") Integer userId,@PathVariable("pageNo") Integer pageNo){
+
+ }
+Thus,@PathVariable annotation can be used to handle template variables in the request URI mapping, and
+ set them as method parameters.
+
+ 12. @RequestParam
+ -----------------
+ 1.@RequestParam to extract query parameters, form parameters, and even files from the request.
+ 2. Annotation which indicates that a method parameter should be bound to a web request parameter.
+@RequestParam("email") String email
+if url like - // localhost:3000/v1/api?pageNumber=123
+@RequestParam(defaultValue = "1",required = false)int pageNumber{
+	try{
+
+	}catch(){
+
+	}
+}
+
+13.@Value
+----------
+By the help of this annotation, we are able to get the value inside of any mentioned properties inside "application.properties".
+For Example --->
+ @Value("${cassandra.keyspace}") //this cassandra.keyspace is inside the application.properties.
+  private String keySpace;
 
 @Param are to accept the data passed in query string
 
@@ -508,13 +703,6 @@ Que: What are WebHooks
      They have a message—or payload—and are sent to a unique URL—essentially 
      the app's phone number or address. Webhooks are almost always faster than 
      polling, and require less work on your end.
-
-
-
-
-कान्हा प्रॉपर्टीज
-कान्हा
-केशव
 
 
 spring is a complete frameworks

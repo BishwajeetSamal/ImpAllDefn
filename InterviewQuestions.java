@@ -21,7 +21,8 @@ public class Helloworld {														   |
     public static void main(String[] args) {						               |
         System.out.println("Inside main(String[] args) method ....");              |
        																			   |
-    }																			   |
+    }																	           |
+    		                                                                       |
     																			   |
     /**																			   |
      * An overloaded main method which accepts Integer[] instead of                |
@@ -103,7 +104,7 @@ initialization is used to write this static method.
 |													   						|
 |	public final class Test {
     =========================================================================================
-    |private static Test t = new Test(); //This approach is wrong by using new keyword because constructor is private.
+    |private static Test t = new Test(); //This approach is wrong for outside creating the object by using new keyword because constructor is private but wer can do inside class.
     =========================================================================================
     private static Test t; //Its default value is null
     //private constructor
@@ -193,7 +194,6 @@ We can do it by using // System.exit(0);
 	Any resource that is open it can be closed by using finalize() method.
 	----------------------------------------------------------------------------------
 	----------------------------------------------------------------------------------
+	****************************************************************************************
+
 	
-
-
-
