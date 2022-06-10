@@ -196,4 +196,43 @@ We can do it by using // System.exit(0);
 	----------------------------------------------------------------------------------
 	****************************************************************************************
 
-	
+	 What is Data Warehousing?
+The process of collecting, extracting, transforming, and loading data from multiple sources and storing them in
+ one database is known as data warehousing.
+--------------------------------------------------------------------------------
+ Q- Explain different types of relationships amongst tables in a DBMS.
+Ans-Following are different types of relationship amongst tables in a DBMS system:
+
+One to One Relationship:  This type of relationship is applied when a particular row in 
+table X is linked to a singular row in table Y.
+
+One to Many Relationship: This type of relationship is applied when a single row in 
+table X is related to many rows in table Y.
+
+Many to Many Relationship: This type of relationship is applied when multiple rows in 
+table X can be linked to multiple rows in table Y.
+
+Self Referencing Relationship: This type of relationship is applied when a particular row in 
+table X is associated with the same table.
+-----------------------------------------------------------------------------------
+Que->Explain the difference between intension and extension in a database.
+Ans->Following is the major difference between intension and extension in a database:
+
+Intension: Intension or popularly known as database schema is used to define the description of the database
+ and is specified during the design of the database and mostly remains unchanged.
+
+Extension: Extension on the other hand is the measure of the number of tuples present in the database at any 
+given point in time. The extension of a database is also referred to as the snapshot of the database and its value 
+keeps changing as and when the tuples are created, updated, or destroyed in a database.
+------------------------------------------------------------------------------------
+Que->Explain the difference between the DELETE and TRUNCATE command in a DBMS.
+Ans->1. DELETE command: this command is needed to delete rows from a table based on the condition provided by the 
+WHERE clause.
+2. It can be rolled back if required.
+3. It maintains a log to lock the row of the table before deleting it and hence it’s slow.
+
+TRUNCATE command: this command is needed to remove complete data from a table in a database. It is like a DELETE 
+command which has no WHERE clause.
+It removes complete data from a table in a database. It can be lead to data loss.
+It doesn’t maintain a log and deletes the whole table at once and hence it’s fast.
+
