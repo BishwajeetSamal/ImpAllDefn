@@ -657,7 +657,7 @@ difference bw spring boot and spring mvc
 
 
 Que: What is Thymeleaf ?
-Ans: Used with html5 to generate dynamic contant
+Ans: Used with html5 to generate dynamic content
      can be used in place of jsp
 	 capable of proccessing html,xml, javascript, css and plain text
 	 mostly used for generating html view for web application
@@ -683,11 +683,11 @@ Ans: Two classes implementing a interface which object we will get
 	 in tight coupling when two classes are dependent on each other ie if one class is using the object 
 	 of other class and object is created by new keyword it is called tight coupling
 	 for example first class is car and second is travel then travel is dependent on car
- 	 but if we eant to used
+ 	 but if we want to used
 	 bike then we must change all the code 
-	 for solution we can use interface vechil and create a reference of veichal and can creat
- 	 object of desired vechilal
-	 ie multiple vechicals can implement the vechial interface 
+	 for solution we can use interface vechile and create a reference of vehicle and can create
+ 	 object of desired vehicle
+	 ie multiple vehicles can implement the vehicle interface 
 	 in case of spring boot we can write autowire on the interface variable and it will get their
 	 object of the implemented class and if multiple claases are implementimg the interface 
 	 then we will get the ambuigity and to solve this object

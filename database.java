@@ -138,14 +138,14 @@ A database engine (or storage engine) is the underlying software component that 
 
 
 
- 											  {	SQL(Structured Query Language) }
- 												------------------------------
+ 											           {	SQL(Structured Query Language) }
+ 												            ------------------------------
  Que -->What is SQL?
 SQL is Structured Query Language, which is a computer language for storing, manipulating and retrieving data in a 
 relational database.
 
 SQL is the standard language for a relational database system. All the Relational Database Management Systems (RDMS)
-ike MySQL, MS Access, Oracle, and SQL Server use SQL as their standard database language.
+like MySQL, MS Access, Oracle, and SQL Server use SQL as their standard database language.
 --------------------------------------------------------------------------------------------------------------------
 Que-->A brief history of SQL
 SQL was initially developed by IBM in the early 1970s. The initial version, called SEQUEL 

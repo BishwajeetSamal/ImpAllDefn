@@ -1986,7 +1986,7 @@ However, the Collections class provides the utility
  ArrayList: Introduction
  -----------------------
  ArrayList is the most widely used implementation of the List interface. 
- Some of the salient features of an ArrayList are:
+ Some of the slient features of an ArrayList are:
 
 Elements are stored in the order of insertion.
 It allows the storage of duplicate elements.
@@ -1999,14 +1999,16 @@ size ten was created internally.
 Now, when an ArrayList is created, an array of size zero is created. Only when the first element is inserted does 
 the array size change to ten. This is called lazy initialization, and it saves a lot of memory.
 
-Before adding an element in ArrayList, its capacity is checked. If the internal array is full, then a new array of size \lgroup n+\frac{n}{2}+1\rgroup
+Before adding an element in ArrayList, its capacity is checked. If the internal array is full, then a new array of
+ size \lgroup n+\frac{n}{2}+1\rgroup
 ⟮(n+n/2+1) is created (e.g., if the capacity is ten, then a new array of size 16 will be created). 
  The elements from the old array will be copied to the new array. This increases the capacity of an
   ArrayList, which is a time-consuming process.
 
   Time complexities for ArrayList operations
   ------------------------------------------
-  Adding an element#
+  Adding an element
+  -------------------
 Since an array backs an ArrayList, the addition of an element takes O(1) time in most of the cases. 
 It will take more time if the ArrayList is full and needs to be resized. In that scenario, a new array will 
 be created, and elements will be copied from the old array to the new array.
@@ -7912,7 +7914,8 @@ started
 
 completed
 
-Let's say we want to compute the sum of numbers from 1 to n. Our task should accept an integer n and spit out the sum. Below are two ways to implement our task.
+Let's say we want to compute the sum of numbers from 1 to n. Our task should accept an integer n and ' 
+spit out the sum. Below are two ways to implement our task.
 
     class SumTask implements Callable<Integer> {
 
@@ -7948,5 +7951,7 @@ Or we could take advantage of the anonymous class feature in the Java language t
               return sum;
           }
       };
-Now we know how to represent our tasks using the Callable interface. In the next section we'll explore the Future interface which will help us manage a task's lifecycle as well as retrieve results from it.
+Now we know how to represent our tasks using the Callable interface. In the next section 
+we'll explore the Future interface which will help us manage a task's lifecycle as well as retrieve
+ results from it.
 

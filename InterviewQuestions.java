@@ -236,3 +236,164 @@ command which has no WHERE clause.
 It removes complete data from a table in a database. It can be lead to data loss.
 It doesn’t maintain a log and deletes the whole table at once and hence it’s fast.
 
+
+============================================================================================
+Java Interview Question (Predikly) Date: - 27/06/2022 Time:4:00 PM (Bishwajeet Samal)
+----------------------------------------------------------------------------------------------------------------------------
+
+Q1. What is SpringBootApplication ?
+--------------------------------------
+ Ans --> Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications 
+that you can "just run". It is used for Rapid Application Development.
+Spring Boot is an open source Java-based framework used to create a micro Service.
+You can get started with minimum configurations without the need for an entire Spring configuration setup.
+
+Advantages
+-----------
+Spring Boot offers the following advantages to its developers −
+
+Easy to understand and develop spring applications
+Increases productivity
+Reduces the development time
+==================================================================================================
+ @SpringBootApplication ?
+ -------------------------
+ Its same as declaring a class with @Configuration, @EnableAutoConfiguration and @ComponentScan 
+ annotations.
+ (i.) @EnableAutoConfiguration
+------------------------------
+The @EnableAutoConfiguration annotation enables Spring Boot to auto-configure the application context.
+For example, when we define the spring-boot-starter-web dependency in our classpath, Spring boot 
+auto-configures Tomcat and Spring MVC
+                                    
+(ii.) @Configuration
+---------------------
+Configuration class marks a class as a source of bean/method bean.
+Those objects of beans are managed by Spring.
+Example --->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
+@Bean  //this marks it as a bean , Thus we don't need to create the object of this returned bean. 
+//We can directly autowired.
+public Student getStudent(){
+    return new Student();
+}
+
+(iii.) @ComponentScan
+----------------------
+we can pass package and all classes in that package or subpackages, get scans for spring beans.
+for example ->> @ComponentScan(basePackages={"other_package"}). It also scan the sub packages of it.
+This annotation enables component-scanning so that the web controller classes and other components 
+you create will be automatically discovered and registered as beans in Springs Application Context.
+======================================================================================================
+
+Q2. What is wait and sleep in multithreading ?
+-----------------------------------------------
+Ans --> wait() is used for inter-thread communication while sleep() is used to introduce 
+pause on execution, generally.Thread. sleep() sends the current thread into the “Not Runnable” state for 
+some amount of time.
+
+LifeCycle of Thread
+--------------------
+Five Stages
+-----------
+1. Create the thread. (using t.start)
+2. Runnable  (JVM will allocate the processor by using thread scheduler.)
+3. running
+4. Dead state
+5. Non-Runnable State (sleep(),wait(),suspend())
+
+
+Daemon threads
+---------------
+1.Daemon threads are which runs in background of anathor thread.
+2.It provides service to the threads.
+For ex - Garbage Collector, Finalizer, Attach Listeners, Signal Dispathcers etc.
+Real life example like we write the text in MSWord but the spell check also works. This check is done by
+daemon threads. 
+Methods for the daemon threads
+-------------------------------
+1. public final void setDaemon(boolean b)  // means true or false
+2. public final boolean isDaemon() // it will return true or false if thread is daemon or not
+
+class Test extends Thread
+{
+    public void run(){
+        System.out.println("Run this Thread");
+    }
+
+    public static void main(String []args){
+         System.out.println("Main Method");
+         Test t = new Test();
+         t.setDaemon(true);
+         t.start();
+    }
+}
+
+Case 1
+--------
+Whenever we create the daemon thread it is compulsory to create the thread before start() method.
+Else we get the exception IllegalThreadStateException(RuntimeException/Unchecked Exception).
+
+Case 2
+--------
+We cannot create main thread as daemon thread. 
+
+sleep()
+--------
+In Thread class , there are two sleep methods i.e spleep method is overloaded.
+1. public static native void sleep(long milli) throws InterruptedException //native methods means thats the implementation done in other language.
+2. public static void sleep(long milli,int nano) throws InterruptedException
+
+Sleep method will inhibit the execution of thread as the time is provided.
+As the sleep time gets completed then the execution of thread continious again.
+
+//Here i want to provide the gap during the execution
+------------------------------------------------------
+public class Test{
+        p s v main(String []args){  //main thread
+            for(int i=1;i<=5;i++){
+                try{
+                    Thread.sleep(1000);  //sleep for 1sec
+                    sop(i);
+                }catch(Exception e){
+                    sop(e);
+                }
+                
+            }
+        }
+}
+
+
+sleep() in multithreading
+-------------------------
+class Test extends Thread{
+    public void run(){
+        try
+        {
+            for(int i=1;i<=5;i++){
+                sop(i+": "+Thread.currentThread().getName()); //print like Thread-1,Thread-1,Thread-0
+                Thread.sleep(1000);
+            }
+        }catch(Exeption e){
+            sop(e);
+        }
+    }
+
+    public static void main(){
+        Test t1 = new Test();
+        t1.start();
+
+        Test t2 = new Test();
+        t2.start();
+    }
+}
+
+
+yield()
+-------
+It stops the current executing thread and give a chance to other threads for execution.
+-> Working 
+-----------
+In java 5, it uses sleep() method internally
+In java 6, thread provides the hint to the thread scheduler, then it depends on the thread-scheduler to 
+accept or ignore the hint.
+Thus we cannot get the constant ouptput each time.
