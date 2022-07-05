@@ -646,7 +646,7 @@ heap memory or String Constant Pool. It doesnot have fixed size of like primitiv
     //methods 
 } 
 6.String s = new String(); // This object is immutable object.
-  String s = "amit"; 
+  String s = "amit"; // This object is immutable object.
   To create String, there are three classes:-
   1. String
   2.StringBuffer
@@ -655,13 +655,14 @@ heap memory or String Constant Pool. It doesnot have fixed size of like primitiv
 String Constant Pool OR String Literal Pool
 ============================================
 Whenever we create a object or variable then where it get stored. ?
+---------------------------------------------------------------------
 1.String Constant Pool (or String Literal Pool) is an area in heap memory where java stores String Literal
 values.
-2.String Constant Pool resides in Method Area (1.6 version) and after 1.7 version onwards String Constant
-Pool reside in Heap Area. It can increase or decrease size in heap area.
+2.String Constant Pool resides in Method Area (1.6 version) and in 1.7 version onwards String Constant
+Pool resides in Heap Area. It can increase or decrease size in heap area.
 It is a special memory area in heap.
 
-String s1 = new String("bishwajeet"); // object created by using new keyword will provide area in method area
+String s1 = new String("bishwajeet"); // object created by using new keyword will provide area in heap area
 //and s1 will point to it. Here bishwajeet is literal. So inside the String Literal Pool memory will create
 //and that memory in SCP handled by the JVM internally.
 
@@ -669,7 +670,7 @@ If String s2 = "satyajeet"; // This will create the memory in String Constant Po
 
 In s1 case, two objects were created and for s2, one object will create.
 
-Thats why we use s2 kind of object. If String s2 = "satyajeet"; 
+Thats why we use s2 kind of object. (If String s2 = "satyajeet";)
 In String Constant Pool, Garbage Collectors doesnot work because a reference 
 variable internally is maintained by JVM but works for heap memory.
 
@@ -680,11 +681,12 @@ Special case
 1. String s1 = new String("rano"); // 2 objects created one in heap and other in SCP
 2. String s2 = new String("jeet"); // 2 objects created one in heap and other in SCP
 3. String s3 = new String("rano");// 1 object created in heap and because s1 with same literal is present
-//thas why it will not create in String constant Pool.
+//in SCP thats why it will not create in String constant Pool.
 
 Here, s1,s2 will have and created the memory in heap as well as in String Constant Pool.
 But when we create s3 having same literal as s1. Then s3 will get the memory in heap area but again 
-with same literal it will not create a memory for "rano" in String Literal Pool.
+with same literal it will not create a memory for "rano" in String Literal Pool. Both s1 and s3 in SCP
+points to the same memory area.
 
 2nd case
 ---------
@@ -699,10 +701,10 @@ Immutable means unchangable. String objects are immutable. It means once String 
 or state cannot be changed but a new string object is created.
 
 String s = new String("bishwajeet");
-s.concat("java"); //After concat it will not update it in previous object rather it will create a new object
+s.concat(" java"); //After concat it will not update it in previous object rather it will create a new object
 sop(s); //It will give output bishwajeet, because here reference haven't changed
 But.
-s=s.concat("golang"); //Now the output will be bishwajeet golang, because it will change the reference.
+s=s.concat(" golang"); //Now the output will be bishwajeet golang, because it will change the reference.
 
 String immutability always relates to string objects.
 
@@ -713,12 +715,12 @@ Ans. String city1="Jajpur"; //It will make the reference inside the String Const
      String city3 = "Jajpur";// It will point to the reference where city1 and city2 are pointing
 
      Now, city3 = "Jagannath Puri"; //Now city3 will point to the new one.
-Thus, Strings are immutable in java because String objects are cached in String Pool. Since cached String
-literals are shared between multiple persons there is always a risk, where one person action would affect
-all anathor persons.
+Thus, Strings are immutable in java because String objects are cached in String Pool. 
+The string is immutable means that we cannot change the object itself, but we can change the reference to
+the object. The string is made final to not allow others to extend it and destroy its immutability.
  
 Why Strings are final in Java  (Difference between final and immutability)
-==============================
+==========================================================================
 final keyword is used with class, method and variables
 final class cannot be extend.
 final method cannot be Override.
@@ -729,27 +731,142 @@ final class String{
      
 }
 
+Note:-
+------
+1. To make a immutable class :- 
+------------------------------ 
+1.Make the class final or Declare the class as final so it cannot be extended.
+2. Make all fields private so that direct access is not allowed.
+3.All methods can have getters but not setters. or Do not provide setter methods for variables.
+4.Make all mutable fields final so that its value can be assigned only once. Thus, making it immutabile.
+5.Initialize all the fields via a constructor performing deep copy.
+6.Perform cloning of objects in the getter methods to return a copy rather than returning the actual 
+object reference.
+
+String Class Constructors
+-------------------------
+class String{
+    public String(){} //no args constructor
+
+    public String(String s){} //here we pass the string literal
+
+    public String(StringBuffer sb){} 
+
+    public String(StringBuilder sb){} 
+
+    public String(char[] ch){}
+
+    public String(byte[] b){}  
+
+    //and many more constructors
+}
+
+String Class Methods
+=====================
+1.compareTo() - Compares two strings lexicographically (lexicographical order is alphabetical order).
+2.compareToIgnoreCase() - Compares two strings lexicographically, ignoring case differences
+3.concat() - Appends a string to the end of another string
+4.contains() - Checks whether a string contains a sequence of characters
+5.charAt() - Returns the character at the specified index (position)
+6.isEmpty() - Checks whether a string is empty or not
+7.length() - Returns the length of a specified string
+8.trim() - Removes whitespace from both ends of a string
+9.valueOf() - Returns the string representation of the specified value
+10.static join(CharSequence delimiter,CharSequence... elements) //This is the static method. Here 3dots used
+//because it allows to take as many characters possible.
+12.String overrides equals() and hashCode() methods.
+
+
+String s1="Bishwajeet";
+String s2=" Samal";
+sop(s1+s2); //Bishwajeet Samal
+sop(s1+10); //Bishwajeet10
+sop(s1+10+20); //Bishwajeet1020
+sop(10+20+s1); //30Bishwajeet
+sop(10+s1+20); //10Bishwajeet20
+sop(s1+20/10); // Bishwajeet2
+sop(s1+10-5); //error (Subtract in string is not possible)
+sop(String.join(",",s1,s2));  // Bishwajeet, Samal
+
+
+Rules to be remembered to create Constructors
+---------------------------------------------
+While defining the constructors you should keep the following points in mind.
+
+A constructor does not have return type.
+
+The name of the constructor is same as the name of the class.
+
+A constructor cannot be abstract, final, static and Synchronized.
+
+You can use the access specifiers public, protected & private with constructors.
+
+
+StringBuffer
+============
+StringBuffer and StringBuilder are mutable objects in Java. 
+They provide append(), insert(), delete(), and substring() methods for String manipulation.
+StringBuffer sb = new StringBuffer("Bishwajeet"); // This will create a object in a memory location.
+sb.append(" java"); //this will append the  with the value and change into the existing object or in same
+//memory location.
+
+**Main difference between String  and StringBuffer is, String objects are immutable and StringBuffer
+objects are mutable.
+Que -> When to use String and StringBuffer ?
+Ans -> If the data does not change or change one or two times only, use String.
+If data is constantly or frequently changing like in calculator, notepad etc. we should use StringBuffer.
+
+**StringBuffer is a class.
+public final class StringBuffer extends AbstractStringBuilder implements implements java.io.Serializable,
+CharSequence{
+    //4 Constructors
+    StringBuffer(){}
+    StringBuffer(CharSequence seq){}
+    StringBuffer(String str){}
+    StringBuffer(int capacity){}
+
+    //methods
+    public synchronized int length(){...}
+    public synchronized int capacity(){...}
+    public synchronized StringBuffer append(){...}
+    public synchronized StringBuffer insert(){...}
+    public synchronized StringBuffer reverse(){...}
+    public synchronized StringBuffer delete(){...}
+    public synchronized StringBuffer deleteCharAt(){...}
+    public synchronized StringBuffer replace(){...}
+    etc ...
+
+}
 
 
 
 
 
 
+StringBuffer is slower and StringBuilder is fast.
 
 
+Que-> Why char array is preferred over string for storing passwords in Java?
+--------------------------------------------------------------------------------
+Ans-> String objects are immutable in Java and therefore if a password is stored as plain text it will be
+available in memory until Garbage collector clears it, but String objects are stored in String Literal Pool
+for re-usability and Garbage collection is not applicable in SCP, which is a security threat.
+    With an array, you can explicitly wipe the data after you are done with it. You can overwrite the array
+with anything you like, and the password won’t be present anywhere in the system, even before Garbage
+collection.
 
+Q->Is array stored in heap or stack?
+-------------------------------------
+A->the reference types in Java are stored in heap area.
+ Since arrays are reference types (we can create them using the new keyword) these are also stored in heap
+  area.
 
-
-
-
-
-
-
-
+We can pass char array in String constructor
 for example -
 ------------
 char[] c = {'a','b','c','d'}
 String s = new String(c);
+sop(s);  // output abcd string will get print
 
 
 
