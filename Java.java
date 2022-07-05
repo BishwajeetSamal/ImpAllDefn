@@ -28,7 +28,7 @@ functional programming in Java.
 ----------------------------------------------------------------------------
 difference between object-oriented programming and functional programming is?
 In object-oriented programming, objects and classes are the main entities. If we create a function then it should 
-exist within a class. A function has no meaning outside the scope of the class object.
+exist within a class. A function has no meaning outside the scope of the class object./
 In functional programming, functions can exist outside the scope of an object. We can assign them to a reference 
 variable and we can also pass them to other methods as a parameter.
 ----------------------------------------------------------------------------
@@ -633,7 +633,124 @@ Person [id=1, name=Farhan, salary=50000]
 Person [id=1, name=Bishwajeet, salary=20000]
 Person [id=1, name=Keshav, salary=3000]
 
----------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+                                         |  *|I|* Strings *|I|* |
+                                         | --*--*------*--*---- |
+                                         |======================|
+1.String is non-primitive datatype becuase it references a memory location where data is stored in the 
+heap memory or String Constant Pool. It doesnot have fixed size of like primitive datatype.
+2.String is the sequence of characters.
+3.To represent the sequence of charecters, java have also created the interface. That is CharSequence.
+4.String is a class.
+5.public final class String extends Object implements CharSequence,Serializable,Comparable{
+    //methods 
+} 
+6.String s = new String(); // This object is immutable object.
+  String s = "amit"; 
+  To create String, there are three classes:-
+  1. String
+  2.StringBuffer
+  3.StringBuilder
+
+String Constant Pool OR String Literal Pool
+============================================
+Whenever we create a object or variable then where it get stored. ?
+1.String Constant Pool (or String Literal Pool) is an area in heap memory where java stores String Literal
+values.
+2.String Constant Pool resides in Method Area (1.6 version) and after 1.7 version onwards String Constant
+Pool reside in Heap Area. It can increase or decrease size in heap area.
+It is a special memory area in heap.
+
+String s1 = new String("bishwajeet"); // object created by using new keyword will provide area in method area
+//and s1 will point to it. Here bishwajeet is literal. So inside the String Literal Pool memory will create
+//and that memory in SCP handled by the JVM internally.
+
+If String s2 = "satyajeet"; // This will create the memory in String Constant Pool and s2 will point it.
+
+In s1 case, two objects were created and for s2, one object will create.
+
+Thats why we use s2 kind of object. If String s2 = "satyajeet"; 
+In String Constant Pool, Garbage Collectors doesnot work because a reference 
+variable internally is maintained by JVM but works for heap memory.
+
+Special case
+============
+1st case
+---------
+1. String s1 = new String("rano"); // 2 objects created one in heap and other in SCP
+2. String s2 = new String("jeet"); // 2 objects created one in heap and other in SCP
+3. String s3 = new String("rano");// 1 object created in heap and because s1 with same literal is present
+//thas why it will not create in String constant Pool.
+
+Here, s1,s2 will have and created the memory in heap as well as in String Constant Pool.
+But when we create s3 having same literal as s1. Then s3 will get the memory in heap area but again 
+with same literal it will not create a memory for "rano" in String Literal Pool.
+
+2nd case
+---------
+If i will create String s4 = "rano";
+Because rano already in string literal pool , then it will not create any object. s4 will point to the object
+which is present in SCP.
+String s5 = "rano"; // This will also point to the same object in SCP.
+
+What is String immutable ? .Why it is immutable ?
+==================================================
+Immutable means unchangable. String objects are immutable. It means once String object is created, its data
+or state cannot be changed but a new string object is created.
+
+String s = new String("bishwajeet");
+s.concat("java"); //After concat it will not update it in previous object rather it will create a new object
+sop(s); //It will give output bishwajeet, because here reference haven't changed
+But.
+s=s.concat("golang"); //Now the output will be bishwajeet golang, because it will change the reference.
+
+String immutability always relates to string objects.
+
+Que. Why String Objects are Immutable ?
+Ans. String city1="Jajpur"; //It will make the reference inside the String Constant Pool
+     String city2="Jajpur"; //city2 will point to the same city1 is pointing because string literal is
+     //already present
+     String city3 = "Jajpur";// It will point to the reference where city1 and city2 are pointing
+
+     Now, city3 = "Jagannath Puri"; //Now city3 will point to the new one.
+Thus, Strings are immutable in java because String objects are cached in String Pool. Since cached String
+literals are shared between multiple persons there is always a risk, where one person action would affect
+all anathor persons.
+ 
+Why Strings are final in Java  (Difference between final and immutability)
+==============================
+final keyword is used with class, method and variables
+final class cannot be extend.
+final method cannot be Override.
+final variable value cannot be changed
+But why string class is final
+
+final class String{
+     
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+for example -
+------------
+char[] c = {'a','b','c','d'}
+String s = new String(c);
+
 
 
 

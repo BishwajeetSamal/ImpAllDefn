@@ -96,3 +96,62 @@ cloud:
   			return "Mail Sent Successfully";
   		} 
   	}
+
+
+  FILE UPLOAD
+  ------------
+  Uploads a new object to the specified Amazon S3 bucket. 
+  The PutObjectRequest contains all the details of the request, including the bucket to upload to, the 
+  key the object will be uploaded under, and the file or input stream containing the data to upload.
+  	
+
+  AmazonS3 -> Provides an interface for accessing the Amazon S3 web service.
+
+  public void initialS3Bucket() {
+
+		AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+
+		s3client = AmazonS3ClientBuilder
+				.standard()
+				.withCredentials(new AWSStaticCredentialsProvider(credentials))
+				.withRegion(region)
+				.build();
+
+	}
+
+//upload via putObject
+-----------------------
+	s3client.putObject(new PutObjectRequest(bucketName, fileName, file)
+					.withCannedAcl(CannedAccessControlList.PublicRead));
+
+
+Generate the presigned url 
+--------------------------
+GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(fileType, objectKey, HttpMethod.PUT)
+					.withContentType(fileType)
+					.withExpiration(expiration)
+					.withMethod(HttpMethod.PUT)
+					.withBucketName(bucketName);
+
+
+			URL url = s3client.generatePresignedUrl(generatePresignedUrlRequest);
+
+
+Generate presigned url using uploadId and part Number
+-------------------------------------------------------
+GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(fileType, fileName, HttpMethod.PUT)
+				.withContentType(fileType)
+				.withExpiration(expiration)
+				.withMethod(HttpMethod.PUT)
+				.withBucketName(bucketName);
+
+		generatePresignedUrlRequest.addRequestParameter("partNumber", partNumber+"");
+		generatePresignedUrlRequest.addRequestParameter("uploadId", uploadId);
+
+
+		Map<String, Object> repObj = new HashMap<String, Object>();
+
+		repObj.put("preSignedUrl", s3client.generatePresignedUrl(generatePresignedUrlRequest));
+
+
+		completeMultipartUpload //amazon S3 for assemble
