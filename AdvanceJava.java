@@ -138,6 +138,7 @@ Simply put, this allows for loose coupling of components and moves the responsib
 16.@RestController
 17.@PathVariable
 18.@RequestParam
+19.@ControllerAdvice //To handle the Global Exception
 
 ----------------------------------
 

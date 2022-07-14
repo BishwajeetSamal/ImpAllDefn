@@ -158,10 +158,22 @@ simultaneously. When multiple threads are working on the same data, and the valu
  How to achieve Thread Safety
 There are four ways to achieve Thread Safety in Java. These are:
 
-1. Using Synchronization -Synchronization is the process of allowing only one thread at a time to complete the particular task.
+1. Using Synchronization -Synchronization is the process of allowing only one thread at a time to complete the 
+particular task. Or It is a process by which we control the accessability of multiple threads to a particular
+shared resource.
+***Without Synchronization, data inconsistency and thread interference may occur.
+***The problem with Synchronization is that it increases the waiting time period of threads. And second is 
+Created the performance issues. To overcome the Synchronization disadvatages, java provides one package
+i.e. java.util.concurrent.
+***Static Synchronization is for the class the class level.
+
+
+We can use synchronized keyword for method to make it synchronized.
+We can use synchronized block for reducing the waiting time for other code to accessed by threads.
 2. Using Volatile Keyword.
 3. Using Atomic Variable.
-4. Using Final Keyword.-Final Variables are also thread-safe in java because once assigned some reference of an object It cannot point to reference of another object. 
+4. Using Final Keyword.-Final Variables are also thread-safe in java because once assigned some reference of an
+object It cannot point to reference of another object. 
 
 Que8. Difference between final, finally and finalize ?
 Ans8. The final, finally, and finalize are keywords in Java that are used in exception handling.
@@ -397,3 +409,73 @@ In java 5, it uses sleep() method internally
 In java 6, thread provides the hint to the thread scheduler, then it depends on the thread-scheduler to 
 accept or ignore the hint.
 Thus we cannot get the constant ouptput each time.
+
+public static native yield(); 
+
+public class Test extends Thread {
+ public void run(){
+        for(int t=0;i<=5;i++){
+            sop(Thread.currentThread().getName()+"-"+i);
+        }
+
+        p s v m(){
+            Test t= new Test();
+            t.start();
+
+            for(int i=1;i<=5;i++){
+                Thread.yield();
+                sop("main thread"+i);
+            }
+        }
+}
+
+
+Que -> What is immutable class in JAVA ? //Immutable class in java means that once an object is created, we cannot change its content.
+Ans:-> In Java, when we create an object of an immutable class, we cannot change its value.
+For example, String is an immutable class. Hence, we cannot change the content of a string once created.
+Besides, we can also create our own custom immutable classes. 
+1. declare the class as final so it cannot be extended or child classes can’t be created.
+2.all class members should be private so they cannot be accessed outside of class
+3.shouldn't contain any setter methods to change the value of class members
+4.the getter method should return the copy of class members
+5.class members are only initialized using constructor
+
+In Java, all the wrapper classes (like Integer, Boolean, Byte, Short) and String class is immutable
+
+---------------------------------------
+// class is declared final
+final class Immutable {
+
+  // private class members
+  private String name;
+  private int date;
+
+  Immutable(String name, int date) {
+
+    // class members are initialized using constructor
+    this.name = name;
+    this.date = date;
+  }
+
+  // getter method returns the copy of class members
+  public String getName() {
+    return name;
+  }
+
+  public int getDate() {
+    return date;
+  }
+
+}
+
+class Main {
+  public static void main(String[] args) {
+
+    // create object of Immutable
+    Immutable obj = new Immutable("Programiz", 2011);
+
+    System.out.println("Name: " + obj.getName());
+    System.out.println("Date: " + obj.getDate());
+  }
+}
+-----------------------------------------

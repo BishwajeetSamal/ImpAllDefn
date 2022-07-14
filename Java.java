@@ -27,8 +27,9 @@ Java lambda expression is treated as a function, so compiler does not create .cl
 functional programming in Java.
 ----------------------------------------------------------------------------
 difference between object-oriented programming and functional programming is?
+*******************************************************************************
 In object-oriented programming, objects and classes are the main entities. If we create a function then it should 
-exist within a class. A function has no meaning outside the scope of the class object./
+exist within a class. A function has no meaning outside the scope of the class object.
 In functional programming, functions can exist outside the scope of an object. We can assign them to a reference 
 variable and we can also pass them to other methods as a parameter.
 ----------------------------------------------------------------------------
@@ -633,6 +634,9 @@ Person [id=1, name=Farhan, salary=50000]
 Person [id=1, name=Bishwajeet, salary=20000]
 Person [id=1, name=Keshav, salary=3000]
 
+Multithreading with Lamabda Expression
+=======================================
+
 -----------------------------------------------------------------------------------------------------
                                          |  *|I|* Strings *|I|* |
                                          | --*--*------*--*---- |
@@ -651,6 +655,8 @@ heap memory or String Constant Pool. It doesnot have fixed size of like primitiv
   1. String
   2.StringBuffer
   3.StringBuilder
+(1. String is slower.)(2. StringBuffer is faster than String.)(3.StringBuilder is faster than StringBuffer)
+String does not have reverse() method but SrtingBuffer and StringBuilder have.
 
 String Constant Pool OR String Literal Pool
 ============================================
@@ -668,7 +674,7 @@ String s1 = new String("bishwajeet"); // object created by using new keyword wil
 
 If String s2 = "satyajeet"; // This will create the memory in String Constant Pool and s2 will point it.
 
-In s1 case, two objects were created and for s2, one object will create.
+In s1 case, two objects were created and for s2, one object will created.
 
 Thats why we use s2 kind of object. (If String s2 = "satyajeet";)
 In String Constant Pool, Garbage Collectors doesnot work because a reference 
@@ -703,7 +709,7 @@ or state cannot be changed but a new string object is created.
 String s = new String("bishwajeet");
 s.concat(" java"); //After concat it will not update it in previous object rather it will create a new object
 sop(s); //It will give output bishwajeet, because here reference haven't changed
-But.
+But if
 s=s.concat(" golang"); //Now the output will be bishwajeet golang, because it will change the reference.
 
 String immutability always relates to string objects.
@@ -802,16 +808,30 @@ A constructor cannot be abstract, final, static and Synchronized.
 You can use the access specifiers public, protected & private with constructors.
 
 
-StringBuffer
+StringBuffer (Its default size is 16.) If size get over then result will be (16*2)+2 i.e. (size*2)+2
 ============
-StringBuffer and StringBuilder are mutable objects in Java. 
+It is a class. The object created through StringBuffer is stored in the heap. 
+StringBuffer never adds to the string pool.All methods are synchronized.
+Synchronization
+===============
+synchronization in Java guarantees that no two threads can execute a synchronized method which requires 
+the same lock simultaneously or concurrently. And thus,synchronization increases waiting time of thread
+and effects performance of the system.
+To overcome the problem of slow performance of StringBuffer methods, Java introduced StringBuilder concept
+in JDK 1.5 version and creates all the methods of StringBuilder as non-synchronized which increases the
+methods performance.
+All methods of StringBuffer are same in StringBuilder. The difference is that StringBuffer is synchronized
+whereas StringBuilder is non-synchronized i.e. not thread safe.
+
+StringBuffer and StringBuilder are mutable objects in Java. String has concat() method whereas StringBuffer
+has append() method.
 They provide append(), insert(), delete(), and substring() methods for String manipulation.
 StringBuffer sb = new StringBuffer("Bishwajeet"); // This will create a object in a memory location.
 sb.append(" java"); //this will append the  with the value and change into the existing object or in same
 //memory location.
 
 **Main difference between String  and StringBuffer is, String objects are immutable and StringBuffer
-objects are mutable.
+objects are mutable.  // Like notepad , Editors etc.
 Que -> When to use String and StringBuffer ?
 Ans -> If the data does not change or change one or two times only, use String.
 If data is constantly or frequently changing like in calculator, notepad etc. we should use StringBuffer.
@@ -838,13 +858,79 @@ CharSequence{
 
 }
 
+*Default capacity for the StringBuffer is 16.
+StringBuffer sb = new StringBuffer("Bishwajeet"); 
+We can change the size then add the capacity
+StringBuffer sb = new StringBuffer(1000); // 1000 
+
+----------------------------
+StringBuffer sb ="Bishwajeet";  // this will throw AN Exception,Exception in thread "main" 
+//java.lang.Error: Unresolved compilation problem: Type mismatch: cannot convert from String to StringBuffer
+
+Thus, we need to write use 
+StringBuffer buffer = new StringBuffer(); //default size is 16
+buf = new StringBuffer("hi"); //default Size + size of String = 18
+buffer.append("h1"); // size is 16.
+buffer.append("Bishwajeet Samal"); // Now size is 34 . Formula is ((size * 2) +2)
+buffer.charAt(3); // h
+buffer.delete(2,6); //It will delete from 2nd index and upto (lastindex-1) Ans -> Bijeet Samal
+buffer.deleteCharAt(2); //It will delete an element in particular Index
+buffer.indexOf("s"); // It will give the index 
+buffer.lastIndexOf("s"); // It will give the index of last present element of that element provided 
+buffer.insert(3,"zzz"); //It will add zzz in 3rd position.
+buffer.replace(start,end,null);
+buffer.replace(3,6,"m"); // It will replace the value from starting index upto (lastIndex-1)
+buffer.reverse(); // It will reverse the String .
+buffer.subSequence(3,6);//It will a give a subSequence 
+buffer.subString(3,6);//It will a give a subString 
+
+StringBuffer sb1 = new StringBuffer("bishwajeet");
+StringBuffer sb2 = new StringBuffer("bishwajeet");
+System.out.println(sb1.equals(sb2));  // false 
+//Because StringBuffer class doesn't override equals method of Object class but String class override the
+//equals method of Object class. Here sb1 and sb2 are pointing to different objects.
+
+But if, StringBuffer sb2 = sb1.append("h1");
+System.out.println(sb1.equals(sb2));  //true because it now points to same object.
+
+Difference between Object equals method and String equals method
+------------------------------------------------------------------
+The equals() Method of the Object class does not know how to compare Strings, it only knows how to compare 
+objects. For comparing strings, a string class will override the equals() Method and compare strings in it.
+Object.equals() will compare only references, where String.
+
+
+
+
 
 
 
 
 
 StringBuffer is slower and StringBuilder is fast.
+StringBuilder(All methods of StringBuffer are same in StringBuilder. The difference is that StringBuffer 
+    is synchronized whereas StringBuilder is non-synchronized i.e. not thread safe.)
+======================================================================================================
+public final class StringBuilder extends AbstractStringBuilder implements implements java.io.Serializable,
+CharSequence{
+    //4 Constructors
+    StringBuilder(){}
+    StringBuilder(CharSequence seq){}
+    StringBuilder(String str){}
+    StringBuilder(int capacity){}
 
+    //methods
+    public int length(){...}
+    public int capacity(){...}
+    public StringBuilder append(){...}
+    public StringBuilder insert(){...}
+    public StringBuilder reverse(){...}
+    public StringBuilder delete(){...}
+    public StringBuilder deleteCharAt(){...}
+    public StringBuilder replace(){...}
+    etc ...
+
+}
 
 Que-> Why char array is preferred over string for storing passwords in Java?
 --------------------------------------------------------------------------------
@@ -868,17 +954,183 @@ char[] c = {'a','b','c','d'}
 String s = new String(c);
 sop(s);  // output abcd string will get print
 
+====================================================================================================
+Nested Classes in Java
+-----------------------
+In Java, it is possible to define a class within another class, such classes are known as nested classes.
+They enable you to logically group classes that are only used in one place, thus this increases the use 
+of encapsulation, and creates more readable and maintainable code.
 
+inner class vs anonymous inner class java
+-------------------------------------------
+A normal class can implement any number of interfaces but the anonymous inner class can implement only one
+interface at a time. A regular class can extend a class and implement any number of interfaces 
+simultaneously. But anonymous Inner class can extend a class or can implement an interface but not both
+at a time.
+
+For regular/normal class, we can write any number of constructors but we can’t write any constructor 
+for anonymous Inner class because the anonymous class does not have any name and while defining constructor 
+class name and constructor name must be same.
+=====================================================================================================
+                                             Generics In Java
+                                             ================
+Generics was added in Java 5 to provide compile-time type checking and removing risk of ClassCastException that 
+was common while working with collection classes. 
+
+Java Generic methods are generic classes enable programmers to specify,with a single method declaration, a set 
+of related methods or, with a single class declaration, a set of related types.
+Java Genrics is one of the most important features introduced in Java 5.
+ -------------------------------------------start---------------------------------------------   
+    public class Example{
+        public <E> void printArray(E []s){
+            traditional loop
+            -----------------
+            // for(int i=0;i<s.length;i++){
+            //     System.out.println(s[i]);
+            // }
+            forEach
+            -------
+            for(E val : s){
+                System.out.println(val);
+            }
+        }
+
+
+        public static void main(String []args){
+            Example e1 = new Example();
+            String countries[] = new String[]{"India","Pak","Nepal"};
+            Integer numbers[] = {12,34,56,77};
+            e1.printArray(countries);
+            e1.printArray(numbers);
+        }
+    }
+
+//Output
+India
+Pak
+Nepal
+12
+34
+56
+77
+---------------------------------------------end-------------------------------------------
+Rules 
+====
+1.All generic method declarations have a type parameter section delimited by angle bracket(< and >) the preceded
+method return type.
+2.Each type parameter section contains one or more type parameters seperated by commas.
+3.The type parameters can be used to declare the return type.
+
+Imp Rule
+========
+Type parameters can represent only reference types, not primitive types(like int,double and char).
+
+Generics Class
+==============
+--------------------------------------------start-----------------------------------------------
+//Single class to manage all the String , Integer type data for calculation
+class MyData<T>{
+   // Integer i;
+    T i;
+    public void add(T i1){
+        i=i1;
+    }
+
+    public T get(){
+        return i;
+    }
+}
+
+public class Example{
+    public static void main(String []args){
+        // MyData m = new MyData();
+        MyData<Integer> m1 = new MyData<Integer>();
+        MyData<String> m1 = new MyData<String>();
+        Integer k = new Integer(5);
+        m.add(5);
+        m.add("Bishwajeet");
+        System.out.println("m1"+m1.get()+" m2"+m2.get() );
+
+    }
+}
+
+//Output
+----------
+m1=5 m2=Bishwajeet
+
+----------------------------------end------------------------------------
+1. A generic class declaration looks like a non-generic class declaration, except that the class name is followed
+by a type parameter section.
+2.As with generic methods, the type parameter section of a generic class can have one or more type parameters 
+seperated by commas.
+
+Java Generic Type
+================
+Java Generic Type Naming convention helps us understanding code easily and having a naming convention is one of the best practices of Java programming language. So generics also comes with its own naming conventions. Usually, type parameter names are single, uppercase letters to make it easily distinguishable from java variables. The most commonly used type parameter names are:
+
+E – Element (used extensively by the Java Collections Framework, for example ArrayList, Set etc.)
+K – Key (Used in Map)
+N – Number
+T – Type
+V – Value (Used in Map)
+S,U,V etc. – 2nd, 3rd, 4th types
+
+Sometimes we don’t want the whole class to be parameterized, in that case, we can create java generics method.
+ Since the constructor is a special kind of method, we can use generics type in constructors too.
 
 
                                                 Stream API
                                                 -----------
+
+Collections and Stream
+========================
+1. If we want to represent a group of individual objects as a single entity, then we should go for the collection.
+If we want to process the objects from the collection then we should go for the stream.
+
+If we want the stream then we should use stream() method.
+
+Stream s = c.stream(); // It present in java.util.stream;
+
 1.The addition of the Stream API was one of the major features added to Java 8.
 2. A Stream in Java can be defined as a sequence of elements from a source that supports aggregate 
 operations on them.
+
+***Source − Stream takes Collections, Arrays, or I/O resources as input source.
+
+***Aggregate Operations => Stream supports aggregate operations like filter, map,
+ limit, reduce, find, match, and so on. Pipelining − Most of the stream operations return stream itself so
+  that their result can be pipelined.
+
 3. The source here refers to collections or arrays that provide data to a stream.
 4.Streams can be created from different element sources, e.g., a collection or an array with the
  help of stream() and of() methods. 
+
+ Generating Streams
+ --------------------
+With Java 8, Collection interface has two methods to generate a Stream.
+stream() − Returns a sequential stream considering collection as its source.
+parallelStream() − Returns a parallel Stream considering collection as its source.
+
+For example
+----------==========================================
+ArrayList<Integer> l = new ArrayList<Integer>();
+l.add(0);
+l.add(5);
+l.add(10);
+l.add(15);
+l.add(15);
+l.add(18);
+l.add(2);
+
+System.out.println(l);
+List<Integer> l2 = l.stream().filter(i->i%2==0).collect(Collectors.toList());
+System.out.println(l2);
+
+Output
+======
+[0, 5, 10, 15, 18, 2]
+[0, 10, 18, 2]
+---------============================================
 
  a) Stream.of(v1, v2, v3….)
 ----------------------------
@@ -947,6 +1199,22 @@ if you are dealing with primitives because wrapping primitives to objects and au
 -------------------------
 These methods produce some results, e.g., count(), toArray(..), and collect(..)
 The streams operations can be further classified as:
+
+
+For Example
+==========
+public static void main(String []args){
+    ArrayList<Integer> marks = new ArrayList<Integer>();
+    marks.add(70);
+    marks.add(45);
+    marks.add(10);
+    marks.add(65);
+    marks.add(20);
+    marks.add(25);
+    System.out.println(marks);
+    long noOfFailedStudent = marks.stream().filer(i->i<35).count();
+    System.out.println(noOfFailedStudent);
+} 
 
 1.filtering
 2.slicing
@@ -1123,7 +1391,31 @@ Mapping Operations in Stream
 Mapping operations are those operations that transform the elements of a stream and return a new 
 stream with transformed elements.
 We can use a variety of methods to transform a stream into another stream object. The two most common methods 
-used are map() and flatMap().
+used are :- 
+1.map()  
+2.flatMap()
+
+
+For Example
+===========
+ArrayList<Integer> marks = new ArrayList<Integer>();
+marks.add(0);
+marks.add(5);
+marks.add(10);
+marks.add(15);
+marks.add(15);
+marks.add(18);
+marks.add(2);
+
+System.out.println(marks);
+List<Integer> updatedMarks = marks.stream().map(i->i+5).collect(Collectors.toList());
+System.out.println(updatedMarks);
+
+Output
+======
+[0, 5, 10, 15, 15, 18, 2]
+[5, 10, 15, 20, 20, 23, 7]
+
 
 The map() method takes a lambda expression as its only argument and uses it to change every individual element 
 in the stream. 
@@ -7091,13 +7383,28 @@ With this backdrop lets delve into more details of concurrent programming about 
 Program vs Process vs Thread
 -------------------------------
 Program#
-A program is a set of instructions and associated data that resides on the disk and is loaded by the operating system to perform some task. An executable file or a python script file are examples of programs. In order to run a program, the operating system's kernel is first asked to create a new process, which is an environment in which a program executes.
+========
+A program is a set of instructions and associated data that resides on the disk and is loaded by the 
+operating system to perform some task. An executable file or a python script file are examples of programs. 
+In order to run a program, the operating system's kernel is first asked to create a new process, which is an'
+ environment in which a program executes.
 
 Process#
-A process is a program in execution. A process is an execution environment that consists of instructions, user-data, and system-data segments, as well as lots of other resources such as CPU, memory, address-space, disk and network I/O acquired at runtime. A program can have several copies of it running at the same time but a process necessarily belongs to only one program.
+========
+A process is a program in execution. A process is an execution environment that consists of instructions, 
+user-data, and system-data segments, as well as lots of other resources such as CPU, memory, address-space,
+ disk and network I/O acquired at runtime. A program can have several copies of it running at the same time but
+ a process necessarily belongs to only one program.
 
 Thread#
-Thread is the smallest unit of execution in a process. A thread simply executes instructions serially. A process can have multiple threads running as part of it. Usually, there would be some state associated with the process that is shared among all the threads and in turn each thread would have some state private to itself. The globally shared state amongst the threads of a process is visible and accessible to all the threads, and special attention needs to be paid when any thread tries to read or write to this global shared state. There are several constructs offered by various programming languages to guard and discipline the access to this global state, which we will go into further detail in upcoming lessons.
+========
+Thread is the smallest unit of execution in a process. A thread simply executes instructions serially. 
+A process can have multiple threads running as part of it. Usually, there would be some state associated with
+ the process that is shared among all the threads and in turn each thread would have some state private to itself.
+  The globally shared state amongst the threads of a process is visible and accessible to all the threads, and 
+  special attention needs to be paid when any thread tries to read or write to this global shared state. 
+  There are several constructs offered by various programming languages to guard and discipline the access to
+this global state, which we will go into further detail in upcoming lessons.
 
 Caveats#
 Note a program or a process are often used interchangeably but most of the times the intent is to refer to a process.

@@ -3,3 +3,4 @@ Garbage Collector
 Ques ===>> What is functional dependency ?
 Ans ===>>  The functional dependency is a relationship that exists between two attributes. It typically exists between the primary key and non-key attribute within a table.
 
+
