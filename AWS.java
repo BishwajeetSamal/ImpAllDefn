@@ -1,5 +1,5 @@
-AMAZON SES
------------
+🔥🔥AMAZON SES
+---------------
 Search SES (Amazon Simple Email Service) //Highly Scalable inbound and outbound emial Service
 It is a cloud based email service that provides cost-effective, flexible and scalable way for businesses of 
 all sizes to keep in contact with their customers through email.

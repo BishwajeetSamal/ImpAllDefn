@@ -1,5 +1,5 @@
-												DESIGN PATTERNS
-												===============
+										🔥🔥  DESIGN PATTERNS
+										  	  ================
 Design Patterns are very popular among software developers. 
 
 In software engineering, a design pattern is a general repeatable solution to a commonly occurring problem in 
@@ -102,8 +102,8 @@ It depennds upon the requirement.
 
 
 
-										AOP(Aspect Oriented Programming)
-										================================
+									🔥🔥 AOP(Aspect Oriented Programming)
+										 ================================
 1.Aspect oriented programming(AOP) as the name suggests uses aspects in programming.
 2.It can be defined as the breaking of code into different modules, also known as modularisation, where the aspect
 is the key unit of modularity.

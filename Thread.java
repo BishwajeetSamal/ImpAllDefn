@@ -1,6 +1,175 @@
 A process is a program which is running
-We can have subprocesses for it 
+We can have subprocesses for it
 
+Three ways to create Thread
+1. Thread
+2.Runnable
+3.ExecutorService 
+
+
+class Thread implements Runnable{
+	//constructor
+
+	//methods
+	1.run()
+	2.start()
+	3.sleep()
+	4.join()
+	5.getName() and setName()
+	6.interrupted,priority
+	7.daemon
+}
+
+================================================================00000000000
+class Test extends Thread 										|==----|
+{																| ===------|
+    public void run(){ 											|====-----------|
+        System.out.println("Run this Thread");					|   =====----------|
+    }															|	  ======----------|
+    															|	+     ======-----------|
+    public static void main(String []args){						|	*		======------------|
+         System.out.println("Main Method");						|				======-----------|
+         Test t = new Test();									|		*			======---------|
+         t.start(); //thread gets created						|						======-------1
+    }															|					*		======----------
+}																|								======----
+																|			*			*		  ============13
+																|								======----1	
+So, 4 steps to create a thread.									|							======1-----
+-----------------------------------								|						======----
+1.Extends the Thread class.										|----		*			 ======----
+2.Override the run method. Inside the run method we write the task.||			  ======--------------
+3.Create an object of the class.								|----			   ====	----------------
+4.Start the thread by using start() method.						|		    ===--------------
+																|	     ===----------
+===================================================================================================
+Create new Thread -> Runnable -> JVM will allocate the processor -> Running -> When task is completed -> dead.
+
+LifeCycle of Thread
+--------------------
+Five Stages
+-----------
+1. Create the thread. (using t.start)
+2. Runnable  (JVM will allocate the processor by using thread scheduler.)
+3. running
+4. Dead state
+5. Non-Runnable State (sleep(),wait(),suspend())
+
+
+Daemon threads
+---------------
+1.Daemon threads are which runs in background of anathor thread.
+2.It provides service to the threads.
+For ex - Garbage Collector, Finalizer, Attach Listeners, Signal Dispathcers etc.
+Real life example like we write the text in MSWord but the spell check also works. This check is done by
+daemon threads. 
+Methods for the daemon threads
+-------------------------------
+1. public final void setDaemon(boolean b)  // means true or false
+2. public final boolean isDaemon() // it will return true or false if thread is daemon or not
+
+class Test extends Thread
+{
+    public void run(){
+        System.out.println("Run this Thread");
+    }
+
+    public static void main(String []args){
+         System.out.println("Main Method");
+         Test t = new Test();
+         t.setDaemon(true);
+         t.start();
+    }
+}
+
+Case 1
+--------
+Whenever we create the daemon thread it is compulsory to create the thread before start() method.
+Else we get the exception IllegalThreadStateException(RuntimeException/Unchecked Exception).
+
+Case 2
+--------
+We cannot create main thread as daemon thread. 
+
+sleep()
+--------
+In Thread class , there are two sleep methods i.e spleep method is overloaded.
+1. public static native void sleep(long milli) throws InterruptedException //native methods means thats the implementation done in other language.
+2. public static void sleep(long milli,int nano) throws InterruptedException
+
+Sleep method will inhibit the execution of thread as the time is provided.
+As the sleep time gets completed then the execution of thread continious again.
+
+//Here i want to provide the gap during the execution
+------------------------------------------------------
+public class Test{
+        p s v main(String []args){  //main thread
+            for(int i=1;i<=5;i++){
+                try{
+                    Thread.sleep(1000);  //sleep for 1sec
+                    sop(i);
+                }catch(Exception e){
+                    sop(e);
+                }
+                
+            }
+        }
+}
+
+
+sleep() in multithreading
+-------------------------
+class Test extends Thread{
+    public void run(){
+        try
+        {
+            for(int i=1;i<=5;i++){
+                sop(i+": "+Thread.currentThread().getName()); //print like Thread-1,Thread-1,Thread-0
+                Thread.sleep(1000);
+            }
+        }catch(Exeption e){
+            sop(e);
+        }
+    }
+
+    public static void main(){
+        Test t1 = new Test();
+        t1.start();
+
+        Test t2 = new Test();
+        t2.start();
+    }
+}
+
+
+yield()
+-------
+It stops the current executing thread and give a chance to other threads for execution.
+-> Working 
+-----------
+In java 5, it uses sleep() method internally
+In java 6, thread provides the hint to the thread scheduler, then it depends on the thread-scheduler to 
+accept or ignore the hint.
+Thus we cannot get the constant ouptput each time.
+
+public static native yield(); 
+
+public class Test extends Thread {
+ public void run(){
+        for(int t=0;i<=5;i++){
+            sop(Thread.currentThread().getName()+"-"+i);
+        }
+
+        p s v m(){
+            Test t= new Test();
+            t.start();
+
+            for(int i=1;i<=5;i++){
+                Thread.yield();
+                sop("main thread"+i);
+            }
+        }
+}
 
 
 

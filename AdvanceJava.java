@@ -338,11 +338,59 @@ In @RestController, we can not return a view.
 here we can use @Qualifier to give specific name of the class that which class object we shold get
 
 
+@Override, @Deprecated are marker interface
+
 *******************************************************************************************
+|========================|
+|Write Custom Annotations|
+|========================|
+
+@Target({ElementType.Type,Element.Type.METHOD}) //If we use "ElementType.Type" then applicable for class,interface,enum and if we want for method then use "Element.Type.METHOD" 
+@Retention(RetentionPolicy.RUNTIME)
+@interface MyAnno{      //multi valued Annotation
+	int myValue() default 0;
+	String name() default "Bishwajeet";
+	String city() default "Jajpur"
+}
 
 
+@interface MyAnno{      //multi valued Annotation
+	int myValue() default 0;
+}
+
+@interface MyAnno{} //marker interface 
+--------------------------
+Now we can use as a annotation, in java
+@MyAnno //if we use like this, then default value get used
+@MyAnno(myValue=369,name="Samal",city="Puri") //we will be able to provide the value
+public class Demo{
+
+}
 
 
+MainExample.java
+-----------------
+class MainExample{
+	public static void main(String []args){
+		Demo d = new Demo();
+		Class c = d.getClass();
+		System.out.println(c.getName());
+
+		MyAnno an = (MyAnno) c.getAnnotation(MyAnno.class); //getAnnotation Method return Annotation type thats why we need to TypeCast.
+		System.out.println(an.myValue());
+		System.out.println(an.name());
+		System.out.println(an.city());
+	}
+}
+
+
+Output
+------
+example.Demo
+
+369
+Samal
+Puri 
 
 *******************************************************************************************
 

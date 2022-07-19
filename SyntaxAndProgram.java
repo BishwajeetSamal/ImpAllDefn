@@ -1,5 +1,5 @@
-											Collections
-											============
+											🔥🔥Collections🔥🔥
+											===================
 
 *1. ArrayList //Elements in an ArrayList are actually objects. To use other types, such as int, you must specify 
 =============
@@ -228,43 +228,3 @@ Ques4.Implement the logic in Java to filter out the data between 12 to 64 use St
 ==========================================================================================
 
 
-
-
-
-
-
-
-
-
-
-
-
-Bubble Sort
-===========
-package com.actiwee.serviceImpl;
-
-import java.util.Arrays;
-
-public class BubbleSort {
-    public static void main(String []args){
-        int[] arr = new int[]{12,54,32,11,77,88,9,69};
-        int temp;
-    for(int round=1;round<arr.length-1;round++){
-            for(int i=0;i<arr.length-round;i++){
-               if(arr[i]>arr[i+1]){
-                 temp=arr[i];
-                arr[i] = arr[i+1];
-                arr[i+1]=temp;
-               }
-            }
-        }
-                //show all elements for each element
-        // for(int i=0;i<arr.length;i++){
-        //     System.out.println(arr[i]);
-        // }
-
-        //show whole array
-        System.out.println(Arrays.toString(arr));
-    }
-}
-[9, 11, 12, 32, 54, 69, 77, 88]

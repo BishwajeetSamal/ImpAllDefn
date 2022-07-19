@@ -1134,7 +1134,7 @@ Output
 
  a) Stream.of(v1, v2, v3….)
 ----------------------------
-We are creating a stream of integers at line 7 using the Stream.of() method.
+We are creating a stream of integers using the Stream.of() method.
 import java.util.stream.Stream;
 
 public class StreamDemo {
