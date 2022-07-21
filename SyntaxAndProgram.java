@@ -228,3 +228,93 @@ Ques4.Implement the logic in Java to filter out the data between 12 to 64 use St
 ==========================================================================================
 
 
+
+Que5.Find highest number of Zeros(consecutive zeros) between 1s in this string 10010001010 (binary gap)
+=======================================================================================================
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+public class Test{
+
+    public static void main(String []args) {
+         String str ="000000000000000000000001001000001000000000";  // 10010000100000     
+        int count=0;
+        int intMax = -1;
+               
+        for(int i=0;i<str.length();i++){
+            
+            if(str.charAt(i)=='0'){
+                count++;              
+            } else{
+                if(intMax == -1){
+                    intMax = 0;
+                    count = 0;
+                }
+                else if(intMax<count){
+                intMax = count;
+                    count=0;
+                }
+            }
+        }
+            System.out.println(intMax); 
+    }
+}
+
+Output
+-------
+5
+
+
+ANATHOR SOLUTION USING FLAG
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+public class Test{
+    //find highest number of Zeros(consecutive zeros) between 1s in this string 10010001010 (binary gap)
+
+    public static void main(String []args) {
+         String str ="000000000000000000000001001000001000000000";  // 10010000100000     
+        int count=0;
+        int flag1 = 0;
+        int flag2=0;
+        int intMax=0;
+        for(int i=0;i<str.length();i++){
+            
+            if(str.charAt(i)=='1' && flag1==0){
+                flag1=1;
+                flag2=0;
+            }else if(str.charAt(i)=='1' && flag1==1){
+                flag1=0;
+                flag2=1;
+            }
+
+
+
+            if(str.charAt(i)=='0' && flag1==1 && flag2==0){
+                count++;               
+            } else{
+                if(intMax<count && flag2==1){
+                    intMax = count;
+                        count=0;
+                        flag1=1;
+                        flag2=0;
+                    } 
+            }   
+        }
+             System.out.println(intMax);  
+    }
+}
+
+
+==========================================================================================================
