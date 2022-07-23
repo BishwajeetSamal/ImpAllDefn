@@ -479,3 +479,142 @@ class Main {
   }
 }
 -----------------------------------------
+
+I have 5 years of experience working as Java Developer.
+I have worked on various project in springboot,springMVC and some part spring security as well and
+have experience on Restful Services,JPA and worked on SQL database like
+Postgres and the MySql.
+
+Que-> Difference between @Component vs @Service and @Repository ?
+=================================================================
+Ans-> These annotations are used to define an object. Basically we give authority to spring to cerate 
+object for us. So for that we need to add those annotations on respective 
+classes like @Controller for the Controller or @RestController for the Restful Services, @Service for the business logic, @Repository
+is for the DAO layer where it will interact with the database.
+
+Que-> What will happen if you see a @Service over a DAO ?
+===========================================================
+Ans-> If we use @Component for DAO layer it will work fine, but for the visibility it is required else it will look like a normal or generic class.
+And one more benifit of @Repository is used to handle Persistent related exceptions that spring provide but with @Component we won't will get the advantage.
+
+Any exception thrown by the persistence layer , doesn't matter what JDBC used.Like Hybernate or any ORM.So any kind of exception it will throw, spring will 
+wrap that of own exception that is called DataAccessException.
+
+---------------------------------------********************-----------------------------
+Que-> Spring Bean Scopes ?
+Ans-> From the spring specs, there are five types of bean scopes supported :
+1. singleton(default*)
+Scopes a single bean definition to a single object instance per Spring IoC container.
+
+2. prototype
+Scopes a single bean definition to any number of object instances.
+
+3. request
+Scopes a single bean definition to the lifecycle of a single HTTP request; that 
+is each and every HTTP request will have its own instance of a bean created off 
+the back of a single bean definition. Only valid in the context of a web-aware 
+Spring ApplicationContext.
+
+4. session
+
+Scopes a single bean definition to the lifecycle of a HTTP Session. Only valid 
+in the context of a web-aware Spring ApplicationContext.
+
+5. global session
+Scopes a single bean definition to the lifecycle of a global HTTP Session. 
+Typically only valid when used in a portlet context. Only valid in the context of
+a web-aware Spring ApplicationContext.
+
+@Configuration
+public class AppConfiguration {
+    @Bean
+    @Scope("singleton")
+    public Manager getManager(){
+        return new Manager();
+    }
+}
+
+@Bean
+@Scope(value="prototype")
+public MyBean myBean() {
+    return new MyBean();
+}
+
+@Bean
+@Scope(value="request")
+public MyBean myBean() {
+    return new MyBean();
+}
+---------------------------------------********************-----------------------------
+
+Que->Explain Bean Life Cycle ?
+===============================
+Ans->For BeanLifeCycle we have two annotations ,1.@PostConstruct and 2.@PreDestroy
+So Whenever your container is created, your beans will be instantiated and then the particular method which have @PostConstruct that will be called first and then 
+furthur activities will take place.
+And At the end the methods which are written using @PreDestroy, those method will be called just before the container about to destroy and the bean get out of the container.
+For Example, create a Database connection with @PostConstruct and this will be one time activity and to close the Database connection or clean the resource with @PreDestroy.
+How to Customize the Bean Life Cycle ?
+--------------------------------------
+Spring framework provides the following four ways for controlling life cycle events of a bean:
+InitializingBean and DisposableBean callback interfaces
+*Aware interfaces for specific behavior
+Custom init() and destroy() methods in bean configuration file
+@PostConstruct and @PreDestroy annotations.
+
+Que-> How to close or stop the springboot application manually by code ?
+Ans-> By using context.close() or context.stop(), but the context is pointing 
+to the application context.
+
+Que->  What the Rest client you have used in your project ?
+Ans-> Rest Template. It is a client to consume the data and uses Rest services.
+
+
+Que-> getForEntity() and getForObject() difference ?
+Ans-> These are the method found in RestTemplate.
+getForObject() will perform a GET and return an object.
+getForEntity() : executes a GET request and returns an object of ResponseEntity class that contains both the status code and the resource as an object.
+
+Que-> Advantages if using ResponseEntity ?
+Ans-> By using this we will send the HTTP status and along with this we can send the body.
+
+Que->Delete API status code ?
+Ans->200 (OK) or 204 (No Content).
+
+Que-> Do you think we have to handle the timeout whenever we are going for Rest Template ?
+Ans->When are connecting to our server those connections are made with the thread.
+  If one thread is waiting for the connection , anathor thread also want to access the it will also be in wait state.
+  Thus, we need to use the timeout and it is necessary.
+
+Que-> Read Timeout and the Server Timeout ?
+Ans->Implement timeout to release the blocked threads.
+If we are not able to establish a connection to the server.
+Read timeout happens when able to establish the connection but we are trying to read some data and we are not getting the response back.
+
+Que->What is Versioning in Restful webservices ?
+Ans-> So versioning means that we are adding new functionality to a API and we want that particular functionality
+ used by the user.
+Versioning example like request param using Request Parameters and we can have in Headers. 
+Producers in @GetMapping and @PostMapping.
+Versioning is the most important and difficult part of the API as it takes backward API compatible. 
+Versioning helps us to iterate faster when
+ the changes are identified. We should always version our Web API.
+ When we made a breaking change in Web API, we should up versioned the API. 
+ The most commonly used approaches fall into three categories:
+
+URI Versioning
+Versioning using Custom Request Header
+Versioning using Accept Header
+
+Que-> How authentication in RestWebServices work and how your RestWebservice get secure ?
+Ans->For that we have security configuration class for an API which will be extending to configureAdapter.
+So basically when we are hitting a request it will go to the authentication filter and 
+further it will give us an authentication object but that is not a validated object. That object will passed to 
+the Authentication Manager Builder then the builder will find the appropriate authentication provider. 
+The provider will validate validate that object.So there are multiple authentication provider.
+Like DAO Authentication Provider.
+
+Que->When we make a Rest call from Postman or using Rest template and we are passing something into the header.?
+Ans->We basically pass the token, like  JWT token in our header and that will be used for the authentication 
+purpose.
+

@@ -1223,6 +1223,8 @@ public static void main(String []args){
 5.reduction
 6.collect
 
+
+
 filter() method
 ---------------
 The Stream interface has a filter() method to filter a stream. This is an intermediate operation.
@@ -1964,6 +1966,20 @@ public class OptionalDemo {
 
     }
 }
+
+-----------------------------------------------------------
+public static void main(String []args){
+
+     Employee emp2= employee.stream().filter(emp->emp.getSalary()>2000.0).map(emp->new Employee(
+        emp.getFirstName(),
+        emp.getLastName(),
+        emp.getSalary()*1.10
+       )).findFirst()
+       .orElse(null);
+       System.out.println(emp2);
+    }
+    ----------------------------------------------------------
+*findFirst() with stream used to get the fist element and it basically returns Optional.
 
 Output
 -------

@@ -114,6 +114,9 @@ It basically follows divide and conquer algorithm.
 2. Take adjacent pairs of two singleton lists and merge them to form a list of 2 elements. n will now 
 convert into n/2 lists of size 2.
 3. Repeat the process till a single sorted list of obtained.
+
+
+
 -----------------------------------------------------------------------------------------------------------------
 Palindrome check until you get the Palindrome. If number is not palindrome then add the original number with its
 reverse number and check again for palindrome..

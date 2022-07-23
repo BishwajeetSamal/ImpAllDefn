@@ -471,7 +471,10 @@ half duplex			 	  full duplex
 
 
 
-STOMP-WebSocket
+STOMP-WebSocket (Simple or Streaming Text Oriented Message Protocol)
+* It is a basic protocol which defines us the basic functionalities like connect,send,subscribe.
+*We can connect to the server with our client and we can send the message to subscribed one.
+
 The WebSocket API enables web applications to handle bidirectional communications whereas 
 STOMP is a simple text-orientated messaging protocol. The STOMP protocol is commonly used 
 inside a web socket when a web app needs to support bidirectional communication with a web server.
@@ -500,13 +503,29 @@ stomp - simple text oriented message protocol
 .send
 
 configuration file
+-------------------
 @EnableWebSocketMessageBroker class level
 @Configuration
 first WebSocketMessageConfig implements WebSocketMessageBrokerConfigurer
-interface contains two endpoints 
-first registerStompEndpoints(StompEndpointRegistry registry)
+//interface contains two endpoints 
+1st-> registerStompEndpoints(StompEndpointRegistry registry){
+	registry.addEndPoint("/stomp-endpoint")
+	.withSockJS();
+}
 
 
+2nd-> configureMessageBroker(MessageBrokerRegistery registry){
+	registry.enableSimpleBroker("/topic");
+	registry.setApplicationDestinationPrefixes("/app"); 
+}
+
+
+Create Controller
+-----------------
+@Controller
+public class GreetingController{
+
+}
 
 
 
