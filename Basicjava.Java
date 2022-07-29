@@ -58,7 +58,22 @@ public class StaticBlockSingleton {
     }
 }
 
-------------------------------end-----------------------------------------------------
+
+-----------------------------or------------------------------------|______________________________________
+class SingleTon{                                                   |Learn it for Compulsory.**************|
+    static private singleObj=null;                                 |____(V.V IMP)__________________________________|
+    private Singleton(){                                           |
+                                                                   |
+    }                                                              |
+    public static Singleton getInstance(){                         |
+        if(singleObj==null){                                       |
+            singleObj = new SingleTon();                           |
+        }                                                          |
+        return singleObj;                                          |
+    }                                                              |
+}                                                                  |
+                                                                   |
+------------------------------end----------------------------------|-------------------
 2.Factory-- Factory method, that means there is a method which is a factory, and in general factories are 
 involved with creational stuff and here with this an object is being created. It is one of the best ways to
  create an object where object creation logic is hidden to the client.

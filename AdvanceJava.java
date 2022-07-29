@@ -5,7 +5,7 @@ actuator
 aop
 failsafe 
 failfast
-threadpool'
+threadpool
 multithreading in third way
 SOCIAL login is called third party login
 

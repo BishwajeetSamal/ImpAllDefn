@@ -474,6 +474,8 @@ public class Test {
 Streams will also be able to utilize both lambda expressions and functional interfaces.
 -------------------------------------------------------------------------
 
+
+
 										Function Interface
 										------------------
 Function is a category of functional interfaces that takes an object of type T and returns an object of type R.
@@ -633,6 +635,91 @@ Person [id=1, name=Keshav, salary=3000]
 Person [id=1, name=Farhan, salary=50000]
 Person [id=1, name=Bishwajeet, salary=20000]
 Person [id=1, name=Keshav, salary=3000]
+
+
+
+
+We have some predefined functional Interfaces.
+Consumer Functional Interface(contains accept abstract method and return void)
+------------------------------
+Consumer<T> is an in-built functional interface introduced in Java 8.
+Consumer can be used in all contexts where an object needs to be consumed i.e taken as input,and some operation
+is to be performed on the object without returning any result.
+
+public class ConsumerDemo{
+    public static void main(String []args){
+        Consumer<Integer> consumer = t->System.out.println("Printing : "+t);
+
+        consumer.accept(10);
+
+
+        List<Integer> list1 = Arrays.asList(1,2,3,4,5);
+        list1.stream().forEach(consumer); (or)  list.stream.forEach(t->System.out.println("print ":+t));
+
+    }
+}
+Output
+=======
+Printing: 10
+Printing: 1
+Printing: 2
+Printing: 3
+Printing: 4
+Printing: 5
+
+
+Predicate Functional Interface (contains test abstract method and it returns boolean)
+-------------------------------
+The Functional Interface used for conditional check. where you think, we can use these true/false returning 
+functions in day to day programming we should choose Predicate.
+
+public class PredicateDemo implements Predicate<Integer> {
+    @Override
+    public boolean test(Integer t){
+        if(t%2==0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static void main(String []args){
+        Predicate<Integer> predicate = new PredicateDemo();
+        System.out.println(predicate.test(7));
+    }
+} 
+-----------------------------------------------------------------------------------------
+                                         (OR)
+-----------------------------------------------------------------------------------------
+
+public class PredicateDemo {
+    Predicate<Integer> predicate = t->t%2==0;
+    System.out.println(predicate.test(5));
+}
+
+List<Integer> list1 = Arrays.asList(1,2,3,4,5);
+list.stream().filter(predicate).forEach(t->System.out.println("print Even: "+t));
+
+Output
+=======
+false
+print Even:2
+print Even:4
+
+Supplier Functional Interface (it has get method return a generic type)
+-----------------------------
+Supplier can be used in all contexts where there is no input but an output is expected.
+
+class SupplierDemo{
+    public static void main(String []args){
+        Supplier<String> supplier=()->{
+            return "Hi Bishwajeet Samal";
+        };
+        System.out.println(supplier.get());
+    }
+}
+
+
 
 Multithreading with Lamabda Expression
 =======================================
@@ -1081,6 +1168,17 @@ Sometimes we don’t want the whole class to be parameterized, in that case, we 
 
                                                 Stream API
                                                 -----------
+* Difference between Collections and Streams
+=============================================
+1. Collections are  used to store and group the data in a particular datastructures like List, Set or Map.
+Streams are used to perform complex data processing like filtering, matching, mapping stored data such as 
+arrays,collections or I/O resources.
+2.You can add or remove the elements from collections whereas In stream you cannot add or remove elements 
+from streams.
+3. Collections have to be iterated externally (using the Loops) whereas in Stream are internally iterated 
+(using forEach() method.)
+4. Collections can be traversed multiple times and in stream are traversable only once.
+5.Collections are eagerly constructed whereas Streams are lazily constructed.
 
 Collections and Stream
 ========================
@@ -1601,7 +1699,8 @@ in the optional.
 According to Oracle, “Java 8 Optional works as a container type for the value which is probably absent or null.
  Java Optional is a final class present in the java.util package.”
 
-Let us look at how things worked before optional was introduced. In the below example, we have a getEmployee() method which gets the employee object from a Map. After fetching the employee object, we will print its details.
+Let us look at how things worked before optional was introduced. In the below example, we have a getEmployee() 
+method which gets the employee object from a Map. After fetching the employee object, we will print its details.
 
 import java.util.HashMap;
 import java.util.Map;
@@ -2148,6 +2247,8 @@ Output
 -------
 20000
 [-===========================================================-]
+employees.stream().map(emp->emp.getAge().flatMap(strings->strings::stream).collect(Collectors.joining(","));
+------------------------------------------------------------------------------------------
 Collectors: Collection Operations.
 [------------------------------------]
 Collectors
@@ -4855,15 +4956,18 @@ Let’s discuss all the methods that we can use to insert a key-value pair in a 
 
 Using the put() method
 ----------------------
-We can use the put(K key, V value) method to insert a key-value pair in the HashMap. If the key is not present, then a new key-value pair will be added. If the key is already present, then the value will be updated.
+We can use the put(K key, V value) method to insert a key-value pair in the HashMap. If the key is not 
+present, then a new key-value pair will be added. If the key is already present, then the value will be updated.
 
 Using the putIfAbsent() method
 --------------------------------
-The putIfAbsent(K key, V value) method inserts a key-value pair only if it is not already present in the Map. If the key is already present then its value will not be updated. This method was added in Java 8.
+The putIfAbsent(K key, V value) method inserts a key-value pair only if it is not already present in the Map. 
+If the key is already present then its value will not be updated. This method was added in Java 8.
 
 Using the putAll() method
 --------------------------
-The putAll(Map<? extends K, ? extends V> m) method copies all of the mappings from the specified map to this map. These mappings will replace any mappings that this map had for any of the keys currently in the specified map.
+The putAll(Map<? extends K, ? extends V> m) method copies all of the mappings from the specified map to this map. 
+These mappings will replace any mappings that this map had for any of the keys currently in the specified map.
 
 The below example shows HashMap working properly.
 
@@ -4901,11 +5005,15 @@ Fetching an element from a HashMap
 There are two ways to get an element from a HashMap.
 
 Using the get() method#
-The get(Object key) method takes a key as a parameter and returns the value corresponding to that key. If the key is not present, it returns null.
+-----------------------
+The get(Object key) method takes a key as a parameter and returns the value corresponding to that key. 
+If the key is not present, it returns null.
 
 Using the getOrDefault() method
 -------------------------------
-The getOrDefault(Object key, V defaultValue) method is useful if are not sure whether a key is present in the Map or not. If the key is present then this method returns the value corresponding to the key and if the key is not present then the default value is returned.
+The getOrDefault(Object key, V defaultValue) method is useful if are not sure whether a key is present in the 
+Map or not. If the key is present then this method returns the value corresponding to the key and if the key is
+ not present then the default value is returned.
 
 import java.util.HashMap;
 import java.util.Map;
@@ -4938,14 +5046,22 @@ null
 
 Replacing a value in HashMap
 -----------------------------
-When we insert a key-value pair in HashMap and the key is already present then its value gets updated. But if we only want to update the value of a key that is present in the Map, then we can use the replace() method. There are two overloaded versions of the replace() method and one replaceAll() method. All three methods were added in Java 8.
+When we insert a key-value pair in HashMap and the key is already present then its value gets updated.
+ But if we only want to update the value of a key that is present in the Map, then we can use the replace() method.
+  There are two overloaded versions of the replace() method and one replaceAll() method. All three methods were 
+  added in Java 8.
 
 Using the replace(K key, V oldValue, V newValue) method#
-The replace(K key, V oldValue, V newValue) method takes three parameters: the key, the old value, and a new value. It checks if the current value of the key is equal to the oldValue provided in the parameter. If yes then it replaces the value with newValue and returns true; otherwise, it returns false.
+----------------------------------------------------------
+The replace(K key, V oldValue, V newValue) method takes three parameters: the key, the old value, and a new value.
+It checks if the current value of the key is equal to the oldValue provided in the parameter. 
+If yes then it replaces the value with newValue and returns true; otherwise, it returns false.
 
 Using the replace(K key, V value) method
 -----------------------------------------
-This method takes only two parameters: a key and a value. It replaces the value of the key with the new value provided as a parameter and returns the old value. If the key is not present, then it returns null.
+This method takes only two parameters: a key and a value.
+ It replaces the value of the key with the new value provided as a parameter and returns the old value.
+  If the key is not present, then it returns null.
 
 Using the replaceAll(BiFunction<? super K, ? super V, ? extends V> function) method#
 This method takes a BiFunction as input and replaces the values of all the keys with the result of the given function. Suppose we need to add ten to the stock price of each company. Instead of updating the value for each stock one by one, we can use this method. The lambda expression to do this task will look like this:
@@ -7284,32 +7400,53 @@ thread-safe implementations instead of making a collection thread-safe using thi
 
                                         MULTI-THREADING
                                         ---------------
+                    
 What good is concurrency?#
-Understanding of how threading works and knowledge of concurrent programming principles exhibit maturity and technical depth of a candidate and can be an important differentiator in landing a higher leveling offer at a company. First, we have to understand why threading models exist and what good do they provide?
+---------------------------
+Understanding of how threading works and knowledge of concurrent programming principles exhibit maturity and 
+technical depth of a candidate and can be an important differentiator in landing a higher leveling offer at a 
+company. First, we have to understand why threading models exist and what good do they provide?
 
-Threads like most computer science concepts arent physical objects. The closest tangible manifestation of threads can be seen in a debugger. The screen-shot below, shows the threads of our program suspended in the debugger.
+Threads like most computer science concepts arent physical objects. The closest tangible manifestation of threads
+ can be seen in a debugger. The screen-shot below, shows the threads of our program suspended in the debugger.
 
 Suspended threads in a debugger
 Suspended threads in a debugger
-The simplest example to think of a concurrent system is a single-processor machine running your favorite IDE. Say you edit one of your code files and click save, that clicking of the button will initiate a workflow which will cause bytes to be written out to the underlying physical disk. However, IO is an expensive operation, and the CPU will be idle while bytes are being written out to the disk.
+The simplest example to think of a concurrent system is a single-processor machine running your favorite IDE. 
+Say you edit one of your code files and click save, that clicking of the button will initiate a workflow which 
+will cause bytes to be written out to the underlying physical disk. However, IO is an expensive operation, and 
+the CPU will be idle while bytes are being written out to the disk.
 
-Whilst IO takes place, the idle CPU could work on something useful and here is where threads come in - the IO thread is switched out and the UI thread gets scheduled on the CPU so that if you click elsewhere on the screen, your IDE is still responsive and does not appear hung or frozen.
+Whilst IO takes place, the idle CPU could work on something useful and here is where threads come in - the IO 
+thread is switched out and the UI thread gets scheduled on the CPU so that if you click elsewhere on the screen, 
+your IDE is still responsive and does not appear hung or frozen.
 
-Threads can give the illusion of multitasking even though at any given point in time the CPU is executing only one thread. Each thread gets a slice of time on the CPU and then gets switched out either because it initiates a task which requires waiting and not utilizing the CPU or it completes its time slot on the CPU. There are much more nuances and intricacies on how thread scheduling works but what we just described, forms the basis of it.
+Threads can give the illusion of multitasking even though at any given point in time the CPU is executing only one
+thread. Each thread gets a slice of time on the CPU and then gets switched out either because it initiates a task 
+which requires waiting and not utilizing the CPU or it completes its time slot on the CPU. There are much more 
+nuances and intricacies on how thread scheduling works but what we just described, forms the basis of it.
 
-With advances in hardware technology, it is now common to have multi-core machines. Applications can take advantage of these architectures and have a dedicated CPU run each thread.
+With advances in hardware technology, it is now common to have multi-core machines. Applications can take advantage
+ of these architectures and have a dedicated CPU run each thread.
 
 Benefits of Threads#
-Higher throughput, though in some pathetic scenarios it is possible to have the overhead of context switching among threads steal away any throughput gains and result in worse performance than a single-threaded scenario. However such cases are unlikely and an exception, rather than the norm.
+Higher throughput, though in some pathetic scenarios it is possible to have the overhead of context switching 
+among threads steal away any throughput gains and result in worse performance than a single-threaded scenario. 
+However such cases are unlikely and an exception, rather than the norm.
 
 Responsive applications that give the illusion of multi-tasking.
 
-Efficient utilization of resources. Note that thread creation is light-weight in comparison to spawning a brand new process. Web servers that use threads instead of creating new processes when fielding web requests, consume far fewer resources.
+Efficient utilization of resources. Note that thread creation is light-weight in comparison to spawning a brand 
+new process. Web servers that use threads instead of creating new processes when fielding web requests, consume 
+far fewer resources.
 
 All other benefits of multi-threading are extensions of or indirect benefits of the above.
 
 Performance Gains via Multi-Threading#
-As a concrete example, consider the example code below. The task is to compute the sum of all the integers from 0 to Integer.MAX_VALUE. In the first scenario, we have a single thread doing the summation while in the second scenario we split the range into two parts and have one thread sum for each range. In the end, we add the two half sums to get the combined sum. We measure the time taken for each scenario and print it.
+As a concrete example, consider the example code below. The task is to compute the sum of all the integers 
+from 0 to Integer.MAX_VALUE. In the first scenario, we have a single thread doing the summation while in the 
+second scenario we split the range into two parts and have one thread sum for each range. In the end, we add 
+the two half sums to get the combined sum. We measure the time taken for each scenario and print it.
 
 class Demonstration {
     public static void main( String args[] ) throws InterruptedException {
@@ -7385,10 +7522,15 @@ Single thread final count = 2305843008139952128 took 2076
 Two threads final count = 2305843008139952128 took 1395
 
 
-In my run, I see the two threads scenario run within 652 milliseconds whereas the single thread scenario runs in 886 milliseconds. You may observe different numbers but the time taken by two threads would always be less than the time taken by a single thread. The performance gains can be many folds depending on the availability of multiple CPUs and the nature of the problem being solved. However, there will always be problems that don't yield well to a multi-threaded approach and may very well be solved efficiently using a single thread.
+In my run, I see the two threads scenario run within 652 milliseconds whereas the single thread scenario runs in 
+886 milliseconds. You may observe different numbers but the time taken by two threads would always be less than 
+the time taken by a single thread. The performance gains can be many folds depending on the availability of 
+multiple CPUs and the nature of the problem being solved. However, there will always be problems that don't 
+yield well to a multi-threaded approach and may very well be solved efficiently using a single thread.
 
 Problems with Threads#
-However, as it is said, there's no free lunch in life. The premium for using threads manifests in the following forms:
+However, as it is said, there's no free lunch in life. The premium for using threads manifests in the following
+ forms:
 
 Usually very hard to find bugs, some that may only rear head in production environments
 Higher cost of code maintenance since the code inherently becomes harder to reason about
@@ -8010,10 +8152,16 @@ class NonReentrantLock {
 Setting-up Threads
 ---------------------
 Creating Threads#
-To use threads, we need to first create them. In the Java language framework, there are multiple ways of setting up threads.
+------------------
+To use threads, we need to first create them. In the Java language framework, there are
+ multiple ways of setting up threads.
 
 Runnable Interface#
-When we create a thread, we need to provide the created thread code to execute, or in other words we need to tell the thread what task to execute. The code can be provided as an object of a class that implements the Runnable interface. As the name implies, the interface forces the implementing class to provide a run method which in turn is invoked by the thread when it starts.
+--------------------
+When we create a thread, we need to provide the created thread code to execute, or in other words we need to tell
+ the thread what task to execute. The code can be provided as an object of a class that implements the Runnable
+  interface. As the name implies, the interface forces the implementing class to provide a run method which in
+   turn is invoked by the thread when it starts.
 
 The runnable interface is the basic abstraction to represent a logical task in Java.
 
@@ -8034,7 +8182,10 @@ Output
 Say Hello
 
 
-We defined an anonymous class inside the Thread class’s constructor and an instance of it is instantiated and passed into the Thread object. Personally, I feel anonymous classes decrease readability and would prefer to create a separate class implementing the Runnable interface. An instance of the implementing class can then be passed into the Thread object’s constructor. Let’s see how that could have been done.
+We defined an anonymous class inside the Thread class’s constructor and an instance of it is instantiated and 
+passed into the Thread object. Personally, I feel anonymous classes decrease readability and would prefer to
+ create a separate class implementing the Runnable interface. An instance of the implementing class can then be
+  passed into the Thread object’s constructor. Let’s see how that could have been done.
 
 class Demonstration {
     public static void main( String args[] ) {
@@ -8078,13 +8229,18 @@ Output
 --------
 I ran after extending Thread class
 
-The con of the second approach is that one is forced to extend the Thread class which limits code’s flexibility. Passing in an object of a class implementing the Runnable interface may be a better choice in most cases.
+The con of the second approach is that one is forced to extend the Thread class which limits code’s flexibility.
+ Passing in an object of a class implementing the Runnable interface may be a better choice in most cases.
 
 
 Basic Thread Handling
 -------------------
 Joining Threads#
-A thread is always created by another thread except for the main application thread. Study the following code snippet. The innerThread is created by the thread which executes the main method. You may wonder what happens to the innerThread if the main thread finishes execution before the innerThread is done?
+--------------------
+A thread is always created by another thread except for the main application thread. 
+Study the following code snippet. The innerThread is created by the thread which executes the main method.
+ You may wonder what happens to the innerThread if the main thread finishes execution before
+  the innerThread is done?
 class Demonstration {
     public static void main( String args[] ) throws InterruptedException {
         
@@ -8111,16 +8267,23 @@ class ExecuteMe implements Runnable {
         Thread innerThread = new Thread(executeMe);
         innerThread.start();
         innerThread.join();
-If we didn’t execute join on innerThread and let the main thread continue after innerThread was spawned then the innerThread may get killed by the JVM upon main thread’s completion.
+If we didn’t execute join on innerThread and let the main thread continue after innerThread was spawned then the
+ innerThread may get killed by the JVM upon main thread’s completion.
 
 Daemon Threads#
-A daemon thread runs in the background but as soon as the main application thread exits, all daemon threads are killed by the JVM. A thread can be marked daemon as follows:
+---------------
+A daemon thread runs in the background but as soon as the main application thread exits, all daemon threads
+ are killed by the JVM. A thread can be marked daemon as follows:
 
 innerThread.setDaemon(true);
-Note that in case a spawned thread isn’t marked as a daemon then even if the main thread finishes execution, JVM will wait for the spawned thread to finish before tearing down the process.
+Note that in case a spawned thread isn’t marked as a daemon then even if the main thread finishes execution, JVM
+ will wait for the spawned thread to finish before tearing down the process.
 
 Sleeping Threads#
-A thread can be made dormant for a specified period using the sleep method. However, be wary to not use sleep as a means for coordination among threads. It is a common newbie mistake. Java language framework offers other constructs for thread synchronization that’ll be discussed later.
+-----------------
+A thread can be made dormant for a specified period using the sleep method. 
+However, be wary to not use sleep as a means for coordination among threads. It is a common newbie mistake.
+ Java language framework offers other constructs for thread synchronization that’ll be discussed later.
 class SleepThreadExample {
     public static void main( String args[] ) throws Exception {
         ExecuteMe executeMe = new ExecuteMe();
@@ -8146,14 +8309,26 @@ Output
 Hello. innerThread going to sleep
 Main thread exiting.
 
-In the above example, the innerThread is made to sleep for 1 second and from the output of the program, one can see that main thread exits only after innerThread is done processing. If we remove the join statement on line-6, then the main thread may print its statement before innerThread is done executing.
+In the above example, the innerThread is made to sleep for 1 second and from the output of the program, one can
+ see that main thread exits only after innerThread is done processing. If we remove the join statement on 
+ line-6, then the main thread may print its statement before innerThread is done executing.
 
 Interrupting Threads#
-In the previous code snippets, we wrapped the calls to join and sleep in try/catch blocks. Imagine a situation where if a rogue thread sleeps forever or goes into an infinite loop, it can prevent the spawning thread from moving ahead because of the join call. Java allows us to force such a misbehaved thread to come to its senses by interrupting it. An example appears below.
+In the previous code snippets, we wrapped the calls to join and sleep in try/catch blocks. Imagine a situation
+ where if a rogue thread sleeps forever or goes into an infinite loop, it can prevent the spawning thread from 
+ moving ahead because of the join call. Java allows us to force such a misbehaved thread to come to its senses 
+ by interrupting it. An example appears below.
 
-If you execute the above code, you’ll see no output. That is because the main thread exits right after starting the innerThread. Once it exits, the JVM also kills the spawned thread. On line 6 we mark the innerThread thread as a daemon thread, which we’ll talk about shortly, and is responsible for innerThread being killed as soon as the main thread completes execution. Do bear in mind, that if the main thread context switches just after executing Line 7, we may see some output from the innerThread, till the main thread is context switched back in and exits.
+If you execute the above code, you’ll see no output. That is because the main thread exits right after starting 
+the innerThread. Once it exits, the JVM also kills the spawned thread. On line 6 we mark the innerThread thread 
+as a daemon thread, which we’ll talk about shortly, and is responsible for innerThread being killed as soon as 
+the main thread completes execution. Do bear in mind, that if the main thread context switches just after 
+executing Line 7, we may see some output from the innerThread, till the main thread is context switched back 
+in and exits.
 
-If we want the main thread to wait for the innerThread to finish before proceeding forward, we can direct the main thread to suspend its execution by calling <code join method on the innerThread object right after we start the innerThread. The change would look like the following.
+If we want the main thread to wait for the innerThread to finish before proceeding forward, we can direct the 
+main thread to suspend its execution by calling <code join method on the innerThread object right after we start
+ the innerThread. The change would look like the following.
 
 class HelloWorld {
     public static void main( String args[] ) throws InterruptedException {
@@ -8191,24 +8366,34 @@ Main thread exiting at 1655031937
 
 Executor Framework
 -------------------
-reating and running individual threads for small applications is acceptable however if you are writing an enterprise-grade application with several dozen threads then you'll likely need to offload thread management in your application to library classes which free a developer from worrying about thread house-keeping.
+reating and running individual threads for small applications is acceptable however if you are writing 
+an enterprise-grade application with several dozen threads then you will likely need to offload thread management
+ in your application to library classes which free a developer from worrying about thread house-keeping.
 
 Task#
-A task is a logical unit of work. Usually, a task should be independent of other tasks so that it can be completed by a single thread. A task can be represented by an object of a class implementing the Runnable interface. We can consider HTTP requests being fielded by a web-server as tasks that need to be processed. A database server handling client queries can similarly be thought of as independent tasks.
+A task is a logical unit of work. Usually, a task should be independent of other tasks so that it can be completed 
+by a single thread. A task can be represented by an object of a class implementing the Runnable interface. 
+We can consider HTTP requests being fielded by a web-server as tasks that need to be processed. 
+A database server handling client queries can similarly be thought of as independent tasks.
 
 Executor Framework#
-In Java, the primary abstraction for executing logical tasks units is the Executor framework and not the Thread class. The classes in the Executor framework separate out:
+-------------------
+In Java, the primary abstraction for executing logical tasks units is the Executor framework and not the Thread 
+class. The classes in the Executor framework separate out:
 
 Task Submission
 Task Execution
-The framework allows us to specify different policies for task execution. Java offers three interfaces, which classes can implement to manage thread lifecycle. These are:
+The framework allows us to specify different policies for task execution. Java offers three interfaces, which
+ classes can implement to manage thread lifecycle. These are:
 
 Executor Interface
 ExecutorService
 ScheduledExecutorService
 The Executor interface forms the basis for the asynchronous task execution framework in Java.
 
-You don't need to create your own executor class as Java's java.util.concurrent package offers several types of executors that are suitable for different scenarios. However, as an example, we create a dumb executor which implements the Executor Interface.
+You dont need to create your own executor class as Javas java.util.concurrent package offers several types
+ of executors that are suitable for different scenarios. However, as an example, we create a dumb executor which 
+ implements the Executor Interface.
 
 import java.util.concurrent.Executor;
 class ThreadExecutorExample {
@@ -8239,15 +8424,22 @@ Output
 ---------
 Mytask is running now ...
 
-The Executor requires implementing classes to define a method execute(Runnable runnable) which takes in an object of interface Runnable. Fortunately, we don't need to define complex executors as Java already provides several that we'll explore in following chapters.
+The Executor requires implementing classes to define a method execute(Runnable runnable) which takes in an object
+ of interface Runnable. Fortunately, we dont need to define complex executors as Java already provides several
+  that we will explore in following chapters.
 
 Executor Implementations
 -----------------------
 
-Executors are based on consumer-producer patterns. The tasks we produce for processing are consumed by threads. To better our understanding of how threads behave, imagine you are hired by a hedge fund on Wall Street and you are asked to design a method that can process client purchase orders as soon as possible. Let's see what are the possible ways to design this method.
+Executors are based on consumer-producer patterns. The tasks we produce for processing are consumed by threads.
+ To better our understanding of how threads behave, imagine you are hired by a hedge fund on Wall Street and 
+ you are asked to design a method that can process client purchase orders as soon as possible. Lets see what are
+  the possible ways to design this method.
 
-Sequential Approach#
-The method simply accepts an order and tries to execute it. The method blocks other requests till it has completed processing the current request.
+Sequential Approach
+--------------------
+The method simply accepts an order and tries to execute it. The method blocks other requests till it has 
+completed processing the current request.
 
  void receiveAndExecuteClientOrders() {
 
@@ -8256,7 +8448,8 @@ The method simply accepts an order and tries to execute it. The method blocks ot
             order.execute();
         }
     }
-You'll write the above code if you have never worked with concurrency. It sequentially processes each buy order and will not be responsive or have acceptable throughput.
+You will write the above code if you have never worked with concurrency.
+ It sequentially processes each buy order and will not be responsive or have acceptable throughput.
 
 Unbounded Thread Approach#
 A newbie would fix the code above like so:
@@ -8278,7 +8471,7 @@ A newbie would fix the code above like so:
     }
 The above approach is an improvement over the sequential approach. The program now accepts an order and spawns off a thread to handle the order execution. The problem, however, is that now the application spawns off an unlimited number of threads. Creating threads without bound is not a wise approach for the following reasons:
 
-Thread creation and teardown isn't for free.
+Thread creation and teardown isnt for free.
 Active threads consume memory even if they are idle. If there are less number of processors than threads then several of them will sit idle tying up memory.
 There is usually a limit imposed by JVM and the underlying OS on the number of threads that can be created.
 Note that the above improvement may still make the application unresponsive. Imagine if several hundred requests are received between the time it takes for the method to receive an order request and spawn off a thread to deal with the request. In such a scenario, the method will end up with a growing backlog of requests and may cause the program to crash.
@@ -8291,17 +8484,25 @@ Thread Pools
 -------------
 
 Thread Pools#
-Thread pools in Java are implementations of the Executor interface or any of its sub-interfaces. Thread pools allow us to decouple task submission and execution. We have the option of exposing an executor's configuration while deploying an application or switching one executor for another seamlessly.
+Thread pools in Java are implementations of the Executor interface or any of its sub-interfaces. 
+Thread pools allow us to decouple task submission and execution. We have the option of exposing an executors 
+configuration while deploying an application or switching one executor for another seamlessly.
 
-A thread pool consists of homogenous worker threads that are assigned to execute tasks. Once a worker thread finishes a task, it is returned to the pool. Usually, thread pools are bound to a queue from which tasks are dequeued for execution by worker threads.
+A thread pool consists of homogenous worker threads that are assigned to execute tasks. Once a worker thread 
+finishes a task, it is returned to the pool. Usually, thread pools are bound to a queue from which tasks are
+ dequeued for execution by worker threads.
 
-A thread pool can be tuned for the size of the threads it holds. A thread pool may also replace a thread if it dies of an unexpected exception. Using a thread pool immediately alleviates from the ails of manual creation of threads.
+A thread pool can be tuned for the size of the threads it holds. A thread pool may also replace a thread if 
+it dies of an unexpected exception. Using a thread pool immediately alleviates from the ails of manual creation
+ of threads.
 
-There's no latency when a request is received and processed by a thread because no time is lost in creating a thread.
+Theres no latency when a request is received and processed by a thread because no time is lost in creating a 
+thread.
 
 The system will not go out of memory because threads are not created without any limits
 
-Fine tuning the thread pool will allow us to control the throughput of the system. We can have enough threads to keep all processors busy but not so many as to overwhelm the system.
+Fine tuning the thread pool will allow us to control the throughput of the system. We can have enough threads 
+to keep all processors busy but not so many as to overwhelm the system.
 
 The application will degrade gracefully if the system is under load.
 
@@ -8323,25 +8524,38 @@ Below is the updated version of the stock order method using a thread pool.
             });
         }
     }
-In the above code we have used the factory method exposed by the Executors class to get an instance of a thread pool. We discuss the different type of thread pools available in Java in the next section.
+In the above code we have used the factory method exposed by the Executors class to get an instance of a thread 
+pool. We discuss the different type of thread pools available in Java in the next section.
 
 Types of Thread Pools
 ----------------------
-Java has preconfigured thread pool implementations that can be instantiated using the factory methods of the Executors class. The important ones are listed below:
+Java has preconfigured thread pool implementations that can be instantiated using the factory methods of the
+ Executors class. The important ones are listed below:
 
-newFixedThreadPool: This type of pool has a fixed number of threads and any number of tasks can be submitted for execution. Once a thead finishes a task, it can reused to execute another task from the queue.
+newFixedThreadPool: This type of pool has a fixed number of threads and any number of tasks can be submitted 
+for execution. Once a thead finishes a task, it can reused to execute another task from the queue.
 
-newSingleThreadExecutor: This executor uses a single worker thread to take tasks off of queue and execute them. If the thread dies unexpectedly, then the executor will replace it with a new one.
+newSingleThreadExecutor: This executor uses a single worker thread to take tasks off of queue and execute them.
+ If the thread dies unexpectedly, then the executor will replace it with a new one.
 
-newCachedThreadPool: This pool will create new threads as required and use older ones when they become available. However, it'll terminate threads that remain idle for a certain configurable period of time to conserve memory. This pool can be a good choice for short-lived asynchronous tasks.
+newCachedThreadPool: This pool will create new threads as required and use older ones when they become available.
+ However, it will terminate threads that remain idle for a certain configurable period of time to conserve memory.
+  This pool can be a good choice for short-lived asynchronous tasks.
 
 newScheduledThreadPool: This pool can be used to execute tasks periodically or after a delay.
 
-There is also another kind of pool which we'll only mention in passing as it's not widely used: ForkJoinPool. A prefconfigured version of it can be instantiated using the factory method Executors.newWorkStealingPool(). These pools are used for tasks which fork into smaller subtasks and then join results once the subtasks are finished to give an uber result. It's essentially the divide and conquer paradigm applied to tasks.
+There is also another kind of pool which we'll only mention in passing as it's not widely used: ForkJoinPool. 
+A prefconfigured version of it can be instantiated using the factory method Executors.newWorkStealingPool(). 
+These pools are used for tasks which fork into smaller subtasks and then join results once the subtasks are 
+finished to give an uber result. Its essentially the divide and conquer paradigm applied to tasks.
 
-Using thread pools we are able to control the order in which a task is executed, the thread in which a task is executed, the maximum number of tasks that can be executed concurrently, maximum number of tasks that can be queued for execution, the selection criteria for rejecting tasks when the system is overloaded and finally actions to take before or after execution of tasks.
+Using thread pools we are able to control the order in which a task is executed, the thread in which a task 
+is executed, the maximum number of tasks that can be executed concurrently, maximum number of tasks that can 
+be queued for execution, the selection criteria for rejecting tasks when the system is overloaded and finally 
+actions to take before or after execution of tasks.
 
-Executor Lifecycle#
+Executor Lifecycle
+-------------------
 An executor has the following stages in its lify-cycle:
 
 Running
@@ -8350,20 +8564,27 @@ Shutting Down
 
 Terminated
 
-As mentioned earlier, JVM can't exit unless all non-daemon thread have terminated. Executors can be made to shutdown either abruptly or gracefully. When doing the former, the executor attempts to cancel all tasks in progress and doesn't work on any enqueued ones, whereas when doing the latter, the executor gives a chance for tasks already in execution to complete but also completes the enqueued tasks. If shutdown is initiated then the executor will refuse to accept new tasks and if any are submitted, they can be handled by providing a RejectedExecutionHandler.
+As mentioned earlier, JVM cant exit unless all non-daemon thread have terminated. 
+Executors can be made to shutdown either abruptly or gracefully. When doing the former, the executor attempts to cancel all tasks in progress and doesn't work on any enqueued ones, whereas when doing the latter, the executor gives a chance for tasks already in execution to complete but also completes the enqueued tasks. If shutdown is initiated then the executor will refuse to accept new tasks and if any are submitted, they can be handled by providing a RejectedExecutionHandler.
 
 An Example: Timer vs ScheduledThreadPool
 ---------------------------------------------
-As an example, we'll compare and contrast using a timer and a pool to schedule periodic or delayed threads.
+As an example, we will compare and contrast using a timer and a pool to schedule periodic or delayed threads.
 
 Timer#
-The achilles' heel of the Timer class is its use of a single thread to execute submitted tasks. Timer has a single worker thread that attempts to execute all user submitted tasks. Issues with this approach are detailed below:
+The achilles heel of the Timer class is its use of a single thread to execute submitted tasks. 
+Timer has a single worker thread that attempts to execute all user submitted tasks. 
+Issues with this approach are detailed below:
 
 If a task misbehaves and never terminates, all other tasks would not be executed
 
-If a task takes too long to execute, it can block timely execution of other tasks. Say two tasks are submitted and the first is scheduled to execute after 100ms and the second is scheduled to execute after 500ms. Now if the first task takes 5 minutes to execute then the second task would get delayed by 5 minutes rather than the intended 500ms.
+If a task takes too long to execute, it can block timely execution of other tasks. 
+Say two tasks are submitted and the first is scheduled to execute after 100ms and the second is scheduled to 
+execute after 500ms. Now if the first task takes 5 minutes to execute then the second task would get delayed by 5 minutes rather than the intended 500ms.
 
-In the above example, if the second task is scheduled to run periodically after every 500ms, then when it finally gets a chance to run after 5 minutes, it'll run for all the times it missed its turns, one after the other, without any delay between consecutive runs.
+In the above example, if the second task is scheduled to run periodically after every 500ms, then when 
+it finally gets a chance to run after 5 minutes, it will run for all the times it missed its turns, one after 
+the other, without any delay between consecutive runs.
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -8404,7 +8625,9 @@ class Demonstration {
 Bad Use of Timer
 
 
-Below is another example of Timer's shortcoming. We schedule a task which throws a runtime exception and ends up killing the lone worker thread Timer possess. The subsequent submission of a task reports the timer is canceled when in fact the previously submitted task crashed the Timer.
+Below is another example of Timers shortcoming. We schedule a task which throws a runtime exception and ends up
+ killing the lone worker thread Timer possess. The subsequent submission of a task reports the timer is canceled
+  when in fact the previously submitted task crashed the Timer.
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -8461,7 +8684,8 @@ public interface Callable<V> {
      */
     V call() throws Exception;
 }
-Note the interface also allows a task to throw an exception. A task goes through the various stages of its life which include the following:
+Note the interface also allows a task to throw an exception.
+ A task goes through the various stages of its life which include the following:
 
 created
 

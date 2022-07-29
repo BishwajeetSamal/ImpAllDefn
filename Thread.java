@@ -1,8 +1,119 @@
+Multitasking
+------------
+-> Performing multiple task at a single time.
+Like VLC,Word,browser all are using CPU.
+Mutitasking can be achived by 
+1. Process Based Mutitasking/Process Threading    
+2.Thread Based Mutitasking/Multithreading
+
+Multi-Processing 
+---------------
+When one system is connected to multiple processors in order to complete the task.
+One OS-> CPU_1 + CPU_2 etc. 
+It is best suited at system level or OS level.
+
+Multithreading
+--------------
+Executing multiple threads(sub-process,small task) at single time.
+Tasks are achived through methods. Methods are a set of code which perform a set of task. 
+
+Difference between Process and Thread
+=======================================
+1. A program in executing state.   Thread is a subpart of process.
+2.Process is heavy weight and thread is lightweight.
+3. Context Switching takes more time in process and thread takes less time.
+4. Communication takes more time but in thread Communication takes less time.
+5.Each process has different address space whereas thread share same address space.
+6. Process are not dependent on each other but threads are dependent on each other.
+7. Process doesnt require synchronization whereas Threads may require synchronization.
+8. Process uses larger resources whereas thread takes less resource.
+9. Process take large time for creation and Thread take less time for creation.
+{{{{{ //It is a process that involves switching of the CPU from one process or task to anathor.
+//In this phenomenon,the execution of process that is present in the running state is suspended by the kernel and 
+//anathor process that is present in the ready state is executed by the CPU.
+//														It is one of the essential features of the mutitasking 
+//operating system. The process are switched so fastly that gives an the illusion to the user that all processes 
+//are being executed at the same time.}}}}} 
+
+
+
+Thread Lifecycle:
+-----------------
+There are three ways to create the thread.
+1. By using Thread Class (It is present inside java.lang package)
+2.By Runnable Method
+3. By Executors Framework.
+
+Threads can go through five different status in its life cycle as shown below.
+
+New: When the thread instance is created, it will be in “New” state.
+Runnable: When the thread is started, it is called “Runnable” state.
+Running: When the thread is running, it is called “Running” state.
+Waiting: When the thread is put on hold or it is waiting for the other thread to complete, then that state will be
+ known as “waiting” state.
+Terminated: When the thread is dead, it will be known as “terminated” state.
+
+
+start() – Starts the thread.
+getState() – It returns the state of the thread.
+getName() – It returns the name of the thread.
+getPriority() – It returns the priority of the thread.
+setPriority() - used to set the priority range 1 minimum to 10 maximum
+pulic staic int NORM_PRIORITY
+pblic sttic int MAX_PRIORITY
+ublic satic int MIN_PRIORITY
+by default we get thr priority of parent thread ehich is 5 by default for main thread
+sleep() – Stop the thread for the specified time.
+Join() – Stop the current thread until the called thread gets terminated.
+isAlive() – Check if the thread is alive.
+Deamon thread
+setDeamon(true)
+isDeamon();
+we can not change deamon status after starting the thread we will get exception IllegalThreadStateException.
+yield() method
+Suppose there are three threads t1, t2, and t3. Thread t1 gets the processor and starts its execution and thread 
+t2 and t3 are in Ready/Runnable state. The completion time for thread t1 is 5 hours and the completion time for 
+t2 is 5 minutes. Since t1 will complete its execution after 5 hours, t2 has to wait for 5 hours to just finish 
+5 minutes job. In such scenarios where one thread is taking too much time to complete its execution, we need a 
+way to prevent the execution of a thread in between if something important is pending. yield() helps us in doing so. 
+The yield() basically means that the thread is not doing anything particularly important and if any other threads
+ or processes need to be run, they should run. Otherwise, the current thread will continue to run.
+
+sleep() method
+This method causes the currently executing thread to sleep for the specified number of milliseconds, subject to the
+ precision and accuracy of system timers and schedulers. 
+
+//  sleep for the specified number of milliseconds
+public static void sleep(long millis) throws InterruptedException
+
+//sleep for the specified number of milliseconds plus nano seconds
+public static void sleep(long millis, int nanos) 
+                         throws InterruptedException
+
+join() Method
+If a thread wants to wait for anathor thread to complete its task, then we should use join method.
+
+The join() method of a Thread instance is used to join the start of a thread’s execution to the end of another 
+thread’s execution such that a thread does not start running until another thread ends. If join() is called on a
+ Thread instance, the currently running thread will block until the Thread instance has finished executing. 
+ The join() method waits at most this many milliseconds for this thread to die. A timeout of 0 means to wait 
+ forever 
+
+Syntax:// waits for this thread to die.
+ public final void join() throws InterruptedException
+
+// waits at most this much milliseconds for this thread to die
+public final void join(long millis) 
+              throws InterruptedException
+
+// waits at most milliseconds plus nanoseconds for this thread to die.
+The java.lang.Thread.join(long millis, int nanos)
+
 A process is a program which is running
 We can have subprocesses for it
 
 Three ways to create Thread
-1. Thread
+1. Thread //class thread resides in package java.lang;
 2.Runnable
 3.ExecutorService 
 
@@ -17,7 +128,7 @@ class Thread implements Runnable{
 	4.join()
 	5.getName() and setName()
 	6.interrupted,priority
-	7.daemon
+	7.daemonJV
 }
 
 ================================================================00000000000
@@ -293,6 +404,19 @@ public class Demo {
 	}
 }
 
+Thread Priorities In Java
+=========================
+1.JVM provides the priorities to each thread and according to these priorities, JVM allocates the processor.
+2.Priorities are represented in the form of integer values.which ranges from 1-10.
+3. 1-> MIN_PRIORITY, 5-> NORM_PRIORITY, 10->MAX_PRIORITY
+4. 0,less than 1, greater than 10 are not valid priorities.
+5. Methods are (1). public final void setPriority(int value) and second method is
+					public final int getPriority()
+**Bydefault for main method the priority is 5.
+6. Priorities are inherited from parent thread.
+7. If priority value is not in between 1-10 then it will throw the Runtime exception i.e. IllegalArgumentException.
+8. Priorities depends on the platform. Windows doesnt support priorities of Thread. 
+
 
 one more way to implement thread 
 here size of thread pool determines that a particular object can execute 
@@ -300,6 +424,12 @@ how many execute methods at a time
 if given 1 then only one execute will run and we will get only 1111111 as output 
 no mixed output
 if given 4 then all the outputs will be mixed i.e. 1 2 3 4
+
+Que-> What is Synchronization ?
+Ans-> It is the process by which we control the accessibility of multiple threads to a particular shared resource.
+
+
+
 
 
 ExecutorService is a JDK API that simplifies running tasks in asynchronous mode
@@ -496,69 +626,6 @@ Thread t2=new Thread(down);
 t2.start();
 }
 }
-
-
-Thread Lifecycle:
-
-Threads can go through five different status in its life cycle as shown below.
-
-New: When the thread instance is created, it will be in “New” state.
-Runnable: When the thread is started, it is called “Runnable” state.
-Running: When the thread is running, it is called “Running” state.
-Waiting: When the thread is put on hold or it is waiting for the other thread to complete, then that state will be known as “waiting” state.
-Terminated: When the thread is dead, it will be known as “terminated” state.
-
-
-start() – Starts the thread.
-getState() – It returns the state of the thread.
-getName() – It returns the name of the thread.
-getPriority() – It returns the priority of the thread.
-setPriority() - used to set the priority range 1 minimum to 10 maximum
-pulic staic int NORM_PRIORITY
-pblic sttic int MAX_PRIORITY
-ublic satic int MIN_PRIORITY
-by default we get thr priority of parent thread ehich is 5 by default for main thread
-sleep() – Stop the thread for the specified time.
-Join() – Stop the current thread until the called thread gets terminated.
-isAlive() – Check if the thread is alive.
-Deamon thread
-setDeamon(true)
-isDeamon();
-we can not change deamon status after starting the thread we will get exception IllegalThreadStateException.
-yield() method
-Suppose there are three threads t1, t2, and t3. Thread t1 gets the processor and starts its execution and thread t2 and t3 are in Ready/Runnable state. The completion time for thread t1 is 5 hours and the completion time for t2 is 5 minutes. Since t1 will complete its execution after 5 hours, t2 has to wait for 5 hours to just finish 5 minutes job. In such scenarios where one thread is taking too much time to complete its execution, we need a way to prevent the execution of a thread in between if something important is pending. yield() helps us in doing so. 
-The yield() basically means that the thread is not doing anything particularly important and if any other threads or processes need to be run, they should run. Otherwise, the current thread will continue to run.
-
-sleep() method
-This method causes the currently executing thread to sleep for the specified number of milliseconds, subject to the precision and accuracy of system timers and schedulers. 
-
-//  sleep for the specified number of milliseconds
-public static void sleep(long millis) throws InterruptedException
-
-//sleep for the specified number of milliseconds plus nano seconds
-public static void sleep(long millis, int nanos) 
-                         throws InterruptedException
-
-join() Method
-The join() method of a Thread instance is used to join the start of a thread’s execution to the end of another thread’s execution such that a thread does not start running until another thread ends. If join() is called on a Thread instance, the currently running thread will block until the Thread instance has finished executing. The join() method waits at most this many milliseconds for this thread to die. A timeout of 0 means to wait forever 
-
-Syntax:// waits for this thread to die.
-public final void join() throws InterruptedException
-
-// waits at most this much milliseconds for this thread to die
-public final void join(long millis) 
-              throws InterruptedException
-
-// waits at most milliseconds plus nanoseconds for this thread to die.
-The java.lang.Thread.join(long millis, int nanos)
-
-
-
-
-
-
-
-
 
 
 

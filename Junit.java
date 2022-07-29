@@ -32,7 +32,7 @@ JUNIT 5 Architechture
 ---------------------
 Platform -> This is not which we are going to interact with. What we interact with JUnit API(Jupiter).Test Engine is
 inside the platform.
-Second thing is, VINTAGE, It is anathor set of API which can be used for older JUnit tests. 
+Secongs. 
 For new test we will use Jupiter and for Old test use ((Vintage)).
 Anathor thing is that JUnit have provided a library lets you extended. 
 									

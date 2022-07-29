@@ -1,7 +1,7 @@
 
 JAVA INTERVIEW QUESTIONS
 ---------------------------------------------------------------------------------------
-Que 1. Can main method be overloaded and Override ?
+Que 1. Can main method be overloaded and Overrided ?
 Ans1. (1).The main method can be overloaded but cannot be overridden in Java.
 (2).The main is a static method and the static method cannot be overridden in Java.
 (3).Overloading takes place at compile time and overriding takes place at runtime.
@@ -248,7 +248,10 @@ command which has no WHERE clause.
 It removes complete data from a table in a database. It can be lead to data loss.
 It doesn’t maintain a log and deletes the whole table at once and hence it’s fast.
 
-
+Que->Why the main () method in Java is always static?
+Ans->Java main() method is always static, so that compiler can call it without the creation of an object or 
+before the creation of an object of the class. In any Java program, the main() method is the starting point from
+ where compiler starts program execution.
 ============================================================================================
 Java Interview Question (Predikly) Date: - 27/06/2022 Time:4:00 PM (Bishwajeet Samal)
 ----------------------------------------------------------------------------------------------------------------------------
@@ -302,6 +305,8 @@ Q2. What is wait and sleep in multithreading ?
 Ans --> wait() is used for inter-thread communication while sleep() is used to introduce 
 pause on execution, generally.Thread. sleep() sends the current thread into the “Not Runnable” state for 
 some amount of time.
+wait() causes current thread to wait until another thread invokes the notify() method or the notifyAll() method
+ for this object. 
 
 LifeCycle of Thread
 --------------------
@@ -550,10 +555,14 @@ public MyBean myBean() {
 Que->Explain Bean Life Cycle ?
 ===============================
 Ans->For BeanLifeCycle we have two annotations ,1.@PostConstruct and 2.@PreDestroy
-So Whenever your container is created, your beans will be instantiated and then the particular method which have @PostConstruct that will be called first and then 
+So Whenever your container is created, your beans will be instantiated and then the particular method which
+ have @PostConstruct that will be called first and then 
 furthur activities will take place.
-And At the end the methods which are written using @PreDestroy, those method will be called just before the container about to destroy and the bean get out of the container.
-For Example, create a Database connection with @PostConstruct and this will be one time activity and to close the Database connection or clean the resource with @PreDestroy.
+And At the end the methods which are written using @PreDestroy, those method will be called just before the 
+container about to destroy and the bean get out of the container.
+For Example, create a Database connection with @PostConstruct and this will be one time activity and to close 
+the Database connection or clean the resource with @PreDestroy.
+
 How to Customize the Bean Life Cycle ?
 --------------------------------------
 Spring framework provides the following four ways for controlling life cycle events of a bean:

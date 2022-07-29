@@ -318,3 +318,74 @@ public class Test{
 
 
 ==========================================================================================================
+
+Check Armstrong with lambda expression
+=======================================
+
+package com.Test;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class Test11Armstrong {
+    // 1st sollution
+//    public static void main(String[] args) {
+//        int num = 1634;
+//        int num2 = num;
+//        int length = (num+"").length();
+//        int temp = 0;
+//        while (num>0){
+//            temp += calArm(length,num%10);
+//            num /= 10;
+//        }
+//        if (temp == num2){
+//            System.out.println("armstrong");
+//        }else {
+//            System.out.println("not armstrong");
+//        }
+//    }
+//
+//    public static int calArm(int power, int num){
+//        int temp = 1;
+//        while (power>0){
+//            temp *= num;
+//            power --;
+//        }
+//        return temp;
+//    }
+
+    // 2nd solution
+    public static void main(String[] args) {
+        int num = 1537;
+        final double[] temp = {0};
+        Stream.of(String.valueOf(num).split(""))
+                .map(x -> Math.pow(Double.parseDouble(x),(num+"").length()))
+                .forEach(x -> temp[0] = x.doubleValue()+ temp[0]);
+
+        if (temp[0] == num)
+            System.out.println("Armstrong");
+        else
+            System.out.println("Not Armstrong");
+
+        int d = Stream.of(String.valueOf(num).split(""))
+                .map(x -> (int) Math.pow(Integer.parseInt(x),(num+"").length()))
+                .mapToInt(Integer::intValue).sum();
+
+        if (d == num)
+            System.out.println("Armstrong");
+        else
+            System.out.println("Not Armstrong");
+
+
+        int c = Stream.of(String.valueOf(num).split(""))
+                .map(x -> (int) Math.pow(Integer.parseInt(x),(num+"").length()))
+                .reduce(0, Integer::sum);
+
+
+        if (c == num)
+            System.out.println("Armstrong");
+        else
+            System.out.println("Not Armstrong");
+    }
+}

@@ -16,7 +16,7 @@ Note. If you want to create  container then you must required an image.
 Ex -- doker container create alpine6.
 
 2. If you want to provide instance names of images.
-Example -- docker contain er run --name 
+Example -- docker container run --name 
 
 3. If you want to run image and and at the same time want to edit.
 Example -- docker container run ****

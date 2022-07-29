@@ -163,6 +163,7 @@ Perform basic data management chores (add, delete and modify).
 Perform complex queries to transform raw data into useful information.
 ---------------------------------------------------------------------------------------------------------------------
 SQL Commands#
+--------------
 The standard SQL commands to interact with relational databases are CREATE, SELECT, INSERT, UPDATE, DELETE, and DROP. 
 These commands can be classified into the following groups based on their nature:
 DDL - Data Definition Language
@@ -178,10 +179,13 @@ INSERT	Creates a record.
 UPDATE	Modifies records.
 DELETE	Deletes records.
 
-DCL(Data Control Language):  It contains commands which are required to deal with the user permissions and controls of the database system.
+DCL(Data Control Language):  It contains commands which are required to deal with the user permissions and
+---------------------------   controls of the database system.
+
 E.g., GRANT and REVOKE.
 
 TCL(Transaction Control Language):  It contains commands which are required to deal with the transaction of the database.
+----------------------------------
 E.g., COMMIT, ROLLBACK, and SAVEPOINT.
 
 ACID -- Atomicity,Consistent,Isolated,Durable
@@ -230,3 +234,87 @@ Operator	                   |         Description	            |             Exam
 ------------------------------------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------------
+
+Constraints
+===========
+1.Primary key
+2.Foreign key
+3.Check
+4.Unique
+5.default
+6.Not Null
+
+JOINS
+=====
+
+JOIN operations
+---------------
+A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+The JOIN operations, which are among the possible TableExpressions in a FROM clause, perform joins between two 
+tables.
+TableExpression
+---------------
+A TableExpression specifies a table, view, or function in a FROM clause. It is the source from which a 
+SelectExpression selects a result.
+
+SelectExpression
+----------------
+A SelectExpression is the basic SELECT-FROM-WHERE construct used to build a table value based on filtering and 
+projecting values from other tables.
+
+FROM clause
+-----------
+The FROM clause is a mandatory clause in a SelectExpression. It specifies the tables (TableExpression) from which 
+the other clauses of the query can access columns for use in expressions.
+
+
+
+1.Cross JOIN
+2.Natural JOIN
+3.Conditional JOIN
+4.Equi JOIN
+5.Self JOIN
+6.Outer JOIN->Left,Right,Full
+7.Inner JOIN->The INNER JOIN keyword selects records that have matching values in both tables.
+------*******************
+SELECT column_name(s)
+FROM table1
+INNER JOIN table2
+ON table1.column_name = table2.column_name;
+-------****************
+
+Left Join/Left Outer Join-> The LEFT JOIN keyword returns all records from the left table (table1), and the
+ matching records from the right table (table2). The result is 0 records from the right side, if there is no match.
+----------*****************
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+----------****************
+
+RIGHT JOIN/RIGHT Outer JOIN -> The RIGHT JOIN keyword returns all records from the right table (table2), and the 
+matching records from the left table (table1). The result is 0 records from the left side, if there is no match.
+---------****************
+SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
+FROM Orders
+RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+ORDER BY Orders.OrderID;
+---------****************
+
+Full Outer Join
+---------------
+The FULL OUTER JOIN keyword returns all records when there is a match in left (table1) or right (table2) table 
+records.
+--------------****************
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+ORDER BY Customers.CustomerName;
+---------------**************
+
+Self Join
+---------
+A self join is a regular join, but the table is joined with itself.
+
+
+
