@@ -8673,7 +8673,10 @@ Exception in thread "main" java.lang.IllegalStateException: Timer already cancel
     ------------------
 
     Callable Interface#
-In the previous sections we used the Runnable interface as the abstraction for tasks that were submitted to the executor service. The Runnable interface's sole run method doesn't return a value, which is a handicap for tasks that don't want to write results to global or shared datastructures. The interface Callable allows such tasks to return results. Let's see the definition of the interface first.
+In the previous sections we used the Runnable interface as the abstraction for tasks that were submitted to 
+the executor service. The Runnable interfaces sole run method doesnt return a value, which is a handicap 
+for tasks that dont want to write results to global or shared datastructures. 
+    The interface Callable allows such tasks to return results. Lets see the definition of the interface first.
 
 public interface Callable<V> {
     /**
@@ -8695,7 +8698,7 @@ started
 
 completed
 
-Let's say we want to compute the sum of numbers from 1 to n. Our task should accept an integer n and ' 
+Lets say we want to compute the sum of numbers from 1 to n. Our task should accept an integer n and
 spit out the sum. Below are two ways to implement our task.
 
     class SumTask implements Callable<Integer> {
@@ -8736,3 +8739,53 @@ Now we know how to represent our tasks using the Callable interface. In the next
 we'll explore the Future interface which will help us manage a task's lifecycle as well as retrieve
  results from it.
 
+How HashMap works internally ?
+==============================
+1.HashMap is a class in Java that implements Map interface. There are bunch of methods available.
+HashMap is similar to HashTable, but it is unsynchronized.
+This class is found in java.util package. It stores the data in (Key, Value) pairs
+One object is used as a key (index) to another object (value).
+If you try to insert the duplicate key, it will replace the element of the corresponding key.
+ It allows to store the null keys as well, but there should be only one null key object and there can 
+ be any number of null values. 
+
+HashMap provides 4 constructors:-
+1.HashMap()
+2.HashMap(int initialCapacity)
+3.HashMap(int initialCapacity, float loadFactor)
+4.HashMap(Map map)
+
+Performing Various Operations on HashMap
+------------------------------------------
+1. Adding Element -we can use the put() method.
+2. Changing Elements: -  it can be done by again adding the element with the put() method.
+3. Removing Element:- we can use the remove() method.
+4. Traversal of HashMap:-We can use the Iterator interface to traverse over any structure.Since Iterators work 
+with one type of data we use Entry< ? , ? > to resolve the two separate types into a compatible format. 
+Then using the next() method we print the entries of HashMap.
+
+
+Map<K,V> emp = new HashMap<>();
+
+Map<String,String> emp = new HashMap<>();
+emp.put("Bishwajeet","Samal");
+
+Default capacity is 16 and default load factor is 0.75.
+*HashMap contains an array of Node and Node can represent a class having the following objects : 
+1.int hash
+2.K key
+3.V value
+4.Node next
+
+First, we will see the hashing process. 
+1. It makes use of hashCode() method to determine which bucket the key/value pair should map.
+2.The hash function helps to determine the location for a given key in the bucket list.
+3.Generally, hashcode is a non-negative integer that is equal for equal Objects and may or may not be equal for unequal Objects.
+4.To determine whether two objects are equal or not, hashtable makes use of the equals() method.
+5.It is possible that two unequal Objects have the same hashcode.This is called a collision.
+6.To resolve collisions, hashtable uses an array of lists. 
+7.HashMap also allows a null key, so hash code of null will always be 0.
+Imp->******************* If collisions occur by same hashcode, then equals() method come into picture to 
+check content whether it is same or not. If the content is same it will update the value to already present key
+ else it will add to the linked list to the bucket.
+Buckets: It bucket is one element of the HashMap array. 

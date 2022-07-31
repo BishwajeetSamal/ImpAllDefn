@@ -3,7 +3,7 @@ Multitasking
 -> Performing multiple task at a single time.
 Like VLC,Word,browser all are using CPU.
 Mutitasking can be achived by 
-1. Process Based Mutitasking/Process Threading    
+1. Process Based Mutitasking/Multi-Processing    
 2.Thread Based Mutitasking/Multithreading
 
 Multi-Processing 
@@ -19,15 +19,15 @@ Tasks are achived through methods. Methods are a set of code which perform a set
 
 Difference between Process and Thread
 =======================================
-1. A program in executing state.   Thread is a subpart of process.
+1.A program in executing state is process whereas Thread is a subpart of process.
 2.Process is heavy weight and thread is lightweight.
-3. Context Switching takes more time in process and thread takes less time.
-4. Communication takes more time but in thread Communication takes less time.
+3.Context Switching takes more time in process and thread takes less time.
+4.Communication takes more time but in thread Communication takes less time.
 5.Each process has different address space whereas thread share same address space.
-6. Process are not dependent on each other but threads are dependent on each other.
-7. Process doesnt require synchronization whereas Threads may require synchronization.
-8. Process uses larger resources whereas thread takes less resource.
-9. Process take large time for creation and Thread take less time for creation.
+6.Process are not dependent on each other but threads are dependent on each other.
+7.Process doesnt require synchronization whereas Threads may require synchronization.
+8.Process uses larger resources whereas thread takes less resource.
+9.Process take large time for creation and Thread take less time for creation.
 {{{{{ //It is a process that involves switching of the CPU from one process or task to anathor.
 //In this phenomenon,the execution of process that is present in the running state is suspended by the kernel and 
 //anathor process that is present in the ready state is executed by the CPU.
@@ -35,40 +35,44 @@ Difference between Process and Thread
 //operating system. The process are switched so fastly that gives an the illusion to the user that all processes 
 //are being executed at the same time.}}}}} 
 
-
-
-Thread Lifecycle:
------------------
+Ways to create a Thread:-
+-----------------------
 There are three ways to create the thread.
 1. By using Thread Class (It is present inside java.lang package)
 2.By Runnable Method
 3. By Executors Framework.
 
+Thread Lifecycle:-
+-----------------
 Threads can go through five different status in its life cycle as shown below.
 
-New: When the thread instance is created, it will be in “New” state.
-Runnable: When the thread is started, it is called “Runnable” state.
-Running: When the thread is running, it is called “Running” state.
-Waiting: When the thread is put on hold or it is waiting for the other thread to complete, then that state will be
- known as “waiting” state.
-Terminated: When the thread is dead, it will be known as “terminated” state.
+1.New: When the thread instance is created, it will be in “New” state.
+2.Runnable: When the thread is started, it is called “Runnable” state.
+3.Running: When the thread is running, it is called “Running” state.
+4.Waiting: When the thread is put on hold or it is waiting for the other thread to complete, then 
+that state will be known as “waiting” state.
+5.Terminated: When the thread is dead, it will be known as “terminated” state.
 
-
+Methods in Thread
+------------------
 start() – Starts the thread.
 getState() – It returns the state of the thread.
 getName() – It returns the name of the thread.
 getPriority() – It returns the priority of the thread.
-setPriority() - used to set the priority range 1 minimum to 10 maximum
+setPriority(int priority) - used to set the priority range 1 minimum to 10 maximum
 pulic staic int NORM_PRIORITY
 pblic sttic int MAX_PRIORITY
 ublic satic int MIN_PRIORITY
 by default we get thr priority of parent thread ehich is 5 by default for main thread
 sleep() – Stop the thread for the specified time.
+yield()- It stops the current executing thread and give a chance to other threads for execution. It give the hint to thread scheduler.
 Join() – Stop the current thread until the called thread gets terminated.
 isAlive() – Check if the thread is alive.
 Deamon thread
-setDeamon(true)
+setDeamon(true);
 isDeamon();
+
+
 we can not change deamon status after starting the thread we will get exception IllegalThreadStateException.
 yield() method
 Suppose there are three threads t1, t2, and t3. Thread t1 gets the processor and starts its execution and thread 
@@ -209,7 +213,7 @@ In Thread class , there are two sleep methods i.e spleep method is overloaded.
 2. public static void sleep(long milli,int nano) throws InterruptedException
 
 Sleep method will inhibit the execution of thread as the time is provided.
-As the sleep time gets completed then the execution of thread continious again.
+As the sleep time gets completed then the execution of thread continues again.
 
 //Here i want to provide the gap during the execution
 ------------------------------------------------------
@@ -284,6 +288,51 @@ public class Test extends Thread {
 
 
 
+Thread interrupt() in java
+========================
+1.Use:-
+------
+It is used to interrupt an executing thread.
+2.interrupt():-
+-------------
+This method will only works when the thread is in sleeping or waiting state.
+3.If thread is not in sleeping or waiting state then calling an interrupt() method will perform normal behaviour.
+4.When we use an interrupt() method it throws an exception called InterruptedException.
+5.Syntax - public void interrupt(){--}
+
+
+class Test extends Thread{
+	public void run(){
+		try{
+			for(int i=1;i<=5;i++){
+				spo(i);
+				Thread.sleep(1000); 
+			}
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String []args){
+		Test t = new Test();
+		t.start();
+		t.interupt();
+	}
+}  //Now it will work because the thread is in sleeping mode.
+
+
+Thread interrupted() and isInterrupted() in java
+=================================================
+1.interrupted() and isInterrupted() method is used to check whether a thread is interrupted or not.
+2.interrupted() method clears the interrupted status from true to false if the thread is interrupted.
+3.isInterrupted() method doesnt clears the interrupted status.
+4.interrupted() method will change the result but isInterrupted() method will produce same result if called more than once.
+5.Syntax
+-------
+public static boolean interrupted(){---}
+public boolean isInterrupted(){---}
+----------------------------------------------------------------------------------------------------------------
 package demo;
 
 import java.util.Iterator;
@@ -439,7 +488,7 @@ ExecutorService is an interface, an instance of any its implementations can be u
 There are several implementations to choose from in the java.util.concurrent package
 ExecutorService can execute Runnable and Callable tasks 
 The execute() method is void and doesnt give any possibility to get the result of a 
-tasks execution or to check the task's status (is it running):
+tasks execution or to check the tasks status (is it running):
 executorService.execute(runnableTask);
 submit() submits a Callable or a Runnable task to an ExecutorService and returns 
 a result of type Future:
