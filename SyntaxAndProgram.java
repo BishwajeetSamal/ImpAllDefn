@@ -389,3 +389,55 @@ public class Test11Armstrong {
             System.out.println("Not Armstrong");
     }
 }
+=================================================================================================
+
+Create a function called random7() and it will generate value from 1 to 7. But we need to cerate 
+anathor function called random5() where by using random7() function return values from 1 to 5.
+T&C -> Repeated values not to display. On every iteration unique values need to show.
+===================================================================================================
+import java.util.ArrayList;
+
+public class CheckRandom {
+    public static void main(String[] args) {
+        ArrayList<Integer> arr = new ArrayList<>(5);
+        for(int i=0;i<5;i++) {
+            int num = random5(arr);
+            if(num ==-1) {
+                i--;
+            }else {
+                System.out.println(num);
+            }
+            
+        }
+    }
+    
+    public static int random5(ArrayList<Integer> arr) {
+        int i= random7();
+        if(!arr.contains(i) && (i<6 && i>0)) {
+            arr.add(i);
+            return i;
+        }
+        return -1;  
+    }
+    
+    public static int random7() {
+        int num =(int) Math.ceil(Math.random()*10);
+        if(num<1 || num>7) {
+            return random7();
+        }else {
+            return num;
+        }
+        
+    }
+}
+
+Output
+-------
+Any arrangement of 12345.
+Like 
+1       2
+2   or  4
+3       3
+4       1
+5       5   etc.
+===================================================================================================
