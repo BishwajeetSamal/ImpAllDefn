@@ -82,8 +82,8 @@ ResultSet object can be obtained as a returned object by executeQuery() method o
 
 import from java.sql.*; //This is the package for the SQL. 
 
-												JPA(JAVA PERSISTENCE API)
-											-----------------------------------
+												              JPA(JAVA PERSISTENCE API)
+											           -----------------------------------
 1.JPA is a specification .
 2.ORM stands for Object-Relational Mapping (ORM) is a programming technique for converting data between relational 
 databases and object oriented programming languages such as Java, C#, etc.
@@ -138,8 +138,8 @@ A database engine (or storage engine) is the underlying software component that 
 
 
 
- 											           {	SQL(Structured Query Language) }
- 												            ------------------------------
+ 											          ~||~ { SQL(Structured Query Language) } ~||~
+ 												             --------------------------------
  Que -->What is SQL?
 SQL is Structured Query Language, which is a computer language for storing, manipulating and retrieving data in a 
 relational database.
@@ -171,6 +171,8 @@ DDL - Data Definition Language
 CREATE	------>Creates a new table, a view of a table, or other objects in the database.
 ALTER	------>Modifies an existing database object, such as a table.
 DROP	------>Deletes an entire table, a view of a table or other objects in the database.
+TRUNCATE-----> Truncate the table.Truncate operations drop and re-create the table, which is much faster 
+than deleting rows one by one, particularly for large tables. It cannot be rolled back.
 
 DML - Data Manipulation Language
 ----------------------------------
@@ -244,6 +246,26 @@ Constraints
 5.default
 6.Not Null
 
+
+NOT NULL - Ensures that a column cannot have a NULL value
+UNIQUE - Ensures that all values in a column are different
+PRIMARY KEY - A combination of a NOT NULL and UNIQUE. Uniquely identifies each row in a table
+FOREIGN KEY - Prevents actions that would destroy links between tables
+CHECK - Ensures that the values in a column satisfies a specific condition
+DEFAULT - Sets a default value for a column if no value is specified
+CREATE INDEX - Used to create and retrieve data from the database very quickly
+
+SQL Injection
+-------------
+SQL injection is a code injection technique that might destroy your database.
+
+SQL injection is one of the most common web hacking techniques.
+
+SQL injection is the placement of malicious code in SQL statements, via web page input.
+SELECT * FROM Users WHERE UserId = 105 OR 1=1;
+SELECT UserId, Name, Password FROM Users WHERE UserId = 105 or 1=1;
+SELECT * FROM Users WHERE Name ="" or ""="" AND Pass ="" or ""=""
+SELECT * FROM Users WHERE UserId = 105; DROP TABLE Suppliers;
 JOINS
 =====
 
@@ -316,5 +338,266 @@ Self Join
 ---------
 A self join is a regular join, but the table is joined with itself.
 
+SQL SELECT DISTINCT Statement
+-----------------------------
+The SELECT DISTINCT statement is used to return only distinct (different) values.
+
+The SQL AND, OR and NOT Operators
+---------------------------------
+The WHERE clause can be combined with AND, OR, and NOT operators.
+The AND and OR operators are used to filter records based on more than one condition:
+
+The AND operator displays a record if all the conditions separated by AND are TRUE.
+The OR operator displays a record if any of the conditions separated by OR is TRUE.
+
+The NOT operator displays a record if the condition(s) is NOT TRUE.
+
+The SQL ORDER BY Keyword
+-------------------------
+The ORDER BY keyword is used to sort the result-set in ascending or descending order.
+SELECT column1, column2, ...
+FROM table_name
+ORDER BY column1, column2, ... ASC|DESC;
+
+The SQL INSERT INTO Statement
+------------------------------
+The INSERT INTO statement is used to insert new records in a table.
+INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...);
 
 
+The SQL UPDATE Statement
+------------------------
+The UPDATE statement is used to modify the existing records in a table.
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+
+
+The SQL DELETE Statement
+------------------------
+The DELETE statement is used to delete existing records in a table.
+DELETE FROM table_name WHERE condition;
+
+The SQL SELECT TOP Clause
+--------------------------
+The SELECT TOP clause is used to specify the number of records to return.
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+LIMIT number;
+
+SELECT * FROM Customers
+LIMIT 3;
+
+SQL Wildcard Characters
+------------------------
+A wildcard character is used to substitute one or more characters in a string.
+Wildcard characters are used with the LIKE operator. The LIKE operator is used in a WHERE clause to search for 
+a specified pattern in a column.
+
+* Represents zero or more characters
+? Represents a single character
+[]  Represents any single character within the brackets
+! Represents any character not in the brackets
+- Represents any single character within the specified range
+# Represents any single numeric character
+
+SELECT * FROM Customers
+WHERE City LIKE '[bsp]%';
+
+SELECT * FROM Customers
+WHERE City LIKE '[a-c]%';
+
+SELECT * FROM Customers
+WHERE City LIKE '[!bsp]%';
+
+SELECT * FROM Customers
+WHERE City NOT LIKE '[bsp]%';
+
+The SQL IN Operator
+-------------------
+The IN operator allows you to specify multiple values in a WHERE clause.
+The IN operator is a shorthand for multiple OR conditions.
+
+SELECT column_name(s)
+FROM table_name
+WHERE column_name IN (value1, value2, ...);
+
+SELECT * FROM Customers
+WHERE Country IN ('Germany', 'France', 'UK');
+
+The SQL BETWEEN Operator
+------------------------
+The BETWEEN operator selects values within a given range. The values can be numbers, text, or dates.
+The BETWEEN operator is inclusive: begin and end values are included. 
+
+SELECT column_name(s)
+FROM table_name
+WHERE column_name BETWEEN value1 AND value2;
+
+SELECT * FROM Products
+WHERE Price BETWEEN 10 AND 20;
+
+The SQL GROUP BY Statement
+--------------------------
+The GROUP BY statement groups rows that have the same values into summary rows, like find the number of customers 
+in each country.
+
+The GROUP BY statement is often used with aggregate functions (COUNT(), MAX(), MIN(), SUM(), AVG()) to group 
+the result-set by one or more columns.
+
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+ORDER BY column_name(s);
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country;
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+ORDER BY COUNT(CustomerID) DESC;
+
+What is a Stored Procedure?
+---------------------------
+A stored procedure is a prepared SQL code that you can save, so the code can be reused over and over again.
+So if you have an SQL query that you write over and over again, save it as a stored procedure, and then just 
+call it to execute it.
+
+You can also pass parameters to a stored procedure, so that the stored procedure can act based on the parameter
+value(s) that is passed.
+
+CREATE PROCEDURE procedure_name
+AS
+sql_statement
+GO;
+
+Execute a Stored Procedure
+EXEC procedure_name;
+----------------------------------------
+CREATE PROCEDURE SelectAllCustomers
+AS
+SELECT * FROM Customers
+GO;
+
+EXEC SelectAllCustomers;
+-----------------------------------------
+
+CREATE PROCEDURE SelectAllCustomers @City nvarchar(30)
+AS
+SELECT * FROM Customers WHERE City = @City
+GO;
+
+EXEC SelectAllCustomers @City = 'London';
+
+SQL Comments
+------------
+Comments are used to explain sections of SQL statements, or to prevent execution of SQL statements.
+
+Single Line Comments
+Single line comments start with --.
+
+--Select all:
+SELECT * FROM Customers;
+
+
+SELECT * FROM Customers -- WHERE City='Berlin';
+
+Multi-line Comments
+ulti-line comments start with /* and end with */.
+
+Any text between /* and */ will be ignored.
+
+SQL Operators
+---------------
+SQL Arithmetic Operators
+Operator 
++ Add 
+- Subtract  
+* Multiply  
+/ Divide  
+% Modulo
+
+SQL Bitwise Operators
+Operator  
+& Bitwise AND
+| Bitwise OR
+^ Bitwise exclusive OR
+
+SQL Comparison Operators
+Operator  
+= Equal to  
+> Greater than  
+< Less than 
+>=  Greater than or equal to  
+<=  Less than or equal to 
+<>  Not equal to
+
+SQL Compound Operators
+Operator  Description
++=  Add equals
+-=  Subtract equals
+*=  Multiply equals
+/=  Divide equals
+%=  Modulo equals
+&=  Bitwise AND equals
+^-= Bitwise exclusive equals
+|*= Bitwise OR equals
+
+
+SQL Logical Operators
+Operator 
+ALL     ->  TRUE if all of the subquery values meet the condition 
+AND     ->  TRUE if all the conditions separated by AND is TRUE 
+ANY     ->  TRUE if any of the subquery values meet the condition 
+BETWEEN ->  TRUE if the operand is within the range of comparisons  
+EXISTS  ->  TRUE if the subquery returns one or more records  
+IN      ->  TRUE if the operand is equal to one of a list of expressions  
+LIKE    ->  TRUE if the operand matches a pattern 
+NOT     ->  Displays a record if the condition(s) is NOT TRUE 
+OR      ->  TRUE if any of the conditions separated by OR is TRUE 
+SOME    ->  TRUE if any of the subquery values meet the condition
+
+
+
+
+MySQL String Functions
+--------------------------
+Function  Description
+ASCII -------------Returns the ASCII value for the specific character
+CHAR_LENGTH ---------------Returns the length of a string (in characters)
+CHARACTER_LENGTH  ---------Returns the length of a string (in characters)
+CONCAT  -------------Adds two or more expressions together
+CONCAT_WS --------Adds two or more expressions together with a separator
+FIELD -------------Returns the index position of a value in a list of values
+FIND_IN_SET--------Returns the position of a string within a list of strings
+FORMAT  ---------------------Formats a number to a format like "#,###,###.##", rounded to a specified number of decimal places
+INSERT  ----------------------Inserts a string within a string at the specified position and for a certain number of characters
+INSTR ----------------------Returns the position of the first occurrence of a string in another string
+LCASE ----------Converts a string to lower-case
+LEFT  -----------Extracts a number of characters from a string (starting from left)
+LENGTH --------- Returns the length of a string (in bytes)
+LOCATE ----------- Returns the position of the first occurrence of a substring in a string
+LOWER ------Converts a string to lower-case
+LPAD  --------Left-pads a string with another string, to a certain length
+LTRIM -------Removes leading spaces from a string
+MID -------Extracts a substring from a string (starting at any position)
+POSITION -------- Returns the position of the first occurrence of a substring in a string
+REPEAT  -------Repeats a string as many times as specified
+REPLACE ------Replaces all occurrences of a substring within a string, with a new substring
+REVERSE ---------Reverses a string and returns the result
+RIGHT --------Extracts a number of characters from a string (starting from right)
+RPAD  ------Right-pads a string with another string, to a certain length
+RTRIM ---------Removes trailing spaces from a string
+SPACE ---------Returns a string of the specified number of space characters
+STRCMP -------- Compares two strings
+SUBSTR  -------Extracts a substring from a string (starting at any position)
+SUBSTRING --------Extracts a substring from a string (starting at any position)
+SUBSTRING_INDEX ---------Returns a substring of a string before a specified number of delimiter occurs
+TRIM  ------Removes leading and trailing spaces from a string
+UCASE -------Converts a string to upper-case
+UPPER --------Converts a string to upper-case

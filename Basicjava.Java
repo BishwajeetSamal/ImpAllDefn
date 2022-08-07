@@ -7,6 +7,11 @@ software design. A design pattern isnt a finished design that can be transformed
 It is a description or template for how to solve a problem that can be used in many different situations.
 The 4 peoples created the design patterns. They are also called Gang Of 4.
 
+Each pattern describes a problem that occurs over and over multiple times in our environment. And core of the 
+solution to that problem can be used a million times without ever doing it same way twice.
+Design patterns thumbrules or different concepts using which you can solve the problem of modelling real world
+examples into object oriented design.
+
 It is classified into three design patterns:-
 
 1.Creational patterns provide object creation mechanisms that increase flexibility and reuse of existing code.
@@ -26,6 +31,8 @@ In software engineering, creational design patterns are design patterns that dea
  the class exists in the java virtual machine.
  (ii.)The singleton class must provide a global access point to get the instance of the class.
  (iii.)Singleton pattern is used for logging, drivers objects, caching and thread pool.
+
+ Factory Method is applied on class and rest of objects.
  Java Singleton Pattern Implementation
  *************************************
 To implement a Singleton pattern, we have different approaches but all of them have the following common concepts.
@@ -80,6 +87,11 @@ involved with creational stuff and here with this an object is being created. It
 
 3.Abstract Factory
 4.Builder
+---------
+Builder pattern builds a complex object using simple objects and using a step by step approach.
+This type of design pattern comes under creational pattern as this pattern provides one of the best ways to create
+the object.
+
 5.Prototype
 
 
@@ -90,6 +102,12 @@ involved with creational stuff and here with this an object is being created. It
 8.Proxy
 9.Fly Weight
 10.Facade
+----------
+Facade pattern hides the complexities of the System and provides an interface to the client using which the client 
+can access the system. This type of design pattern comes under structural pattern as this pattern adds and interface 
+to existing system to hide its complexities.
+
+
 11.Bridge
 12.Decorator
 
