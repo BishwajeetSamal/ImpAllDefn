@@ -289,7 +289,7 @@ public class Test extends Thread {
 
 
 Thread interrupt() in java
-========================
+==========================
 1.Use:-
 ------
 It is used to interrupt an executing thread.
