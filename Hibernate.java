@@ -7,7 +7,7 @@ Commonly use hibernate annotations
 *@Id->use to mark column as id(primary key)
 *@GeneratedValue->hibernate will automatically generate values for that using an internal sequence. Therefore,
 we don't have to set manually.
-*@GeneratedValue(strategy= ), need to provide the strategy for auto increment. 
+*@GeneratedValue(strategy= GenerationValue.IDENTITY), need to provide the strategy for auto increment. 
 *@Column ->Can be used to specify column mappings. For Example, to change the column name in the associated 
 table in database.
 *@Transient->This tells hibernate not to save the field.
