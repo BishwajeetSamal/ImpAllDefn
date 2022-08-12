@@ -212,10 +212,9 @@ SO, DeligatingFilterProxy -> SecurityFilterChain -> Authentication Filter <=> 		
  Authentication Manager<=> Authentication Provider ->UserDetailsService <-> UserDetails <=> User (DB).		|
 *************************************************************************************************************
 
-It will extract my servlet request and it will convert that request to authentication object.
-Now this Authentication Object contain userName and  password as a principal object and also it contains on 
-credential object.
-But filter dont know how to authenticate it i.e filter does not contain any logic for authentication a request.
+DeligatingFilterProxy -> It will extract my servlet request and it will convert that request to authentication object.
+Now this Authentication Object contain userName as a principal object and password as a  credential object.
+But filter dont know how to authenticate it i.e filter does not contain any logic for authenticating a request.
 
 Thats why filter will deligate the authentication request to one more component that is called Authentication 
 Manager. 
@@ -227,8 +226,8 @@ So the Authentication Manager will deligate the request to one more component th
 Now Spring framework provided multiple Authentication Provider based on Authentication Mechanism.
 
 Lets take an example the 1st Authentication Provider know how to authenticate based on Token.
-And 2nd Authentication Provider knows how to authenticate based on UserName and Password.
-And 3rd Authentication Provider knows how to handle the LDAP server or OAuth.
+And 2nd Authentication Provider knows how to handle the LDAP server or OAuth.
+And 3rd Authentication Provider knows how to authenticate based on UserName and Password.
 
 It is difficult for Authentication Manager to identify who is the appropriate authenticate provider and to whom it
 can redirect the request.
@@ -236,8 +235,8 @@ So direclty not able to deligate the request to the Authentication Provider. So 
 ProviderManager after requesting by the Authentication Manager.
 
 Now Provider Manager checks for each and every Authentication Provider calling the support method.
-Lets assume Provider Manager goes to 1st Authentication Provider and it return false becsause the operation is
-appropriate for the AuthenticationZ Provider. Then goes to the second Authentication Provider and again it will 
+Lets assume Provider Manager goes to 1st Authentication Provider and it return false becsause the operation is not
+appropriate for the Authentication Provider. Then goes to the second Authentication Provider and again it will 
 check the support method. If it will support this kind of Authentication Mechanism it will return true else false
 and it return false because it does not support.
 Now Provider Manager goes to the 3rd one and it return true because this allows to Authenticate by UserName and 
@@ -251,7 +250,7 @@ So to load the user object from external resource Authentication Provider will t
 component that is called UserDetailsService.
 Now this UserDetailsService will go to the external resource like database or cache, based on your UserName it will
 load the details User detail object and it will return back to the Authentication Provider.
-But if there is no user exist with given username, it will through the Exception like BadCredetialObject.
+But if there is no user exist with given username, it will go through the Exception like BadCredetialObject.
 Now Authentication Provider will authenticate it and it will return the valid authentication object to Provider
 Manager.
 Now Provider Manager will return same valid authentication object to the Filter.
