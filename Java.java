@@ -8789,3 +8789,41 @@ Imp->******************* If collisions occur by same hashcode, then equals() met
 check content whether it is same or not. If the content is same it will update the value to already present key
  else it will add to the linked list to the bucket.
 Buckets: It bucket is one element of the HashMap array. 
+
+                                try with resources
+                                ==================
+⦾ Try with resources came in 1.7 version. Before that finally used instead i.e try with finally.
+⦾ Before 1.6 
+BufferReader br = null;
+try{
+    br =new BR(new FR("input.txt"));
+    //do operations
+}catch(IOException e){
+    //handling code
+} finally{
+    if(br!=null){
+        br.close();
+    }
+}
+
+By using the finally block, these are two problems in this approach.
+1. If we forget to use the finally block then the resource will be there taking the memory.
+2.Readibility become inefficient.
+3.Length of the code become Increased.
+
+But After the 1.7 version and onwards we have a solution is called try with resources.
+
+The benifit of the try with resource is that we doesn't need to close  the resource explicitly.
+Automatically it will be closed. Readibility become increased.
+
+Same example as mentioned now in try with resource
+---------------------------------------------------
+try(BR br = new BR(new Fe("input.txt"))){ // Now inside the try the total inside written inside bracket is treated as resource
+    //do operation
+}catch(IOException e){
+    //handling code
+}
+**Here we are not required to close the br explicitly. Once it reaches the end of the try block
+either normally or abnormally, so we are not require to close it. It will be done Automatically.
+Here Complexity of programming will be reduced.
+

@@ -1,156 +1,105 @@
-LLP-> It gets Registered under Limited Liability Partnership Act, 2008, For Registration 
-it needs atleast two members and can have as many members.
-Paperwork
-=========
+1.PROPCO EnterpriseTM is a Web based Residential Lettings. 
+*Residential ->A residential area is a land used in which housing predominates. 
+Designed for people to live in.
+Residential real estate can be single-family homes, condominium units, apartments, townhouses, duplexes, and
+ so on. 
 
+*Lettings -> Renting, also known as hiring or letting, is an agreement where a payment is made for the
+ temporary use of a good, service or property owned by another.
 
+⦾ Market leading Residential Lettings and Management software solution
+⦾ Advanced Accounting Control Suite
+⦾ Multiple server architecture with single database administration providing
+live and efficient access to the data anytime and anywhere
+⦾ Advanced Reporting suite providing a single-click access to a vast range
+of information
+⦾ Proactive reminders and status monitoring of all events occurring during a
+tenancy life-cycle.
 
-Pvt Ltd-> It gets registered under Pvt Ltd Company Act, 2013,For Registration 
-it needs atleast two members and upto 200 members.
-In this we can have Directors from 2 to 15.
+=========================================**********************=========================================
+tenancy life-cycle
+===================
+Generally speaking, the tenant lifecycle involves seven stages: vacancy, screening, leasing, move-in, 
+occupancy, ending tenancy, and move-out.
+1. Vacancy -> 
+------------
+Stage one starts with your property being empty. 
+It’s critical that you start things off on the right foot and make sure your property is prepared to 
+become someone’s new home. To do that, there are some things you should do:
+◙ Clean the unit 
+◙ Take high-quality photos of the interior and exterior
+◙ Handle any necessary repairs and maintenance issues
 
---------------------------------------------------------------------------------------------------------------------
-1.Sole Proprietorship
-2.Partnership Firm
-3.Private Limited (Pvt Ltd)
-4.Limited Liability Partnership (LLP)
-5.One Person Company (OPC)
+2. Screening -> 
+----------------
+During stage two, it’s time to start your screening process.
+Once you’ve started marketing your available rental property, it’s time to start scheduling showings 
+and considering potential tenants.
 
-1.Sole Proprietorship (Proprietor)
-=====================
-Sole Proprietary is one man entity. There is no difference between owner and entity. All the liability
-is on the owner himself. Likewise, he takes all profit and losses himself.
-Registration
+Our four-step screening process includes:
+◙ Credit check
+◙ Criminal background
+◙ Income verification (additional layer of protection)
+◙ Rental verification 
+
+3. Leasing -> 
+--------------
+After you’ve screened qualified applicants and selected a tenant, you’ll need to enter 
+into a lease agreement.
+◙ This includes creating the lease agreement, scheduling a move-in date, calculating move-in costs, and 
+having both parties sign the finalized lease agreement.
+◙ It’s best practice to have the tenants sign the lease first and make sure both parties receive a copy of 
+the signed lease agreement.
+
+4.Move-in ->
 -------------
-No registration needed. 1 Govt certificate required for current account on my own name (in bank) 
-Like Shop and Estalishment, GST certificate.
-Name
-----
-Any name of Choice.
-Legal Entity or Liability
---------------------------
-Unlimited Liability
-Proprietor is personally liable for the Liabilities of the Proprietorship.
+◙ At this point, you should have agreed on a move-in date with your tenant and collected all applicable
+ move-in fees before handing over the keys. 
+◙ Review any final rules or regulations and create a plan for when and where your tenant will pick up keys 
+ to the property.
 
-Members
--------
-One Person, The Proprietor
+5.Occupancy ->
+--------------
+Hopefully, this is the lifecycle step where you’ll spend most of your time.
+◙ Once your tenant has moved into your rental property, your focus should shift to property management and
+building a strong landlord-tenant relationship. 
+                                  ◙  Consider how you will address any issues that arise like late rent 
+payments, tenant complaints, lease violations, or emergency maintenance issues. Plan a regular inspection 
+schedule (seasonally is a good place to start) and share the schedule with your tenants.
 
-Taxation
---------
-Taxed as individual. No seperate PAN.
+6. Ending tenancy ->
+---------------------
+◙ Whenever your lease term ends, you and your tenant have the option to either extend the lease or end your
+lease agreement.
+◙ If your tenant is interested in sticking around, you can either move to a month-to-month agreement or enter
+ into a lease renewal with new dates and terms.
+◙ If a tenant intends to move, they must provide you with a letter of intent, and if you are ending the 
+tenancy, you must send notice to vacate, usually at a set period of time before the lease ends.
 
-***********************************************************************************************
-2.Partnership Firm (Partner)
-==================
-Partnership is owned by two or more people where the ownership and share in profit and losses are split
-between the owners in a certain agreed ratio and it is established through the Partnership Agreement 
-or Deed. Partners are collectively called firm.
+7. Move-out ->
+---------------
+◙ The move-out process is an important step in wrapping up the lifecycle of one tenant before you move 
+on to another. 
+◙ Like move-in, provide detailed instructions on logistics and timing for move-out dates, cleaning, and 
+ handing off keys.
 
-Registration
-------------
-Optional registration under the Partnership Act, 1932. DEED mandatory. Partnership Deed / Agreement means
-patners will have that Agreement that we will do business with these rules and have the rules for the 
-Profit Distribution etc.
-Name
-----
-Any name of Choice.
+◙ Conduct a move-out inspection to ensure the tenant has complied with all requirements and note any
+ maintenance issues that need to be addressed before another tenant can move in. Calculate and return 
+ any security deposits promptly.
 
-Legal Entity or Liability
---------------------------
-Unlimited Liability
-Proprietor is personally liable for the Liabilities of the Proprietorship.
+====================================***********************************======================================
 
-Members
--------
-Minimum 2 Partners, Maximum 20
+⦾ Way SMS facility.
+⦾ BACS & Super-charged Direct Debit support and the ability to register
+receipts electronically.
+BACS -> Bacs is responsible for the schemes behind the clearing and settlement of UK automated 
+payment methods, Direct Debit and Bacs Direct Credit.
 
-Taxation
---------
-Flat 30% 
-Seperate PAN
-
-
-***********************************************************************************************
-
-3.Private Limited (Pvt Ltd) (Director)
-===========================
-It is  a business entity formed under Companies Act 2013.
-Registration
-------------
-It is registered with MCA (Ministry of Corporate Affairs).
-Name
-----
-Only name approved by the Registrar of Company. Brand name can be different then company name.
-Like XYZ Trading Pvt Ltd
-Techvalens Software Systems Pvt Ltd
-
-Legal Entity or Liability
---------------------------
-Limited Liability
-The Directors and the shareholders of a Private Limited Company are not personally liable of the company.
-
-Members
--------
-Minimum 2 Directors and 2 shareholders, Maximum 200 shareholders.
-shareholders can be anathor Private Limited Company as well.
-
-Taxation
---------
-22%,25% or 30% (based on turnover) 
-Seperate PAN
-***********************************************************************************************
-
-4.Limited Liability Partnership (LLP) (Partner)
-=====================================
-It is a business entity formed under Limited Liability Partnership Act 2008. It has a seperate legal entity.
-Registration
-------------
-It is registered with MCA (Ministry of Corporate Affairs).
-Name
-----
-Only name approved by the Registrar of Company.
-XYZ LLP
-Reak Infotech LLP
-
-Legal Entity or Liability
---------------------------
-Limited Liability
-The partners of a LLP are not personally liable for the Liabilities of the LLP.
-
-Members
----------
-Minimum 2 Partners . A LLP can have unlimited number of Partners.
-
-Taxation
---------
-30% Tax Slab 
-Seperate PAN
-***********************************************************************************************
+# Bacs -> Direct Debit is the payment option chosen by thousands of companies to automatically and securely 
+collect important payments from millions of people and organisations.
+# Bacs Direct Credit ->  Bacs Direct Credit is used to pay eight in ten employees in the UK, whether that’s 
+wages, salaries, or benefits, as well as for settling business-to-business invoices.
+⦾ In-built Document Management facility allows user to save all their
+paperwork online and associate with records on PropCoTM.
 
 
-5.One Person Company (OPC) (Director)
-===========================                                  
-Similar to Private Limited but with only one director.
-Registration
-------------
-It is registered with MCA (Ministry of Corporate Affairs).
-Name 
------
-Only name approved by the Registrar of Company.
-XYZ OPC Pvt Ltd
-
-Legal Entity or Liability
---------------------------
-Limited Liability
-The Director and the Nominee Director of a One Person Company are not the Liabilities of the Company.
-
-Members
---------
-1 Director 1 Nominee Director
-
-Taxation
---------
-22%,25% or 30% (based on turnover) 
-Seperate PAN
-======================================================================================================
