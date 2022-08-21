@@ -103,3 +103,57 @@ wages, salaries, or benefits, as well as for settling business-to-business invoi
 paperwork online and associate with records on PropCoTM.
 
 
+============================================================================================================
+                                        Knowledge Transfer(KT)
+                                        ======================
+Today Purpose is to understand the lifecycle of the tenancy through Propco.
+Tenancy Term( a written agreement specifying the terms of the rental or temporary possession of a property.)
+==============
+Duration/Tenancy term/Period of the tenancy of that property. 
+
+So we will proceed with the term. For a agent we do have a diffrent kinds of terms. It could be 3 Months, 2Years , 1 year or we can create for that.
+Suppose If I am an Agent and working for the Product and all the terms i can have which an applicant can choose for.
+
+So how we can as a Agent/as a New Agent we  can say, how we can create a term on Propco.
+
+So to do that we need to Login to the Propco. Today i am using the QA propco with the latest build as 44, this is just for the information.
+
+We are good to go any kind of platform for the propco.
+For now we are using the desktop Application.
+
+Moving Next, How we create a term.
+The access is generally to the admin person or admin staff.
+This is crucuial bit where we have to draftout agreement between an applicant and a property.
+All the task is done by the administrator.
+If i want to do all these then I should have the admin rights with me.
+
+The can only create the term. We create with option called tools.
+Tools is kind of Settings in the Propco Project over here.
+Go to TOOLS ->  Data Setup -> Tenancy -> Terms.
+-----------------------------------------------
+Add New , for that click on Add 
+Lets create the duration for the Six Months.
+So Six motnth is the duration and rent has to paid monthly.
+--------------------
+So In our Software, the 1st section is 
+Details
+======== 
+like, *Name: 6Month/Monthly, So here before slash we have duration of the tenancy and after slash pointing to the rent paid in that duration like monthly or Qualterly.
+then ,*Description: 6 months is duration and rent needs to paid monthly.
+then, *Length: 6 months.
+then, *Payment: 1 monthly
+then, Laspse To: "Select in Dropdown", means your agreement is about to end and if you want to extends the same agreement
+if a tenant have the duration for the 6 months then if he/she  wants to extend the duration for more 6 months
+then to do that we have Lapse To field .
+then, Apply Tax: "can apply the task" //In india called slabs.
+then, a second check box is here (Charge commission on net). //this is for the overall value to what they are paying to and if you want to charge any Agent Commission on it. We can go with this option.
+then, Options: Less one day, Invoice for full period, never post after tenancy date, //if i have to pay after 30days then we can pay after 29days (if select the 1st option)
+--------------------2nd option (Invoice for full period) -> We can pay for complete Six months or whatever the duration is.
+then, Charged In Arr:  Yes or No. //Charged in Arr as in that it should be outstanding as a arrear to the tenant.
+
+Forward Posting Rent
+====================
+This is generally to allow systems to generate or the rents forward.
+Suppose if our tenancy cycle starts with 2nd of April month, Claims is where we start raising the rent from defining rent from one day before.
+And Thereafter it will says want to continue till this time.
+
