@@ -153,7 +153,64 @@ then, Charged In Arr:  Yes or No. //Charged in Arr as in that it should be outst
 
 Forward Posting Rent
 ====================
+It is here like the pre-payment. Or pay in advance. Paying the rent in advance.
 This is generally to allow systems to generate or the rents forward.
 Suppose if our tenancy cycle starts with 2nd of April month, Claims is where we start raising the rent from defining rent from one day before.
-And Thereafter it will says want to continue till this time.
+And Thereafter it will says want to continue till do this time.
 
+Mail Merge
+===========
+We have agrements printed or we do create the agreements between the tenancy and the landlord. To do that we already
+have existing list of agrement letters.
+We can select any of the letter from the system and we can add to the process where it has to be  printed.
+So first field is 1. Printed at tenancy start (Add or Remove) button.
+Once we finished our tenancy that means we have finished confirming our tenancy and then this particular agreement 
+will print.
+2. Printed at Renewal(Add or Remove) button.
+If any tenancy term will get extended then the particular letter will get printed which is to select from 
+Initiated Letters where the list of files will be shown.
+These are not the uploaded basically but it will give you the list of the Agreement type in the mail merge.
+We can create the letters.
+Here we do have the letter type. Letter type is like Tenlad Letter(need to confirm) and anathor is the Implement Letter(need to confirm).
+If the letter type is Agreement then it start showing in the list (Initiated Letters).
+
+Task List
+==========
+Task List is generally for the Reminders, Here we can remind to a particular person who can track different kinds 
+of data can assign to (Assign Reminders to: ) field.
+So that the user can start the conversation to the current tenants if they want to extend the term or they want 
+to move out or any further actions. That kind of conversation can happen if I am aware about the end date.
+
+So there can be lots of Tenants in the  Propco. For a single agent it's very hard to manage these.
+So he will appoint staff's, different different staffs which will handle all kinds of works for himself.
+So one staff could go with the propsing or creating the Agreement.
+One can for to track all the tenants end date.
+Some for the collect the rent.
+Some other to manage the repairs.
+Some has to do the basic checks like if there is the maintenance checks needs to collected.
+
+So if a person has been assigned to look onto the agreements end dates that can be done towards this section.
+Then we can give the reminders or notification to that person where a task can be assigned.
+
+Rent Requests
+============
+It has a checkbox called Generate Rent Request before the due date.
+This is not recommended to use this. Whatever we have the rent date. We can request the rent before that date.
+
+So this is all how here we create the Term. 
+
+Finally to see the term, we need to logout and after login providing UserName and Password.
+Then go back through the tools and then to terms. Then it will start reflecting.
+
+
+Next is the Shared Tenancy
+============================
+Lead Tenant and Co-Tenant comes under the Shared Tenancy.
+*we can create property by using Market Appraisal Form whereas Fast Start is bigger detail Form for the Property for 
+the same purpose.
+
+Add the Landlord with the basic details. And the property toward where I have to rent it out.
+
+Create the Applicant by go to MArketing -> Applicant Marketing -> Applicant Card in the menu.
+Fill the Applicant details, Name, Title, etc.
+This is the form of registering the applicant into the system.
