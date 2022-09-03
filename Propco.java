@@ -214,3 +214,6 @@ Add the Landlord with the basic details. And the property toward where I have to
 Create the Applicant by go to MArketing -> Applicant Marketing -> Applicant Card in the menu.
 Fill the Applicant details, Name, Title, etc.
 This is the form of registering the applicant into the system.
+
+
+==============================Training=====By=====Aekta===============Date:-02/Sep/2022======================
