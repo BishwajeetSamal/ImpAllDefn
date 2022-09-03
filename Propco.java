@@ -217,3 +217,69 @@ This is the form of registering the applicant into the system.
 
 
 ==============================Training=====By=====Aekta===============Date:-02/Sep/2022======================
+RMI (Remote Method Invocation)
+===============================
+Java RMI -> Java Remote Method Invocation. 
+*It is a API that allows an object to invoke anathor method that exists in seperate address space means In Local Machine or
+in Server Machine.      ---------------------------------------
+                        | Client | -----(RMI)------> | Server |
+                        ---------------------------------------
+If client machine try to call or invokes the methods present in Server machine with the help of RMI.
+RMI Working -> Two intermediate objects are used for the communication between client and server.
+
+TO work of RMI there are two Intermediate objects for the communication between client and server.
+So in Client side the object is used called STUB and in Server side the object used is SKELETION.
+
+=========================================================================================
+Normal Java Code On client side
+             ↓ 
+    |---------------|                               
+    | Remote        |   
+    | method call   |
+    |on client      |
+    |---------------|
+            ↓  " Parameters can send from here an this is optional"
+      -------------
+      |Stub Object|
+      -------------
+            ↓  "Connection can be the internet or any other communication way"    
+    -----------------
+    |Skeleton Object|
+    -----------------
+            ↓   "Take parameters and sends back the response."
+    |---------------|                               
+    | Remote        |   
+    | method call   |
+    |on server      |
+    |---------------|
+             ↓ 
+Normal Java Code on Server Side
+
+===========================================================================================
+STUB Object -> It creates a information block and sends to the server.
+This information block consists of "ID of Remote object (i.e. which to call)", "method name to invoke", "which parameter to pass"
+
+SKELETION Object -> It passes the request from STUB Object to the Remote Object.
+*It calls the desired method.
+*Forwards the parameter receives from Client side.
+*Sends the response to the Stub Object.
+
+Goals of RMI
+------------
+1. Minimizes complexity of the Application.
+2.Distributed Garbage collection.
+3.Minimizes difference between working with local and remote objects.
+ 
+RMI Registry
+------------
+It is a namespace on which all server objects are placed. 
+    Client Invokes the method using fetched objects.
+    Client fetches the object using lookup() method at very first time before to server.
+    Whenever server gives according to the client request then that method get placd inside the RMI Registry with
+    the help of bind() and rebind() method. Binds are the objects of RMI Registry. 
+
+                                              KT Session
+                                            ==============
+We have some 5 Entities, Named Agent, Applicant, Contractors, Landlords, Properties, Tenant.
+
+Select any Entity and click on Search Icon and we will get all the list.
