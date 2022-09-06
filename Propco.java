@@ -282,4 +282,286 @@ It is a namespace on which all server objects are placed.
                                             ==============
 We have some 5 Entities, Named Agent, Applicant, Contractors, Landlords, Properties, Tenant.
 
-Select any Entity and click on Search Icon and we will get all the list.
+For Example -> Select any Entity and click on Search Icon and we will get all the list.
+After hit on Search icon Landlord list will comeup from the propco DB.
+
+After click on any landlord we will see the details regarding the landlord.
+
+1.So Landlord is an Entity and there are many aspects related to it and you can get it from Left side of the page under Navigator.
+Like :-> Address Details, Banking, Notes, CRN/FICO Details, Data Processing Preferences, Letter Audit, Power Of Attorney,
+Building Property Insurance, Contents Insurance, Payments Breakdown, Preffered Suppliers, Statement Copies, Accountant/Invoice,
+Fees Disbursement, Associated Contacts, Properties Owned, Clauses, Tasks, Document Mgmt, E-Signature, Webforms, etc...
+
+Many fields are involved to the respective aspects.
+These aspects are used by the Agent in the UK. 
+
+2.For Property Entity also show many List of Properties, It has also respective Tabs under the Navigator.
+
+In Database, Propco has 2 db 1.qadb and 2. local
+
+All entity have there own seperated table. Like Property have seperate table and landlord have seperate table and all these 
+tables contains a huge data or table.
+
+3.In propcoent-demo -> we have "properties" table . Suppose there will a requirement come to add the column then we need to add,
+then we need to break into  do anathor table called "properties_ext" Need to add into the "properties_ext".
+
+4.Similarly, there is a table for the Landlord called "landlords". Again it has the "landlords_ext" also and it contains the 
+columns related to it.
+
+5. On Search the Contractor, it has the table called "tbl_cons".
+
+We have anathor database, "propcosystem-v1-v2". There are certain tables in it which have a configurations sort of data.
+Like a table called, "netloc" table has the domain name and the required path for that domain name. Like in that domain 
+for image what is the path, so here are the confogurations based data available here.
+
+*One Applicant Entity is also there but you will get all the data of the applicant inside the table "tenants".
+---------------------------------
+Suppose A person come to the agent that the Person want a property, so that time the person is the Applicant.
+Then that agent says Okay, we have a property you can rent it out. 
+Then Agent will Register for the Property and then the Agent will inform to Applicant that when it will be available.
+Thenafter Agent call to the Applicant and says that the propery you are requesting we had talked with the Landlord and 
+you can rent it from that day.
+So its fine to do the legal formalities that is required. Then the person will get converted to the Tenant.
+
+So very first time the person went to the  Agent for the property, so agent will do the registration as a Tenant.
+To do that, Go to toolbar, where Find/New -> Applicant -> Edit/New, this is from where Agent will create the Applicant.
+
+In the Db, for the Applicant and the Tenant is the same table. In MArket Appraisal Form, where we will create a new Landlord
+or the Property and various things.
+
+------------------------------------------
+Now Search for the code where and to interact with UI/Code. 
+Go to Project and Serch By Ctrl+Shift+R and enter "PropertyNavigator"
+So the PropertyNavigator class, All the Tabs on left side of the Page under the Navigator like Property Info, PropertyDetails,
+Rent, Description etc.. are available.
+
+The same kind of the structure for others aswell. Like for Landlord it has "LandlordNavigator".
+For Contractor, "ContractorNavigaotor" is present.
+For Tenant, "TenantNavigator" is present.
+
+-----------
+So For Example, lets take PropertyNavigator class, Use Ctrl+C For createNewComp(Enum<?>)
+
+
+Note:- createNewComp(Enum<?>) will be available for PropertyNavigator or TenantNavigator or LandlordNavigator etc.
+
+Basically createNewComp is a component, This method actually creates the classes.
+Every Class is representing to the seperate Tab.
+It has switch case, like
+    case navbarPropHome:                return new PropertyHome(getWorkspace(),SWT.NONE,this);
+    case navbarPropGeoData:             return new GeographicalData(getWorkspace(),SWT.NONE,this);
+
+        etc....
+
+In Tab it is Home, Under this Tab, all fields are present, PropCo Id:, Reference, Address, Street, Town etc.
+All fields details are encapsulated in a java file i.e. PropertyHome(getWorkspace(),SWT.NONE,this);
+Subsequently we have further below tabs related to their functions 
+
+**All the switch case: Names represents the Enum in public enum NavBarPropComp{
+    navbarPropHome("Home");   
+    navbarPropGeoData("Geographical Data"); etc...
+}
+
+navbarPropGeoData is All fields under the Tab "Property Info". 
+In field Dropdown is called Combo in SWT.
+
+All are defined in the class defination. We can find the fields name according searching in the class.
+
+**We need to deal with the "propco-enterprise-client" //is for the frontend fro the desktop application
+ and "propco-enterprise-ejb". //is for the backend.
+
+ All the data shown in fileds are fetched via the DB and that operations done under the server code present in "propco-enterprise-ejb".
+ Our Propco Desktop Application and the Server code get interacted via a technology called "RMI (Remote Method Invocation)".
+
+ *****A class is here called "PropcoSessionBean.java" -> This class is that Api/server side class that is responsible for the request
+ accepted from the client side.
+
+ Now whatever the request goes through the client side that get landed to the class called "PropcoSessionBean".
+
+ *Note:-> When we click on Left side pane where we click on particular tab or Property, the data get populated in the field i.e request
+ goes from client and goes to the server. To know the request from the client Go to PropertyNavigator, in clientside the call is written 
+ that call  search for "loadPropertyData()" for Property, "loadTenantData()" for Tenant, "loadLandlordData()" for Landlord etc..
+
+ in loadPropertyData() -> there will a code by wihich we can know it is making the call to the server.
+ propertyDataVO = (PropertyDataVO) EJBHelper.callEjbThrows(shell,MethodNames.getPropertyDataVO, PropcoUserView.getInstance().getLoginDetails(), PropcoUtil.checkNull(id));
+
+ MethodNames in above Line is the Enum.
+ public enum MethodNames{ 
+    getPostingNotes("getting posting notes"),  //these are the method names
+    getBalanceSheetData("getting balance sheet data"), //these are the method names
+    makeAccountTransfer("posting transfer transaction"), etc.. //these are the method names
+ }
+//And these are the methods present in Server side.
+
+So need to check for the method called getPropertyDataVO mentioned above and seach in the "PropertySessionBean.java" which is present inside the 
+"propco-enterprise-ejb".
+
+In server "propco-enterprise-ejb" side,
+we get the method then,
+public PropertyDataVO getPropertyDataVO(LoginDetails domain, String strPropertyID) throws RemoteException{
+    return PropertyDataDAO.getCoreData(domain,strPropertyID); 
+}
+
+getCoreData() is a method 
+------------------------------------------start-------------------------------------------------------------------
+public static PropertyDataVO getCoreData(LoginDetails domainName,String strPropertyID) throws RemoteException
+    {
+        SQLQueries cn=new SQLQueries(domainName);
+        try {
+            PropertyDataVO propertyDataVO = setup(cn,strPropertyID); //setup here where we get the related query
+            if (StringUtils.isNotEmpty(strPropertyID)) {
+                getPropertyHmoLicenses(cn, Long.valueOf(strPropertyID), propertyDataVO);
+                populateOffersAndApplicationTabsUrls(cn, Long.valueOf(strPropertyID), propertyDataVO);
+            }
+            return propertyDataVO;
+        } catch (SQLException sqle) {
+            logger.error("Error occured while getting coreData against propertyId:"+strPropertyID,sqle);
+            throw new RemoteException(sqle.toString());
+        }
+        finally{
+            cn.closeAll();
+        }
+    }
+------------------------------------end-------------------------------------------------------------------------
+The Code you will get in PropertyDataDao.java, Same for Tenant, TenantDataDao.java // which is in Server side code
+
+For the  Query we have the QueryBuilder, 
+like ResultSet rs = cn.getQueryResultThrows("select"+strFields+"from properties LEFT OUTER JOIN property_ext on properties.property_id = property_ext.property .....");
+--------------------------------start---------------------------------------------------
+public ResultSet getQueryResultThrows(String queryToPerform) throws SQLException {
+        closeResults();
+           System.out.println(prompt()+" query>>'" + queryTruncated(queryToPerform)+"'");
+        
+        if (!checkConnection(true/* , maxSlaveTime */) )
+            return null;
+       
+        final Statement stmt = createStatement(true);
+        
+        if(logger.isDebugEnabled()){
+            
+        
+            String message = prompt(stmt)+" query>>'" + queryTruncated(queryToPerform)+"'";
+   
+            //ALWAYS OUTPUT TO DEBUG LOG
+            logger.debug(message);
+        }
+        
+        stmt.executeQuery(queryToPerform);
+        return stmt.getResultSet();
+    }
+-------------------------------end-------------------------------------
+
+then after fetch all the data from the table,
+put inside the
+rsMetaData = rs.getMetaData(); //this is present in the ResultSet.class , This basically retrives the number, types and properties of this ResultSet object's
+//columns. 
+
+Then all the data get set into the respective column to send back to the client as a response like,
+
+data.getProperty_id().setColumnName(rsMetaData.getColumnName(1));
+        data.getProperty_id().setColumnType(DataTypeConstants.TYPE_ALPHA);
+        data.getProperty_id().setColumnLength(rsMetaData.getPrecision(1));
+
+
+        data.getRef().setColumnName(rsMetaData.getColumnName(2));
+        data.getRef().setColumnType(DataTypeConstants.TYPE_ALPHA);
+        data.getRef().setColumnLength(rsMetaData.getPrecision(2));   etc....
+
+
+So Finally the data send back to the client in the form of response, and the object is PropertyDataVO.
+
+The RMI protocol makes use of two other protocols for its on-the-wire format: Java Object Serialization and HTTP.
+The Object Serialization protocol is used to marshal call and return data.
+Same for Property is "PropertyDataVO", for Tenant is "TenantDataVO", for LandLord is "LandLordDataVO" etc. Here VO is the Suffix.
+
+So Structure of PropertyDataVO -> In this class all the fields will present
+You will not get the exact name of Column of DB in Java Class
+All the fileds are of type "TableFieldVO". It has some properties, are columnName, value, columnLength, tableName.
+ and all the fields data are set and finally "return data";
+
+ Then the return data get transfered to the "propco-enterprise-client" in "PropertyNavigator.java" in "loadPropertyData" method.
+
+Thus, we have two approaches, One is XML Approach, and second is VO Approach.
+XML Approach is the old One. It's a legecy code and used majorly in this application.
+We don't need to follow it. It just to know for the update any feature in future.
+
+
+
+Important
+-----------------
+What Is a JavaBean?
+*******************
+A JavaBean is mostly like a POJO, with some strict set of rules on how to implement it. 
+The rules specify that it should be serializable, have a null constructor, and allow access to variables using methods that 
+follow the getX() and setX() convention.
+
+ POJO as a JavaBean?
+********************
+Since a JavaBean is essentially a POJO, let's convert EmployeePOJO to a JavaBean by implementing the necessary bean rules:
+public class EmployeeBean implements Serializable {
+
+    private static final long serialVersionUID = -3760445487636086034L;
+    private String firstName;
+    private String lastName;
+    private LocalDate startDate;
+
+    public EmployeeBean() {
+    }
+
+    public EmployeeBean(String firstName, String lastName, LocalDate startDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.startDate = startDate;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    // additional getters and setters
+}
+
+
+Here, in order to convert the POJO into a JavaBean, we've implemented the Serializable interface, marked properties as
+private, and used getter/setter methods to access the properties.
+
+
+DTO
+***
+A DTO, also referred to as Data Transfer Object, encapsulates values to carry data between processes or networks.
+This helps in reducing the number of methods called.
+By including multiple parameters or values in a single call, we reduce the network overhead in remote operations.
+A DTO does not have any explicit behavior. It basically helps in making the code loosely coupled by decoupling the domain
+ models from the presentation layer.
+
+DTOs have flat structures without any business logic.
+
+VO
+**
+A VO should always override the equals() and hashCode() methods.
+VO, also known as the Value Object, is a special type of object that can hold values such as java.lang.Integer and java.lang.Long.
+It's a good practice to make Value Objects immutable.
+ The change in values occurs only by creating a new object and not by updating values in the old object itself.
+-----------------
+===============================================================================================================================
+Now XML Approach
+-----------------
+Suppose Address I am trying to change in Property Info.
+After Save it is showing the validation problem due to some reason.
+Error Like:-> "Your total Landlord rent assignment must equal 100%."
+
+* In Every ...Navigator Class like PropertyNavigator, TenantNavigator or LandlordNavigator, here we have a method called 
+createXMLForNewEntry() and other is createXMLForExistingEntry(boolean). 
+
+createXMLForExistingEntry() //We can get in all ...Navigator file.
+============================
+This method will create an XML. using final MakeXML mx = new MakeXML();
+Suppose we have changed in many different-different tab and now we are going to save it.
+Now we need to pack all these and need to send to the server.
+
+mx.createXML(hashProperties,"UpdateProperty",hashWhere,XMLConstants.UPDATE);
+"hashProperties" is the HashMap, "UpdateProperty" is the method name, XMLConstants are Enum type like Insert, Update, Delete. 
