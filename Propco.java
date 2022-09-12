@@ -280,7 +280,7 @@ It is a namespace on which all server objects are placed.
 
                                               KT Session
                                             ==============
-We have some 5 Entities, Named Agent, Applicant, Contractors, Landlords, Properties, Tenant.
+We have some 5 Entities, Named -> Agent, Applicant, Contractors, Landlords, Properties, Tenant.
 
 For Example -> Select any Entity and click on Search Icon and we will get all the list.
 After hit on Search icon Landlord list will comeup from the propco DB.
@@ -312,7 +312,7 @@ columns related to it.
 
 We have anathor database, "propcosystem-v1-v2". There are certain tables in it which have a configurations sort of data.
 Like a table called, "netloc" table has the domain name and the required path for that domain name. Like in that domain 
-for image what is the path, so here are the confogurations based data available here.
+for image what is the path, so here are the configurations based data available here.
 
 *One Applicant Entity is also there but you will get all the data of the applicant inside the table "tenants".
 ---------------------------------
@@ -326,7 +326,7 @@ So its fine to do the legal formalities that is required. Then the person will g
 So very first time the person went to the  Agent for the property, so agent will do the registration as a Tenant.
 To do that, Go to toolbar, where Find/New -> Applicant -> Edit/New, this is from where Agent will create the Applicant.
 
-In the Db, for the Applicant and the Tenant is the same table. In MArket Appraisal Form, where we will create a new Landlord
+In the Db, for the Applicant and the Tenant is the same table. In Market Appraisal Form, where we will create a new Landlord
 or the Property and various things.
 
 ------------------------------------------
@@ -340,7 +340,7 @@ For Contractor, "ContractorNavigaotor" is present.
 For Tenant, "TenantNavigator" is present.
 
 -----------
-So For Example, lets take PropertyNavigator class, Use Ctrl+C For createNewComp(Enum<?>)
+So For Example, lets take PropertyNavigator class, Use Ctrl+O For createNewComp(Enum<?>)
 
 
 Note:- createNewComp(Enum<?>) will be available for PropertyNavigator or TenantNavigator or LandlordNavigator etc.
@@ -565,3 +565,68 @@ Now we need to pack all these and need to send to the server.
 
 mx.createXML(hashProperties,"UpdateProperty",hashWhere,XMLConstants.UPDATE);
 "hashProperties" is the HashMap, "UpdateProperty" is the method name, XMLConstants are Enum type like Insert, Update, Delete. 
+
+
+
+
+=***************************************JB=*************************************************************
+enterprise bean class is HelperBean.java
+
+Helper classes
+----------------
+**The EJB stands for Enterprise Java beans
+*EJB is conceptually based on the Java RMI(Remote Method Invocation) specification
+Helper classes are classes that the primary bean class calls upon to successfully
+execute its business methods.
+
+EJB
+===
+EJB stands for Enterprise Java Bean.
+EJB is an essential part of j2ee platform.
+EJB provides an architechture to devlop and deploy component based enterprise applications considering robustness, high scalability,
+and high performance.
+
+When to use EJB ?
+=================
+Application needs Remote Access. In other words, it is distributed.
+Application needs to be scalable, EJB supports load balancing, clustering and fail-over.
+Application needs encapsulated business logic, EJB application is seperated from presentation and persistent layer.
+
+Types Of EJBs
+=============
+Enterprise Beans -> Session Beans -> State less and Stateful
+Enterprise Beans -> Message Beans
+Enterprise Beans -> Entity Beans -> Bean Managed Persistence
+
+Enterprise Beans -> Entity Beans -> Container Managed Persistence
+
+Session Bean
+-------------
+Session bean stores data of a  particular user for a single session. It can be stateful or stateless.
+It is less resource intensive as compared to the entity bean.
+Session bean gets destroyed as soon as user session terminates.
+
+Stateless Session bean is a business object that represents business logic only. It doesn't have state(data).
+In other words, conversational state between multiple method calls is not maintained by the container incase of stateless 
+session bean.
+
+The stateless bean objects are pooled by the EJB container to service the request on demand.
+It can be accessed by one client at a time. Incase of concurrent access, EJB container routes each request to different instance.
+
+Annotations used in Stateless Session Bean.
+
+@Stateless
+
+
+Entity Bean
+-----------
+Entity Beans represent persistent data storage.
+User data can be saved to database via entity beans and later on can be retrieved form the database in the entity bean.
+
+Message Driven Beans
+---------------------
+Message driven beans are used in context of JMS(Java Message Service). Message driven beans can consume JMS messages for external
+entities and act accordingly.
+
+etc...
+
