@@ -1,5 +1,42 @@
 												JUnit
 												=====
+*JUnit is a simple framework to write repeatable tests. It provides the simple API to test our Java Application.
+*The class or methods we want to test is usally called Subject under Test.
+*So to write a test we simply create a java test class and use the Junit API to make some assumptions towards the
+behaviour of the subject under test and junit verifies whether these assumptions are correct or not by either 
+passing or failing the test.
+
+Architechture of JUnit 5
+========================
+On a high level, JUnit5 is a combination of three different modules. 
+
+                          JUnit Jupiter           JUnit Vintage 	   3rd Part Testing frameworks
+                      		   ↓					   ↓						↓
+                      		================================================================
+                      						JUnit   platform
+                      		================================================================
+                      				  ↑				  ↑				    ↑
+                                     IDEs         Build Tool         Console
+
+
+1.JUnit platform -> It provides an API to launch the tests from either the IDEs build tools or or console. So to
+write a unit test in Junit, your IDE or the build tool or the console uses this API inside the JUnit platform 
+module to launch the test. 
+
+2.Junit Jupiter -> It provides the API to write our Junit Tests  and extensions.
+
+3.Junit Vintage -> It provides a test unit implemtation to support backward compatibility to test written with 
+Junit-3 and Junit-4. We can execute the tests in Junit-5 aswell.
+
+4.3rd Part Testing frameworks -> It enables some third party testing frameworks to build their own API to 
+write the tests and reuse the junit platform module to launch these tests, so this is anathor intersting update
+which is part of junit-5.
+
+
+
+
+
+
 Que. Why use a testing framework ?
 Ans. Lets say a class
 -------------------------

@@ -9,8 +9,8 @@ Tea Partners
 
 
 1. Bishwajeet -> 200 paid //[[[[[1/09/2022]]]]]
-2. Prabhanshu ->200 paid //[[[[[08/09/2022]]]]] 
-3. Ayushi ->
+2. Prabhanshu ->100 paid //[[[[[08/09/2022]]]]] 
+3. Ayushi ->100
 4. Keshav ->
 ------------------------------------------------------------------------
  **Anuroudh has 6 tea.
