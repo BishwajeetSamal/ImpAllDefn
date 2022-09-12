@@ -564,4 +564,5 @@ Suppose we have changed in many different-different tab and now we are going to 
 Now we need to pack all these and need to send to the server.
 
 mx.createXML(hashProperties,"UpdateProperty",hashWhere,XMLConstants.UPDATE);
-"hashProperties" is the HashMap, "UpdateProperty" is the method name, XMLConstants are Enum type like Insert, Update, Delete. 
+"hashProperties" is the HashMap, "UpdateProperty" is the method name, XMLConstants are Enum type like Insert, Update, Delete.
+ 
