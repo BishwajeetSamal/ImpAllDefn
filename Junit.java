@@ -32,7 +32,7 @@ Junit-3 and Junit-4. We can execute the tests in Junit-5 aswell.
 write the tests and reuse the junit platform module to launch these tests, so this is anathor intersting update
 which is part of junit-5.
 
-
+LongSupplier
 
 
 
