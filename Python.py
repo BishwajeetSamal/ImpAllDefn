@@ -160,6 +160,54 @@ print(99 in marks) # checks 99 is available in marks or not, then according to t
 
 print(len(marks)) # length of marks
 
+break and continue
+------------------
+ students = ["ram","shyam","radha","radhika"] #wants to print till radha
+ for student in students:
+ 	if student == "radha"
+ 	break;
+ 	print(student) # it will print ram shyam
+
+ //Now we want to ignore the name then we can write 
+ for student in students:
+ 	if student == "shyam"
+ 	continue;
+ 	print(student) # ram radha radhika
+
+ tuple
+ -----
+ It is like list but immutable.
+ marks = (20,30,40,50,60) or  marks = 20,30,40,50,60
+
+Opeations on tuple
+------------------
+print(marks.count(95)) #0
+print(marks.index(20)) #0 this is index
+
+Set //unique values
+---
+marks = {20,30,40,50}
+
+
+Dictionary (We store the data in key-value pairs)
+----------
+marks = {"english":95, "chemistry":98}
+
+print(marks[chemistry]) # prints, 98
+
+marks["physics"] = 97;
+print(marks)
+
+marks["physics"] = 90
+print(marks) # it will print the data
+
+information = {"Bishwajeet":"Mamta"}
+
+Functions
+---------
+1. Inbuilt functions
+2. Module Functions
+3. User defined functions
 
 
 
