@@ -205,9 +205,22 @@ information = {"Bishwajeet":"Mamta"}
 
 Functions
 ---------
-1. Inbuilt functions
-2. Module Functions
+1. In-Built functions # int(), str(), bool() etc.
+2. Module Functions # import math  print(dir(math))
+from math import *
+print(sqrt(16))
+
 3. User defined functions
+def function_name(parameters):
+	//do something
+
+def print_sum(first,second=4): # if second parameter dosen't come then it will take by default 4 here
+	sum = first+second
+	print(sum)
+
+print_sum(1,2) # Call a function
+
+
 
 
 
