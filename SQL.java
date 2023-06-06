@@ -1,3 +1,36 @@
+JOINS
+======
+Basically we need to joins multiple tables in a single query, you would be able to fetch the data you want. This
+where we need to use joins.
+1. Inner Join / Join
+---------------------
+like :- Select e.emp_name, d.dept_name 
+from employee e
+join department d ON e.dept_id = d.dept_id;
+//Here matching will happen upon the given condition 
+
+2. Left Join
+-------------
+Left Join = Inner Join + all remaining records from Left table 
+
+3. Right Join
+--------------
+Right Join = Inner Join + all remaining records from Right table 
+
+
+Full Outer JOIN / Outer Join
+-----------------------------
+Full outer join = Inner join + all remaining records from Left table
+                             + all remaining records from Right table
+
+Select e.emp_id, d.dept_name from employee e 
+full join department d on d.dept_id = e.dept_id;
+
+CROSS Join
+----------
+
+
+
 Video Link -> "https://www.youtube.com/watch?v=Ww71knvhQ-s" and you can 
 download the scripts you want to run, link is -> 
 "https://techtfq.com/video/sql-window-function-part1-sql-queries-tutorial"
