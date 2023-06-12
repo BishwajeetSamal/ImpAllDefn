@@ -322,6 +322,7 @@ func main(){
 		"Keyboard": 100,
 		"Mouse": 	50,
 		"Laptop":	1000,
+	}
 	
 	fmt.Println(shoppingCart) // map[Keyboard:100 Laptop:1000 Mouse:50]	
 	fmt.Println(shoppingCart["Keyboard"]) //100
@@ -442,8 +443,258 @@ func main(){
 
 }
 
+-------------------------------------------------------------------------------------------------------------
+If and Switch statements (Control Flow)
+---------------------------------------
+package main
+
+import "fmt"
+
+func main(){
+	shoppingCart := make(map[string]int)
+	shoppingCart = map[String]int{
+		"Keyboard": 100,
+		"Mouse": 	50,
+		"Laptop":	1000,
+	}
+
+	shoppingCart["Monitor"] = 1200
+
+	if true{
+		fmt.Println("This is simple if statement !")
+	} //This is simple if statement !
+
+	if i:=2; i==2{
+		fmt.Println("This is simple if statement !")
+	}
+	//This is simple if statement !
+
+	if _,ok := shoppingCart["Monitor"]; ok{
+		fmt.Println("Item Exist in the Shopping cart")
+	}
+//Here we will get the output  -> Item Exist in the Shopping cart
+
+	if i:=2; i==3{
+		fmt.Println("This is simple if statement !")
+	}else{
+		fmt.Println("This is simple else statement !")
+	}
+	//This is simple else statement !
+
+
+	if i:=2; i==3{
+		fmt.Println("This is simple if statement !")
+	}else if i==2{
+		fmt.Println("This is simple else if statement !")
+	}else{
+		fmt.Println("This is simple else statement !")
+	}
+//This is simple else if statement !
+
+
+	i:= 10
+	j:=20
+
+	if i > 0 && j > 0 {
+		fmt.Println("i,j is greater than 0")
+	}
+
+	if i > 0 || j > 0 {
+		fmt.Println("i,j is greater than 0")
+	}
+
+	if i == 0 || j > 0 {
+		fmt.Println("i,j is greater than 0")
+	}
+}
 
 
 
+switch (In golang we dont need to use the "break" statement. It will handled implicitly.But if we want to 
+handle by ourself, that is also possible to use "break" statement.) 
+------
+
+package main 
+
+func main(){
+	switch 2 {
+	case 1:
+		fmt.Println("This is 1")
+
+	case 2:
+		fmt.Println("This is 2")
+
+	default:
+		fmt.Println("This is default")
+	}
+}
+------------------
 
 
+func main(){
+	switch 2 {
+	case 1,3,5,7,9:
+		fmt.Println("This is Odd")
+
+	case 2,4,6,8:
+		fmt.Println("This is ")
+
+	default:
+		fmt.Println("This is default")
+	}
+}
+------------
+
+func main(){
+	i := 2 + 3
+	switch  {
+	case i > 0:
+		fmt.Println("This is 1")
+
+	case i < 5:
+		fmt.Println("This is 2")
+
+	default:
+		fmt.Println("This is default")
+	}
+}
+
+-----------------
+Type Switch in Go Language
+---------------------------
+func main(){
+	var i interface{} = 5  
+
+	switch i.(type){
+	case int:
+		fmt.Println("This is int type")
+	}
+	case float64:
+		fmt.Println("This is float64 type")
+
+	case string:
+		fmt.Println("This is string type")
+
+	default:
+		fmt.Println("This is default")
+} 
+//This is int type
+---------------------------
+
+func main(){
+	var i interface{} = 5.3 
+
+	switch i.(type){
+	case int:
+		fmt.Println("This is int type")
+	}
+	case float64:
+		fmt.Println("This is float64 type")
+
+	case string:
+		fmt.Println("This is string type")
+
+	default:
+		fmt.Println("This is default")
+} 
+//This is float64 type
+
+---------------------------
+func main(){
+	var i interface{} = "5.3" 
+
+	switch i.(type){
+	case int:
+		fmt.Println("This is int type")
+	}
+	case float64:
+		fmt.Println("This is float64 type")
+
+	case string:
+		fmt.Println("This is string type")
+
+	default:
+		fmt.Println("This is default")
+} 
+//This is string type
+
+
+fallthrough (It will continue to the next case statement)
+-----------
+func main(){
+
+	switch 1{
+	case int:
+		fmt.Println("This is int type")
+		fallthrough
+	}
+	case float64:
+		fmt.Println("This is float64 type")
+
+	case string:
+		fmt.Println("This is string type")
+
+	default:
+		fmt.Println("This is default")
+} 
+//This is int type
+//This is float64 type
+
+--------------------------------------------------------------------------------------------------------------
+Loops
+------
+func main(){
+	for i := 0; i < 5; i++ {
+		fmt.Println(i)
+	}
+}
+//0
+//1
+//2
+//3
+//4
+-------------------------------
+func main(){
+	for i , j := 0; i < 5; i, j= i+1, j+1 {
+		fmt.Println(i, j)
+	}
+}
+//0 0
+//1 1
+//2 2
+//3 3 
+//4 4
+------------------------------
+If I want to print outside the for loop, inside the main method, then
+func main(){
+	i , j := 0
+	for ; i < 5; i, j= i+1, j+1 {
+		fmt.Println(i, j)
+	}
+	fmt.Println(i,j)
+}
+//0 0
+//1 1
+//2 2
+//3 3 
+//4 4
+//5 5
+
+*We can write it like this also
+func main(){
+	i , j := 0
+	i < 5 {
+		fmt.Println(i, j)
+		i, j= i+1, j+1
+	}
+	fmt.Println(i,j)
+}
+//0 0
+//1 1
+//2 2
+//3 3 
+//4 4
+//5 5
+
+Now, lets see with break and continue statement
+-----------------------------------------------
