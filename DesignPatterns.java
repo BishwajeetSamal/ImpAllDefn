@@ -73,15 +73,134 @@ Business Delegate Pattern
 Front Controller Pattern
 Value Object Pattern
 
+________________________________________________________________________________________________________________
+___________________________________________Creational Design Pattern starts____________________________________
+_________________________________________________________________________________________________________________
+Singleton Design Pattern:-
+__________________________
+he Singleton Design Pattern is a creational design pattern that ensures the existence of only one instance 
+(object) of a class throughout the application and provides a global point of access to that instance
+
+Here's a simple explanation of the Singleton pattern:
+
+Imagine you have a class that should have only one instance, such as a logger or a database connection. 
+The Singleton pattern ensures that no matter how many times you try to create an instance of that class, you
+always get the same instance.
+
+To implement the Singleton pattern, you typically follow these steps:
+
+Make the constructor of the class private, preventing direct instantiation of the class from outside.
+
+Declare a static variable within the class to hold the single instance of the class.
+
+Provide a static method that acts as a global access point to the single instance. This method is responsible for 
+creating the instance if it doesn't exist and returning the existing instance otherwise.
+
+Here's an example of implementing the Singleton pattern in Java:
+
+
+public class Singleton {
+    private static Singleton instance;
+
+    private Singleton() {
+        // Private constructor to prevent instantiation
+    }
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+
+    // Other methods and attributes of the class...
+}
+
+In the above example, the Singleton class has a private constructor, preventing direct instantiation. 
+The static variable instance holds the single instance of the class. The getInstance() method checks if an
+ instance already exists. If not, it creates a new instance and returns it. Subsequent calls to 
+ getInstance() will return the existing instance.
+
+
+
+What is Singleton Class ? //Runtime is a singleton class. For any java class if we are allowed to create 
+// only one object,such type of class is called singleton class.
+
+Ans4. In object-oriented programming, a singleton class is a class that can have only one object 
+(an instance of the class) at a time.
+Remember the key points while defining class as a singleton class that is while designing a singleton class: 
+
+Make a constructor private.
+Write a static method that has the return type object of this singleton class. Here, the concept of Lazy 
+initialization is used to write this static method.
+|---------------------------------------------------------------------------|	
+|													   						|
+|	public final class Test {
+    =========================================================================================
+    |private static Test t = new Test(); //This approach is wrong for outside creating the object by using new keyword because constructor is private but wer can do inside class.
+    =========================================================================================
+    private static Test t; //Its default value is null
+    //private constructor
+    private Test() {        
+    }
+    //public factory method
+    public static Test getTest() {
+        if(t == null) {
+            t = new Test();
+        }
+        
+        return t;
+    }
+}											
+|																		    |
+|	  												                        |
+|---------------------------------------------------------------------------|
+Advantage of Singleton class
+-----------------------------
+1. Memory performance Improvement.
+2. Reuse same object for every similiar requirement.
+3. Singleton prevents other objects from instantiating their own copies of the Singleton object, ensuring 
+that all objects access the single instance. 
+
+Here are some scenarios where you might consider creating a Singleton class:
+
+Logging:
+-------- A logging class that provides logging functionality throughout your application can be implemented as a
+ Singleton. This ensures that all parts of your codebase log to the same instance, making it easier to manage 
+ and control the logging behavior.
+
+Database Connection: 
+---------------------In applications that require a single, shared connection to a database, a Singleton pattern
+ can be used to create and manage the database connection. This ensures that all components of the application 
+ use the same database connection, improving efficiency and avoiding conflicts.
+
+Caching: 
+----------If your application requires a cache to store frequently accessed data, a Singleton cache manager can
+ be used to ensure there is only one cache instance shared across the application. This avoids duplicating cached
+  data and provides consistent access to the cache.
+
+Configuration Settings: 
+------------------------A Singleton class can be used to manage global configuration settings for your application.
+ This ensures that all parts of the application access and utilize the same configuration values, promoting consistency
+  and centralized control over the configuration.
+
+Thread Pool: 
+-------------In scenarios where you need to manage a shared pool of threads, a Singleton thread pool manager can 
+be created. This ensures that all parts of the application use the same pool of threads, facilitating efficient 
+resource utilization and coordination.
+
+GUI Components:
+---------------- In graphical user interface (GUI) applications, certain components like windows, dialogs, or menu 
+bars may need to be globally accessible and shared across different parts of the application. Implementing these 
+components as Singletons allows for centralized control and consistent access.
+
 *************************************************************************************************************
 *************************************************************************************************************
 Factory Design Pattern :-
 ________________________
-# The Factory Design Pattern is a creational design pattern in Java that provides 
-an interface for creating objects without specifying their exact classes.
-
-# It encapsulates the object creation logic within a separate factory class, which 
-is responsible for creating and returning instances of various related classes.
+# In factory design pattern, we dont expose the creation logic to the client and 
+refer to the client and refer the created object using a standard object.
+It is also known as Virtual Constrctor.
 
 # It provides a way to delegate the responsibility of object creation to a separate factory class.
 
@@ -106,7 +225,7 @@ public class Engineer implements Profession {
     }
 }
 
-public class Doctor implements Profession {
+public class Doctor implements Profession {  
     @Override
     public void introduce() {
         System.out.println("I am a doctor.");
@@ -259,6 +378,7 @@ call the displayInfo() method to show the relevant information about the product
 *************************************************************************************************************
 Abstract Factory Desing Pattern:-
 __________________________________
+This factory is also called factory of factories.
 The Abstract Factory Design Pattern is a creational design pattern that provides an interface for creating
  families of related or dependent objects without specifying their concrete classes.
 
@@ -307,7 +427,7 @@ Implement the Concrete Professionals:
 public class Teacher implements Professional {
     @Override
     public void introduce() {
-        System.out.println("I am a teacher.");
+        System.out.println("I am a teacher.");  
     }
 }
 
@@ -422,7 +542,699 @@ to create instances of professionals and trainees, respectively.
 
 *************************************************************************************************************
 *************************************************************************************************************
+Builder Design Pattern:-
+__________________________
+It is a part of creational design pattern.
+Wherever you want to create the object step by step for all those complex objects, step by step then 
+we should go for Builder Design Pattern.
 
+We are not forcing the client to get the unnecessary stuffs to create if the person dont want to.
+For example, a person want a House only, anathor person want House with swimming Pool,
+anathor Person want House with parking area. Then we cannot just handle all different house creation 
+just by using the Constructor. Thus, here builder desing pattern comes into picture.
+
+So We are giving the option to the client, that what he wants to select instead of forcing by us.
+
+The primary purpose of the Builder pattern is to provide a flexible and customizable way of constructing 
+objects, especially when dealing with complex objects with multiple optional attributes or configurations. 
+
+ By using the Builder pattern, you can give the client the ability to selectively set the attributes they 
+ desire, while omitting or providing default values for the rest.
+
+  example of constructing different types of houses using the Builder design pattern:-
+
+ // House class representing the complex object to be constructed
+public class House {
+    private String type;
+    private int bedrooms;
+    private int bathrooms;
+    private boolean hasSwimmingPool;
+    private boolean hasParkingArea;
+
+    // Private constructor to enforce object creation through the builder
+    private House(Builder builder) {
+        this.type = builder.type;
+        this.bedrooms = builder.bedrooms;
+        this.bathrooms = builder.bathrooms;
+        this.hasSwimmingPool = builder.hasSwimmingPool;
+        this.hasParkingArea = builder.hasParkingArea;
+    }
+
+    // Getters for the attributes (omitted for brevity)
+
+    // Builder class for constructing the House object
+    public static class Builder {
+        private String type;
+        private int bedrooms;
+        private int bathrooms;
+        private boolean hasSwimmingPool;
+        private boolean hasParkingArea;
+
+        public Builder(String type, int bedrooms, int bathrooms) {
+            this.type = type;
+            this.bedrooms = bedrooms;
+            this.bathrooms = bathrooms;
+        }
+
+        public Builder withSwimmingPool() {
+            this.hasSwimmingPool = true;
+            return this;
+        }
+
+        public Builder withParkingArea() {
+            this.hasParkingArea = true;
+            return this;
+        }
+
+        public House build() {
+            return new House(this);
+        }
+    }
+}
+
+
+With this implementation, we can create different types of houses using the Builder pattern:
+
+// Creating a simple house
+House house1 = new House.Builder("Simple House", 2, 1).build();
+
+// Creating a house with a swimming pool
+House house2 = new House.Builder("House with Swimming Pool", 3, 2)
+                  .withSwimmingPool()
+                  .build();
+
+// Creating a house with a parking area
+House house3 = new House.Builder("House with Parking Area", 4, 3)
+                  .withParkingArea()
+                  .build();
+
+// Creating a luxurious house with both a swimming pool and a parking area
+House house4 = new House.Builder("Luxurious House", 5, 4)
+                  .withSwimmingPool()
+                  .withParkingArea()
+                  .build();
+
+In this example, the House class represents the complex object to be constructed.
+The Builder class is a nested static class within the House class, responsible for 
+constructing the House object step by step.
+
+The builder provides a constructor and setter-like methods to set the required attributes 
+(type, bedrooms, bathrooms). It also provides optional methods (withSwimmingPool(), withParkingArea())
+ that allow the client to customize the house by adding additional features.
+
+The build() method constructs and returns the final House object based on the attributes set by the client.
+
+
+
+Lets take a burger,meal Examples for the builder desing pattern :-
+---------------------------------------------------------------
+/**
+ * Most Common Way to implement builder pattern is to have Builder class as innner class because 
+ * : - You might have seen at most of the places. -Joshua Bloch's Builder pattern
+ * 1. We don't want to expose our constructor which eventually creates confusion at later stage.
+ * 2. We don't want to have in-consistent object by having setters exposed.
+ * 3. Now since constructor is private we will need inner class to access that. 
+ * - Which will have same inputs what we have in class. But without getters.
+ */
+public class Burger {
+
+    private String size;
+    private boolean egg;
+    private boolean extraCheese;
+    private boolean mayonese;
+    private boolean onion;
+    private boolean lettuce;
+
+    private Burger(BurgerBuilder burgerBuilder) { /**Constructor is private, so that user will not able to 
+    	use the constructor but the BurgerBuilder class that we have created will use it, and BurgerBuilder
+    	is the inner class.
+    	*/
+        // Initialize all fields and you can also add validations.
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public boolean isEgg() {
+        return egg;
+    }
+
+    public boolean isExtraCheese() {
+        return extraCheese;
+    }
+
+    public boolean isMayonese() {
+        return mayonese;
+    }
+
+    public boolean isOnion() {
+        return onion;
+    }
+
+    public boolean isLettuce() {
+        return lettuce;
+    }
+
+    //Return same object everytime that is builder instance
+    //Once build method invoke return actual object.
+    public static class BurgerBuilder {
+        private String size;
+        private boolean egg;
+        private boolean extraCheese;
+        private boolean mayonese;
+        private boolean onion;
+        private boolean lettuce;
+        public BurgerBuilder size(String size) {
+            this.size = size;
+            return this;
+        }
+        public BurgerBuilder egg(boolean egg) {
+            this.egg = egg;
+            return this;
+        }
+        public BurgerBuilder extraCheese(boolean extraCheese) {
+            this.extraCheese = extraCheese;
+            return this;
+        }
+        public BurgerBuilder mayonese(boolean mayonese) {
+            this.mayonese = mayonese;
+            return this;
+        }
+        public BurgerBuilder onion(boolean onion) {
+            this.onion = onion;
+            return this;
+        }
+        public BurgerBuilder lettuce(boolean lettuce) {
+            this.lettuce = lettuce;
+            return this;
+        }
+        public Burger build() {
+
+            return new Burger(this);
+        }
+    }
+}
+
+/**
+ * Builder pattern : It is creational design pattern used to create complex presentation of objects.
+ * Let's say you have class which has initially 4 fields, so you decided to go with constructor then few more fields added
+ * in same class which are optional and class modification goes on. So one choice is to have different args constructor.
+ * That is good but till some extent how we will remember which argument number for what if list is so big!!!
+ * Having this type of constructor is called as Telescoping constructor pattern where we keep having separate constructor as and when
+ * we have new arguments.
+ *
+ * One more option is to use setters method but that has chances of missing pieces of some mandatory fields which leads to inconsistent object.
+ *
+ * By builder patter we take responsibility of creating object and providing back to client. Client just provides input and until
+ * they won't call build method we won't create object.
+ *
+ * Builder pattern is also used when single class has different object representation  meaning let's say We are creating
+ * Burger which can be Veg, non veg ... which can have extra cheese or less cheese, bread size medium , large.
+ * As user, you will say only I need one extra cheese large veg burger.
+ *
+ * To do so you can also have different builders which eventually passes the argument which are required to create that object.
+ *
+ *
+ * Reference : https://www.tutorialspoint.com/design_pattern/builder_pattern.htm
+ * https://springframework.guru/gang-of-four-design-patterns/builder-pattern/
+ *
+ *
+ */
+public class Main {
+    public static void main(String[] args) {
+        //Using builder we have created the object and we as implementer of builder pattern need to assure that this is not inconsistent object.
+        Burger burger = new Burger.BurgerBuilder()
+                .mayonese(true)
+                .onion(false)
+                .egg(false)
+                .extraCheese(true)
+                .size("LARGE")
+                .build();    
+
+        //GOF Builder example
+        Meal meal = new MealDirector(new VegMealBuilder()).prepareMeal();
+    }
+}
+
+/**
+ * If we go via GOF Definition "The intent of the Builder design pattern is to separate the construction of a complex object from its representation. By doing so, the same construction process can create different representations.:
+ *  It means for this Meal class lets say we have different representation which VegMeal and NonVegMeal
+ *  Also this helps when you want to create object step by step too.
+ *  So to achieve GOF we have following components as part builder pattern.
+ *  1. Product - Which we are building
+ *  2. AbstractBuilder - Which is helpful to provide the product
+ *  3. Concrete builder : It is actual builder which helps us to provide specific representation of the object.
+ *  4. Director : Which uses this concrete builder and provides the
+ */
+public class Meal {
+    private String curry;
+    private String bread;
+    private String coldDrink;
+    private String briyani;
+
+    public String getCurry() {
+        return curry;
+    }
+
+    public void setCurry(String curry) {
+        this.curry = curry;
+    }
+
+    public String getBread() {
+        return bread;
+    }
+
+    public void setBread(String bread) {
+        this.bread = bread;
+    }
+
+    public String getColdDrink() {
+        return coldDrink;
+    }
+
+    public void setColdDrink(String coldDrink) {
+        this.coldDrink = coldDrink;
+    }
+
+    public String getBriyani() {
+        return briyani;
+    }
+
+    public void setBriyani(String briyani) {
+        this.briyani = briyani;
+    }
+}
+
+public abstract class MealBuilder {
+    public abstract void addBriyani();
+    public  abstract  void  addBread();
+    public abstract void  addColdDrink();
+    public abstract void addCurry();
+    public abstract Meal build();
+}
+
+
+public class VegMealBuilder extends MealBuilder{
+    private Meal meal;
+    public VegMealBuilder() {
+        meal = new Meal();
+    }
+    @Override
+    public void addBriyani() {
+        this.meal.setBriyani("Veg");
+    }
+
+    @Override
+    public void addBread() {
+        this.meal.setBread("Naan");
+
+    }
+
+    @Override
+    public void addColdDrink() {
+        this.meal.setColdDrink("Sprite");
+
+    }
+
+    @Override
+    public void addCurry() {
+        this.meal.setCurry("Veg");
+    }
+
+    @Override
+    public Meal build() {
+        return meal;
+    }
+}
+
+
+public class NonVegMealBuilder extends MealBuilder{
+    private Meal meal;
+    public NonVegMealBuilder() {
+        meal = new Meal();
+    }
+    @Override
+    public void addBriyani() {
+        this.meal.setBriyani("Chicken");
+    }
+
+    @Override
+    public void addBread() {
+        this.meal.setBread("Roti");
+
+    }
+
+    @Override
+    public void addColdDrink() {
+        this.meal.setColdDrink("Sprite");
+
+    }
+
+    @Override
+    public void addCurry() {
+        this.meal.setCurry("Non-Veg");
+    }
+
+    @Override
+    public Meal build() {
+        return meal;
+    }
+}
+
+
+//Client will interact with this director which helps to provide the meal.
+//Note that we can have this as per our choice there is no standard way , we can also have two different method 
+//getVegMeal and getNonVegMeal
+// Which will use the builders directly inside the method , in this example we are taking input which builder 
+//which type of builder needing.
+public class MealDirector {
+    private MealBuilder mealBuilder;
+    public MealDirector(MealBuilder mealBuilder) {
+        this.mealBuilder = mealBuilder;
+    }
+    public Meal prepareMeal() {
+        mealBuilder.addBread();
+        mealBuilder.addBriyani();
+        mealBuilder.addCurry();
+        mealBuilder.addColdDrink();
+        return mealBuilder.build();
+    }
+}
+
+___________________________________________Creational Design Pattern ends______________________________________
+________________________________________________________________________________________________________________
+_______________________________________________________________________________________________________________
+__________________________________________Structural Design Pattern starts_____________________________________
+
+Proxy Design Pattern :-
+________________________
+The Proxy design pattern is a structural design pattern that provides a surrogate or placeholder 
+for another object in order to control access to it.
+It allows you to create an intermediary object that acts as a substitute for another object, 
+providing additional functionality or controlling the access to the original object. 
+
+ Here's an example of a Bank Account system where the ATM acts as a proxy for performing deposit, 
+ withdrawal, and checking the balance:
+
+Advantages of Proxy Design Pattern 
+==================================
+* Access control / protection gives by proxy object.
+Here are some specific scenarios where you might consider using the Proxy design pattern:
+Access Control:
+--------------- You can use a Proxy to enforce access control mechanisms. For example, you
+might have an object that contains sensitive data, and you want to restrict access to it based
+on user roles or permissions. The Proxy can handle the authentication and authorization checks
+before allowing access to the actual object.
+
+Caching:
+-------- If you have an object that performs expensive operations or retrieves data from a remote 
+source, you can use a Proxy to implement caching. The Proxy can store the results of previous 
+requests and return them directly instead of invoking the actual object every time. This can greatly 
+improve performance by reducing the need for redundant operations.
+
+public interface Account {
+    public void withdraw();
+    void getAccountNumber();
+}
+--------
+//original
+public class BankAccount implements  Account{
+    @Override
+    public void withdraw() {
+
+    }
+
+    @Override
+    public void getAccountNumber() {
+
+    }
+}
+
+-------------
+//proxy
+public class ATM implements Account{ // This is proxy to bank account object not real
+    @Override
+    public void withdraw() {
+        //Access using actual object. You can also have checks on withdraw to achieve authentication or pin is correct or not.
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.withdraw();
+    }
+
+    @Override
+    public void getAccountNumber() {
+
+    }
+}
+-------------
+
+/**
+ * Proxy pattern : Proxy pattern is structural pattern. We use proxy when we don't want to expose real object and provide proxy object to deal with.
+ * Many times when you are dealing with remote servers and do lookup from the naming server it provides you proxy object from remote server not actual one.
+ * Even in hibernate if remember we have concept of lazy loading where whenever we load data from db we get proxy object of
+ * database and return it however if we get it then only it gets loaded from database. This is one of the best example of proxy object.
+ *
+ * Another example can be Spring AOP where AOP objects are proxy and treated on advice aspects.
+ *
+ * Different type of proxies are :
+ * 1. Remote proxy : When you are dealing with remote system , you require remote object to interact with the system. Usually in past it get used in ejb where beans gets created in container
+ * and client gets object using JNDI system.
+ * 2. Virtual proxy :Delay the object creation until it is required, as explained hibernate uses this.
+ * 3. Protection proxy : this proxy is used when we are dealing with security system where before invoking system implementation we want to check access.
+ * 4. Snart proxy - Perform some additional steps before accessing object.
+ *
+ * Proxy pattern has mainly three components :
+ * 1. A common interface
+ * 2. Real Class
+ * 3. Proxy class - this uses the realclass and it is proxy of real class.
+ *
+ * https://www.javadevjournal.com/java-design-patterns/proxy-design-pattern/
+ * Example consider as Bank Account and ATM where to operate your bank account you have ATM which is proxy of doing process in bank account.
+ *
+ */
+public class Main {
+    public static void main(String[] args) {
+        ATM atm = new ATM();
+        atm.withdraw();
+    }
+}
+
+--------------------------------------------------------------------------------------------------
+2nd example->Here's an example where Credit Card, Debit Card, and UPI (Unified Payments Interface) 
+act as proxies for cash:
+// Subject interface
+interface PaymentMethod {
+    void pay(double amount);
+}
+
+// RealSubject
+class Cash implements PaymentMethod {
+    public void pay(double amount) {
+        System.out.println("Paying in cash: $" + amount);
+    }
+}
+
+// Proxy: Credit Card
+class CreditCard implements PaymentMethod {
+    private Cash cash;
+    
+    public CreditCard() {
+        this.cash = new Cash();
+    }
+    
+    public void pay(double amount) {
+        // Additional credit card processing logic
+        System.out.println("Processing credit card payment: $" + amount);
+        
+        // Delegate the payment to the cash object
+        cash.pay(amount);
+    }
+}
+
+// Proxy: Debit Card
+class DebitCard implements PaymentMethod {
+    private Cash cash;
+    
+    public DebitCard() {
+        this.cash = new Cash();
+    }
+    
+    public void pay(double amount) {
+        // Additional debit card processing logic
+        System.out.println("Processing debit card payment: $" + amount);
+        
+        // Delegate the payment to the cash object
+        cash.pay(amount);
+    }
+}
+
+// Proxy: UPI
+class UPI implements PaymentMethod {
+    private Cash cash;
+    
+    public UPI() {
+        this.cash = new Cash();
+    }
+    
+    public void pay(double amount) {
+        // Additional UPI processing logic
+        System.out.println("Processing UPI payment: $" + amount);
+        
+        // Delegate the payment to the cash object
+        cash.pay(amount);
+    }
+}
+
+// Client
+public class PaymentExample {
+    public static void main(String[] args) {
+        // Create payment proxies
+        PaymentMethod creditCard = new CreditCard();
+        PaymentMethod debitCard = new DebitCard();
+        PaymentMethod upi = new UPI();
+        
+        // Perform payments
+        creditCard.pay(100);
+        debitCard.pay(50);
+        upi.pay(75);
+    }
+}
+In this example, we have the PaymentMethod interface representing the subject, which is implemented by the 
+Cash class, as well as the CreditCard, DebitCard, and UPI classes acting as proxies.
+
+The Cash class represents the real object, which in this case is the actual payment made in cash. 
+It implements the pay() method accordingly.
+
+Each proxy class (CreditCard, DebitCard, and UPI) holds an instance of the Cash class and implements 
+the pay() method. The proxy classes perform additional processing specific to their payment 
+method (e.g., credit card processing, debit card processing, UPI processing) and then delegate the 
+payment to the Cash object.
+
+The PaymentExample class demonstrates the usage of the payment system. It creates instances of the 
+payment proxies (credit card, debit card, UPI) and performs payments using the pay() method.
+
+********************************************************************************************************
+********************************************************************************************************
+Flyweight Design Pattern :-
+____________________________
+
+It is a structural design pattern.
+A Flyweight is a shared object that can be used in multiple context simultaneously. The Flyweight
+acts as an independent object in each context.
+* Primarily it is used to reduce the number of objects created and to decrease memory and increase
+performance. This pattern provides ways to decrease object count thus improving the object structure of 
+application.
+
+*Flyweight Pattern tries to reuse already existing similiar kind of objects by storing then and creates new
+object when no matching object is found.
+
+When to use?
+------------
+- When number if object creation is huge.
+- Object creat is Heavy on memory. 
+- When your application needs large number of objects that shares the most of the common attributes
+called Intrinsic attributes or properties and only few unique attributes calles Extrinsic attribute.
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+// Flyweight interface
+interface Animal {
+    void makeSound();
+}
+
+// Flyweight implementation: CAT
+class Cat implements Animal {
+    public void makeSound() {
+        System.out.println("Meow!");
+    }
+}
+
+// Flyweight implementation: COW
+class Cow implements Animal {
+    public void makeSound() {
+        System.out.println("Moo!");
+    }
+}
+
+// Flyweight implementation: DOG
+class Dog implements Animal {
+    public void makeSound() {
+        System.out.println("Woof!");
+    }
+}
+
+// Flyweight factory
+class AnimalFactory {
+    private static Map<String, Animal> animalCache = new HashMap<>();
+    
+    public static Animal getAnimal(String type) {
+        Animal animal = animalCache.get(type);
+        
+        if (animal == null) {
+            switch (type) {
+                case "CAT":
+                    animal = new Cat();
+                    break;
+                case "COW":
+                    animal = new Cow();
+                    break;
+                case "DOG":
+                    animal = new Dog();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid animal type: " + type);
+            }
+            
+            animalCache.put(type, animal);
+        }
+        
+        return animal;
+    }
+}
+
+// Client
+public class AnimalClient {
+    public static void main(String[] args) {
+        Animal cat1 = AnimalFactory.getAnimal("CAT");
+        cat1.makeSound(); // Output: Meow!
+        
+        Animal cow1 = AnimalFactory.getAnimal("COW");
+        cow1.makeSound(); // Output: Moo!
+        
+        Animal dog1 = AnimalFactory.getAnimal("DOG");
+        dog1.makeSound(); // Output: Woof!
+        
+        Animal cat2 = AnimalFactory.getAnimal("CAT");
+        cat2.makeSound(); // Output: Meow!
+        
+        System.out.println("cat1 and cat2 are the same object? " + (cat1 == cat2)); // Output: true
+    }
+}
+
+In this example, we have the Animal interface, which represents the flyweight objects. 
+It defines the makeSound() method, which is implemented by the concrete flyweight classes: Cat, Cow, and Dog.
+
+The AnimalFactory class acts as the flyweight factory. It maintains a cache (in this case, a HashMap) 
+to store and retrieve flyweight objects based on their type. When the getAnimal() method is called with 
+a specific type, it checks if an object of that type exists in the cache. If not, it creates a new instance 
+of the flyweight object, stores it in the cache, and returns it. If the object already exists in the cache, 
+it directly returns it.
+
+The AnimalClient class demonstrates the usage of the flyweight objects. It calls the AnimalFactory 
+to get flyweight objects of different types (CAT, COW, DOG) and invokes the makeSound() method on each object.
+
+When you run this example, you'll see the output displaying the sound made by each animal. 
+Note that when the getAnimal() method is called multiple times with the same type, the same 
+object is returned (as indicated by the comparison cat1 == cat2 in the example), demonstrating 
+the flyweight behavior where object sharing is achieved to conserve memory.
+ 
+________________________________________Strutural Design Pattern ends________________________________________
+______________________________________________________________________________________________________________
+______________________________________________________________________________________________________________
+_______________________________________________________________________________________________________________
+_________________________________________Behavioural Design Pattern starts____________________________________
 Strategy Pattern:-
 __________________
 # Define a family of algorithms, encapsulate each one, and make them interchangeable.
