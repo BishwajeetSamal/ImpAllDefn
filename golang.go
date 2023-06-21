@@ -698,3 +698,233 @@ func main(){
 
 Now, lets see with break and continue statement
 -----------------------------------------------
+func main(){
+	i , j := 0, 0
+	for i < 10 {
+		fmt.Println(i, j)
+		i, j= i+1, j+1
+
+	if i == 6 && j == 6
+		break
+	}
+	fmt.Println(i,j)
+}
+//0 0
+//1 1
+//2 2
+//3 3 
+//4 4
+//5 5
+//6 6
+
+func main(){
+	i , j := 0, 0
+	for {
+		fmt.Println(i, j)
+		i, j= i+1, j+1
+
+	if i == 6 && j == 6
+		break
+	}
+	fmt.Println(i,j)
+}
+//0 0
+//1 1
+//2 2
+//3 3 
+//4 4
+//5 5
+//6 6
+
+func main(){
+	i , j := 0, 0
+	for i<10{
+		if i == 6 && j == 6
+		continue
+	}
+		fmt.Println(i, j)
+		i, j= i+1, j+1
+
+	
+	fmt.Println(i,j)
+}
+//0 0
+//1 1
+//2 2
+//3 3 
+//4 4
+//5 5
+
+package main
+
+func main(){
+	for i:=0;i<5;i++{
+		for j:=0;j<5;j++{
+			fmt.Println(i*j);
+		}
+	}
+}
+// 0 0 0 0 0 0 1 2 3 4 0 2 4 6 8 0 3 6 9 12 0 4 8  12 16
+
+
+func main(){
+	for i:=0;i<5;i++{
+		for j:=0;j<5;j++{
+
+			if (i*j == 0){
+				continue
+			}
+			fmt.Println(i*j);
+		}
+	}
+}
+// 1 2 3 4 2 4 6 8 3 6 9 12 4 8 12 16
+
+
+func main(){
+	a := []int{1, 2, 3, 4, 5, 6, 7}
+	for k,v := range a{
+		fmt.Println(k,v)
+	}
+}
+//0  1
+//1  2
+//2  3
+//3  4
+//4  5
+//5  6
+//6  7
+
+
+func main(){
+	a := []int{1, 2, 3, 4, 5, 6, 7}
+	for _,v := range a{
+		fmt.Println(v)
+	}
+}
+//1
+//2
+//3 
+//4 
+//5 
+//6
+//7
+
+func main(){
+	shoppingCart = map[String]int{
+		"Keyboard": 100,
+		"Mouse": 	50,
+		"Laptop":	1000,
+	}
+
+	shoppingCart["Laptop"] = 1500
+	shoppingCart["Monitor"] = 1200
+
+	for k,v := range shoppingCart{
+		fmt.Println(k,  v)
+	}
+}
+//Keyboard   100
+//Mouse	     50
+//Laptop     1500
+//Monitor    1200
+
+func main(){
+	shoppingCart = map[String]int{
+		"Keyboard": 100,
+		"Mouse": 	50,
+		"Laptop":	1000,
+	}
+
+	shoppingCart["Laptop"] = 1500
+	shoppingCart["Monitor"] = 1200
+
+	for k,v := range shoppingCart{
+		fmt.Println(k)
+	}
+}
+//Keyboard  
+//Mouse	    
+//Laptop    
+//Monitor   
+---------------------------------------------------------------------------------------
+Defer, Panic and Recover
+------------------------
+Defer
+-----
+Defer means you are defering any of the statement to be executed at that particular
+moment. That particular statement will executed at the end of that method before
+returning the value.
+
+
+package main 
+
+func main(){
+	fmt.Println(1)
+	fmt.Println(2)
+	fmt.Println(3)
+}
+//1
+//2
+//3
+
+func main(){
+	fmt.Println(1)
+	defer fmt.Println(2)
+	fmt.Println(3)
+}
+//1
+//3
+//2
+
+func main(){
+	defer fmt.Println(1)
+	defer fmt.Println(2)
+	defer fmt.Println(3)
+}
+//3
+//2
+//1
+
+I most cases, golanguage defers are used to free the resources you have created.
+Lets take an example,
+=============================================================================
+func main(){
+	f := createFile("defer.txt")
+	defer closeFile(f)
+	writeFile(f)
+}
+
+func createFile(p string) *os.File {
+	fmt.Println("creating")
+	f, err := os.Create(p)
+	if err!=nil {
+		panic(err)
+	} 
+	return f
+}
+
+func writeFile(f *os.File){
+	fmt.Println("writing")
+	fmt.Fprintln(f, "data")
+}
+
+func closeFile(f *os.File){
+	fmt.Println("closing")
+	err := f.Close();
+
+	if err!=nil {
+		f.Fprintf(os.Stderr, "error: %v\n", err)
+		os.Exit(1)
+	}
+}	
+//creating
+//writing 
+//closing
+================================================================================
+panic
+-----
+*Panic means panicking the application that means something went wrong and golang is not
+able to handle that and its not able to recover it. Hence it will through an exception.
+
+*Panic is used send the signal to the compiler that is an unrecoverable condition.
