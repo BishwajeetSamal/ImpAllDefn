@@ -78,7 +78,7 @@ ___________________________________________Creational Design Pattern starts_____
 _________________________________________________________________________________________________________________
 Singleton Design Pattern:-
 __________________________
-he Singleton Design Pattern is a creational design pattern that ensures the existence of only one instance 
+The Singleton Design Pattern is a creational design pattern that ensures the existence of only one instance 
 (object) of a class throughout the application and provides a global point of access to that instance
 
 Here's a simple explanation of the Singleton pattern:
@@ -1373,4 +1373,415 @@ flexibility of choosing either one of them, we generally use stratey design patt
 
 *************************************************************************************************************
 *************************************************************************************************************
+State Design Pattern :-
+________________________
+The State design pattern is a behavioral design pattern that allows an object to alter its behavior when its
+internal state changes. This pattern is useful when an object needs to change its behavior dynamically 
+based on its internal state, without explicitly checking and managing different conditions.
 
+Based on the State 1 -> Behaviour 1
+             State 2 -> Behaviour 2   
+             State 3 -> Behaviour 3 etc.
+
+Intent:
+
+Allow an object to change its behavior dynamically when its internal state changes.
+Encapsulate state-specific behavior into separate classes.
+Simplify complex conditionals by delegating behavior to state objects.
+Enable easy extensibility by adding new states without modifying existing code.
+
+Structure:
+The State pattern typically consists of the following elements:
+
+Context: It represents the object whose behavior changes based on its internal state.
+It maintains a reference to the current state object and delegates state-specific requests to that object.
+
+State: It defines the interface for the different states that the Context object can be in. 
+It declares the methods that handle requests and can change the current state of the Context.
+
+Concrete States: These are the specific classes that implement the State interface. 
+Each concrete state provides its own implementation of the state-specific behavior defined by the State interface.
+
+Implementation:
+The State pattern can be implemented in several steps:
+
+Identify the operations that vary depending on the state of an object.
+Create an interface (State) to define those operations.
+Implement the State interface in concrete classes, each representing a different state.
+In the Context class, maintain a reference to the current state object and delegate state-specific requests to that object.
+The Context class can change its current state by setting it to a different concrete state class.
+
+Benefits:
+--------
+Encourages clean separation of concerns by encapsulating state-specific behavior in separate classes.
+Makes it easier to add new states without modifying existing code.
+Simplifies code by removing large conditional statements that check the object's state.
+Improves maintainability and extensibility.
+
+Let's consider an example of a document editor. The editor has multiple states such as 
+"EditingState," "SavingState," and "PrintingState." Each state has different behaviors associated 
+with it, such as allowing edits in the editing state, saving the document in the saving state, and 
+printing the document in the printing state. By applying the State pattern, the document editor 
+can dynamically change its behavior based on its internal state.
+
+In this example, the Context class would be the DocumentEditor, and the different states 
+(EditingState, SavingState, PrintingState) would be implemented as Concrete State classes, each 
+providing its own implementation for the document-related operations.
+
+// State interface
+interface DocumentState {
+    void performOperation(DocumentEditor editor);
+}
+
+// Concrete State classes
+class EditingState implements DocumentState {
+    @Override
+    public void performOperation(DocumentEditor editor) {
+        System.out.println("Performing editing operation...");
+        // Logic for editing the document
+    }
+}
+
+class SavingState implements DocumentState {
+    @Override
+    public void performOperation(DocumentEditor editor) {
+        System.out.println("Performing saving operation...");
+        // Logic for saving the document
+    }
+}
+
+class PrintingState implements DocumentState {
+    @Override
+    public void performOperation(DocumentEditor editor) {
+        System.out.println("Performing printing operation...");
+        // Logic for printing the document
+    }
+}
+
+// Context class
+class DocumentEditor {
+    private DocumentState currentState;
+
+    public DocumentEditor() {
+        // Set initial state to EditingState
+        currentState = new EditingState();
+    }
+
+    public void setState(DocumentState state) {
+        this.currentState = state;
+    }
+
+    public void performOperation() {
+        currentState.performOperation(this);
+    }
+}
+
+// Usage example
+public class Main {
+    public static void main(String[] args) {
+        DocumentEditor editor = new DocumentEditor();
+
+        // Perform editing operation
+        editor.performOperation();
+
+        // Change state to SavingState and perform saving operation
+        editor.setState(new SavingState());
+        editor.performOperation();
+
+        // Change state to PrintingState and perform printing operation
+        editor.setState(new PrintingState());
+        editor.performOperation();
+    }
+}
+
+In this example, we have the DocumentState interface representing the different states that
+ the DocumentEditor can be in. The concrete state classes (EditingState, SavingState, PrintingState) 
+ implement the DocumentState interface and provide their own implementation for the document operations.
+
+The DocumentEditor class represents the context and maintains a reference to the current state object. 
+It has a setState method to change the state and a performOperation method that delegates the operation to the current state.
+
+In the Main class, we create an instance of DocumentEditor and demonstrate how the behavior of the 
+editor changes based on its internal state. Initially, it performs an editing operation, then changes 
+state to saving and performs a saving operation, and finally changes state to printing and performs a printing operation.
+
+*************************************************************************************************************
+*************************************************************************************************************
+
+Observer Design Pattern :-
+___________________________
+It is a part of behavioural design pattern. 
+The Observer pattern is a behavioral design pattern that establishes a one-to-many dependency between objects. 
+In this pattern, when one object (known as the subject or observable) changes its state, all its dependents
+ (known as observers) are automatically notified and updated.
+The Observer pattern promotes loose coupling between the subject and its observers, allowing for flexible and maintainable code.
+
+Let's consider an example of an Amazon product "Notify Me" feature using the Observer design pattern. 
+This feature allows customers to subscribe to notifications when a product becomes available for purchase.
+
+There is one onservable and multiple observers.
+So as the observable changes the state then all the observers get notified.It has one to many relationship.
+
+import java.util.ArrayList;
+import java.util.List;
+
+// Observer interface
+interface Observer {
+    void update(String productName);
+}
+
+// Observable interface (renamed from Subject)
+interface Observable {
+    void registerObserver(Observer observer);
+    void removeObserver(Observer observer);
+    void notifyObservers();
+}
+
+// Concrete Observable (renamed from Product)
+class AmazonProduct implements Observable {
+    private String productName;
+    private boolean available;
+    private List<Observer> observers;
+
+    public AmazonProduct(String productName) {
+        this.productName = productName;
+        this.observers = new ArrayList<>();
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(productName);
+        }
+    }
+
+    // Method to update product availability
+    public void setAvailable(boolean available) {
+        this.available = available;
+        if (available) {
+            notifyObservers();
+        }
+    }
+}
+
+// Concrete Observer
+class Customer implements Observer {
+    private String customerName;
+
+    public Customer(String customerName) {
+        this.customerName = customerName;
+    }
+
+    @Override
+    public void update(String productName) {
+        System.out.println("Notification for " + customerName + ": " + productName + " is now available on Amazon.");
+    }
+}
+
+// Usage
+public class Main {
+    public static void main(String[] args) {
+        // Create an Amazon product
+        AmazonProduct product = new AmazonProduct("Smartphone");
+
+        // Create customers
+        Customer customer1 = new Customer("John");
+        Customer customer2 = new Customer("Alice");
+
+        // Register customers as observers
+        product.registerObserver(customer1);
+        product.registerObserver(customer2);
+
+        // Simulate product availability change
+        product.setAvailable(true);
+        // Output:
+        // Notification for John: Smartphone is now available on Amazon.
+        // Notification for Alice: Smartphone is now available on Amazon.
+    }
+}
+
+In this updated example, the "Observable" interface replaces the previous "Subject" 
+interface, and the "AmazonProduct" class replaces the previous "Product" class. 
+The functionality and usage of the classes/interfaces remain the same.
+
+
+*************************************************************************************************************
+*************************************************************************************************************
+Decorator Design Pattern:-
+__________________________
+The Decorator pattern is a structural design pattern that allows adding new behaviors or functionalities 
+to an existing object dynamically without modifying its structure. It provides a flexible alternative to 
+subclassing for extending the functionality of an object.
+
+Intent:
+-------
+Attach additional responsibilities to an object dynamically.
+Provide a flexible alternative to subclassing for extending functionality.
+Allow behavior to be added or removed at runtime.
+Keep the class hierarchy as lean as possible.
+
+
+The Decorator pattern is a structural design pattern that allows adding new behaviors or functionalities to an existing object dynamically without modifying its structure. It provides a flexible alternative to subclassing for extending the functionality of an object.
+
+Intent:
+
+Attach additional responsibilities to an object dynamically.
+Provide a flexible alternative to subclassing for extending functionality.
+Allow behavior to be added or removed at runtime.
+Keep the class hierarchy as lean as possible.
+
+
+Structure:
+----------
+The Decorator pattern consists of the following components:
+
+Component: It is the base interface or abstract class that defines the common interface for both the 
+concrete component and decorators.
+Concrete Component: It is the original object to which new behaviors can be added.
+Decorator: It is the abstract class that implements the component interface and has a reference to 
+the component object. It acts as a base class for concrete decorators.
+Concrete Decorator: It is the concrete implementation of the decorator. It adds new behaviors or 
+functionalities to the component.
+Implementation:
+To implement the Decorator pattern, follow these steps:
+
+Define the component interface or abstract class that represents the common interface for 
+both the concrete component and decorators.
+Implement the concrete component class that provides the base functionality.
+Create an abstract decorator class that implements the component interface and contains 
+a reference to the component object.
+Implement concrete decorator classes by extending the abstract decorator class. 
+Each concrete decorator adds new behaviors or functionalities to the component.
+The concrete decorators can wrap the component multiple times, adding multiple layers of functionalities.
+The client interacts with the component through the decorator, which can dynamically add or remove behaviors at runtime.
+
+Benefits:
+---------
+Allows for the dynamic addition of new behaviors or functionalities to objects without modifying their structure.
+Supports the open-closed principle by allowing the addition of new decorators without modifying existing code.
+Provides a flexible and modular approach to extend object functionality at runtime.
+Allows for the combination of multiple decorators to create various combinations of behaviors.
+Promotes the single responsibility principle by separating the concerns of object functionality into individual decorators.
+
+example of the Decorator pattern applied to a pizza ordering system:
+
+// Component interface
+interface Pizza {
+    String getDescription();
+    double getCost();
+}
+
+// Concrete component
+class PlainPizza implements Pizza {
+    @Override
+    public String getDescription() {
+        return "Plain Pizza";
+    }
+
+    @Override
+    public double getCost() {
+        return 5.0;
+    }
+}
+
+// Decorator
+abstract class PizzaDecorator implements Pizza {
+    protected Pizza decoratedPizza;
+
+    public PizzaDecorator(Pizza decoratedPizza) {
+        this.decoratedPizza = decoratedPizza;
+    }
+
+    @Override
+    public String getDescription() {
+        return decoratedPizza.getDescription();
+    }
+
+    @Override
+    public double getCost() {
+        return decoratedPizza.getCost();
+    }
+}
+
+// Concrete decorator
+class CheeseDecorator extends PizzaDecorator {
+    public CheeseDecorator(Pizza decoratedPizza) {
+        super(decoratedPizza);
+    }
+
+    @Override
+    public String getDescription() {
+        return super.getDescription() + ", with Cheese";
+    }
+
+    @Override
+    public double getCost() {
+        return super.getCost() + 2.0;
+    }
+}
+
+// Concrete decorator
+class PepperoniDecorator extends PizzaDecorator {
+    public PepperoniDecorator(Pizza decoratedPizza) {
+        super(decoratedPizza);
+    }
+
+    @Override
+    public String getDescription() {
+        return super.getDescription() + ", with Pepperoni";
+    }
+
+    @Override
+    public double getCost() {
+        return super.getCost() + 3.0;
+    }
+}
+
+// Usage
+public class Main {
+    public static void main(String[] args) {
+        // Create a plain pizza
+        Pizza pizza = new PlainPizza();
+
+        // Add cheese to the pizza
+        Pizza cheesePizza = new CheeseDecorator(pizza);
+
+        // Add pepperoni to the pizza
+        Pizza pepperoniPizza = new PepperoniDecorator(cheesePizza);
+
+        // Get the final description and cost
+        System.out.println("Description: " + pepperoniPizza.getDescription());
+        System.out.println("Cost: $" + pepperoniPizza.getCost());
+    }
+}
+
+In this example, the Pizza interface represents the component, which is the base pizza. 
+The PlainPizza class is the concrete component that provides the basic pizza functionality.
+
+The PizzaDecorator class is the abstract decorator, which implements the Pizza interface and 
+holds a reference to the decorated pizza. It acts as a base class for concrete decorators.
+
+The CheeseDecorator and PepperoniDecorator classes are the concrete decorators. They extend 
+the PizzaDecorator class and add cheese and pepperoni toppings to the decorated pizza.
+
+In the Main class, we create a plain pizza object. Then, we decorate it by adding cheese using 
+the CheeseDecorator and further decorate it by adding pepperoni using the PepperoniDecorator. 
+Finally, we obtain the description and cost of the decorated pizza.
+----------------------------------------------------------
+The output will be:
+Description: Plain Pizza, with Cheese, with Pepperoni
+Cost: $10.0
+-----------------------------------------------------------
+
+*************************************************************************************************************
+*************************************************************************************************************
