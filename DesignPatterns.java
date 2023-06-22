@@ -654,7 +654,8 @@ public class House {
         this.hasParkingArea = builder.hasParkingArea;
     }
 
-    // Getters for the attributes (omitted for brevity)
+    // Getters for the attributes (omitted for brevity( It is about expressing something in a clear and 
+    //succinct(concise and precise manner) manner without unnecessary elaboration or verbosity(excessive detail).))
 
     // Builder class for constructing the House object
     public static class Builder {
@@ -1303,6 +1304,142 @@ When you run this example, you'll see the output displaying the sound made by ea
 Note that when the getAnimal() method is called multiple times with the same type, the same 
 object is returned (as indicated by the comparison cat1 == cat2 in the example), demonstrating 
 the flyweight behavior where object sharing is achieved to conserve memory.
+
+import java.util.HashMap;
+import java.util.Map;
+
+// Flyweight interface
+interface Shape {
+    void draw();
+}
+
+// Flyweight implementation: Circle
+class Circle implements Shape {
+    private String color;
+    private int radius;
+
+    public Circle(String color) {
+        this.color = color;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    public void draw() {
+        System.out.println("Drawing a " + color + " circle with radius " + radius);
+    }
+}
+
+// Flyweight factory
+class ShapeFactory {
+    private static Map<String, Shape> shapeCache = new HashMap<>();
+
+    public static Shape getCircle(String color) {
+        Shape circle = shapeCache.get(color);
+
+        if (circle == null) {
+            circle = new Circle(color);
+            shapeCache.put(color, circle);
+        }
+
+        return circle;
+    }
+}
+
+// Client
+public class Client {
+    private static final String[] COLORS = { "Red", "Green", "Blue", "Yellow", "Black" };
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            String color = COLORS[(int) (Math.random() * COLORS.length)];
+            int radius = (int) (Math.random() * 10) + 1;
+
+            Circle circle = (Circle) ShapeFactory.getCircle(color);
+            circle.setRadius(radius);
+            circle.draw();
+        }
+    }
+}
+
+Sure! Here's an example to illustrate the Flyweight design pattern:
+
+java
+Copy code
+import java.util.HashMap;
+import java.util.Map;
+
+// Flyweight interface
+interface Shape {
+    void draw();
+}
+
+// Flyweight implementation: Circle
+class Circle implements Shape {
+    private String color;
+    private int radius;
+
+    public Circle(String color) {
+        this.color = color;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    public void draw() {
+        System.out.println("Drawing a " + color + " circle with radius " + radius);
+    }
+}
+
+// Flyweight factory
+class ShapeFactory {
+    private static Map<String, Shape> shapeCache = new HashMap<>();
+
+    public static Shape getCircle(String color) {
+        Shape circle = shapeCache.get(color);
+
+        if (circle == null) {
+            circle = new Circle(color);
+            shapeCache.put(color, circle);
+        }
+
+        return circle;
+    }
+}
+
+// Client
+public class Client {
+    private static final String[] COLORS = { "Red", "Green", "Blue", "Yellow", "Black" };
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            String color = COLORS[(int) (Math.random() * COLORS.length)];
+            int radius = (int) (Math.random() * 10) + 1;
+
+            Circle circle = (Circle) ShapeFactory.getCircle(color);
+            circle.setRadius(radius);
+            circle.draw();
+        }
+    }
+}
+In this example, we have a Shape interface representing the flyweight objects, and the Circle class 
+as a concrete implementation of the Shape interface. The Circle class has intrinsic state (color) 
+and extrinsic state (radius), where the intrinsic state is shared among multiple circles.
+
+The ShapeFactory class acts as a flyweight factory, creating and managing flyweight objects (circles) 
+based on their intrinsic state (color). It caches the created flyweights and returns the cached object 
+if it already exists, ensuring object reusability.
+
+The Client class demonstrates the usage of the flyweight objects. It requests circles of random colors 
+and radii from the ShapeFactory, sets the extrinsic state (radius), and calls the draw() method to draw 
+the circle.
+
+The benefit of using the Flyweight design pattern in this example is that it reduces memory consumption 
+by sharing the common intrinsic state (color) among multiple circles, rather than creating a separate 
+object for each color. It allows us to create a large number of circles efficiently and improves performance 
+in scenarios where there are a large number of similar objects with shared state.
 
 *************************************************************************************************************
 *************************************************************************************************************
