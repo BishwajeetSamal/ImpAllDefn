@@ -373,6 +373,80 @@ In the client code, you can receive the product category from user input or any 
 Then, using the ProductFactory, you create the specific product object based on the category and 
 call the displayInfo() method to show the relevant information about the product.
 
+/** Anathor example of Factory Design Pattern */
+--------------------------------------------------
+// Notification interface
+interface Notification {
+    void sendNotification();
+}
+
+// Concrete EmailNotification
+class EmailNotification implements Notification {
+    @Override
+    public void sendNotification() {
+        System.out.println("Sending email notification...");
+    }
+}
+
+// Concrete SMSNotification
+class SMSNotification implements Notification {
+    @Override
+    public void sendNotification() {
+        System.out.println("Sending SMS notification...");
+    }
+}
+
+// Concrete PushNotification
+class PushNotification implements Notification {
+    @Override
+    public void sendNotification() {
+        System.out.println("Sending push notification...");
+    }
+}
+
+// Concrete SlackNotification
+class SlackNotification implements Notification {
+    @Override
+    public void sendNotification() {
+        System.out.println("Sending Slack notification...");
+    }
+}
+
+// NotificationFactory
+class NotificationFactory {
+    // Factory method to create a specific type of notification
+    public static Notification createNotification(String type) {
+        switch (type) {
+            case "email":
+                return new EmailNotification();
+            case "sms":
+                return new SMSNotification();
+            case "push":
+                return new PushNotification();
+            case "slack":
+                return new SlackNotification();
+            default:
+                throw new IllegalArgumentException("Invalid notification type: " + type);
+        }
+    }
+}
+
+// Usage
+public class Main {
+    public static void main(String[] args) {
+        // Create different types of notifications using the factory
+        Notification emailNotification = NotificationFactory.createNotification("email");
+        Notification smsNotification = NotificationFactory.createNotification("sms");
+        Notification pushNotification = NotificationFactory.createNotification("push");
+        Notification slackNotification = NotificationFactory.createNotification("slack");
+
+        // Send the notifications
+        emailNotification.sendNotification();
+        smsNotification.sendNotification();
+        pushNotification.sendNotification();
+        slackNotification.sendNotification();
+    }
+}
 
 *************************************************************************************************************
 *************************************************************************************************************
