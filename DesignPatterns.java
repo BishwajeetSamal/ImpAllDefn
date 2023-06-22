@@ -1229,6 +1229,176 @@ When you run this example, you'll see the output displaying the sound made by ea
 Note that when the getAnimal() method is called multiple times with the same type, the same 
 object is returned (as indicated by the comparison cat1 == cat2 in the example), demonstrating 
 the flyweight behavior where object sharing is achieved to conserve memory.
+
+*************************************************************************************************************
+*************************************************************************************************************
+Decorator Design Pattern:-
+__________________________
+The Decorator pattern is a structural design pattern that allows adding new behaviors or functionalities 
+to an existing object dynamically without modifying its structure. It provides a flexible alternative to 
+subclassing for extending the functionality of an object.
+
+Intent:
+-------
+Attach additional responsibilities to an object dynamically.
+Provide a flexible alternative to subclassing for extending functionality.
+Allow behavior to be added or removed at runtime.
+Keep the class hierarchy as lean as possible.
+
+
+The Decorator pattern is a structural design pattern that allows adding new behaviors or functionalities to an 
+existing object dynamically without modifying its structure. 
+It provides a flexible alternative to subclassing for extending the functionality of an object.
+
+Intent:
+
+Attach additional responsibilities to an object dynamically.
+Provide a flexible alternative to subclassing for extending functionality.
+Allow behavior to be added or removed at runtime.
+Keep the class hierarchy as lean as possible.
+
+
+Structure:
+----------
+The Decorator pattern consists of the following components:
+
+Component: It is the base interface or abstract class that defines the common interface for both the 
+concrete component and decorators.
+Concrete Component: It is the original object to which new behaviors can be added.
+Decorator: It is the abstract class that implements the component interface and has a reference to 
+the component object. It acts as a base class for concrete decorators.
+Concrete Decorator: It is the concrete implementation of the decorator. It adds new behaviors or 
+functionalities to the component.
+Implementation:
+To implement the Decorator pattern, follow these steps:
+
+Define the component interface or abstract class that represents the common interface for 
+both the concrete component and decorators.
+Implement the concrete component class that provides the base functionality.
+Create an abstract decorator class that implements the component interface and contains 
+a reference to the component object.
+Implement concrete decorator classes by extending the abstract decorator class. 
+Each concrete decorator adds new behaviors or functionalities to the component.
+The concrete decorators can wrap the component multiple times, adding multiple layers of functionalities.
+The client interacts with the component through the decorator, which can dynamically add or remove behaviors at runtime.
+
+Benefits:
+---------
+Allows for the dynamic addition of new behaviors or functionalities to objects without modifying their structure.
+Supports the open-closed principle by allowing the addition of new decorators without modifying existing code.
+Provides a flexible and modular approach to extend object functionality at runtime.
+Allows for the combination of multiple decorators to create various combinations of behaviors.
+Promotes the single responsibility principle by separating the concerns of object functionality into individual decorators.
+
+example of the Decorator pattern applied to a pizza ordering system:
+
+// Component interface
+interface Pizza {
+    String getDescription();
+    double getCost();
+}
+
+// Concrete component
+class PlainPizza implements Pizza {
+    @Override
+    public String getDescription() {
+        return "Plain Pizza";
+    }
+
+    @Override
+    public double getCost() {
+        return 5.0;
+    }
+}
+
+// Decorator
+abstract class PizzaDecorator implements Pizza {
+    protected Pizza decoratedPizza;
+
+    public PizzaDecorator(Pizza decoratedPizza) {
+        this.decoratedPizza = decoratedPizza;
+    }
+
+    @Override
+    public String getDescription() {
+        return decoratedPizza.getDescription();
+    }
+
+    @Override
+    public double getCost() {
+        return decoratedPizza.getCost();
+    }
+}
+
+// Concrete decorator
+class CheeseDecorator extends PizzaDecorator {
+    public CheeseDecorator(Pizza decoratedPizza) {
+        super(decoratedPizza);
+    }
+
+    @Override
+    public String getDescription() {
+        return super.getDescription() + ", with Cheese";
+    }
+
+    @Override
+    public double getCost() {
+        return super.getCost() + 2.0;
+    }
+}
+
+// Concrete decorator
+class PepperoniDecorator extends PizzaDecorator {
+    public PepperoniDecorator(Pizza decoratedPizza) {
+        super(decoratedPizza);
+    }
+
+    @Override
+    public String getDescription() {
+        return super.getDescription() + ", with Pepperoni";
+    }
+
+    @Override
+    public double getCost() {
+        return super.getCost() + 3.0;
+    }
+}
+
+// Usage
+public class Main {
+    public static void main(String[] args) {
+        // Create a plain pizza
+        Pizza pizza = new PlainPizza();
+
+        // Add cheese to the pizza
+        Pizza cheesePizza = new CheeseDecorator(pizza);
+
+        // Add pepperoni to the pizza
+        Pizza pepperoniPizza = new PepperoniDecorator(cheesePizza);
+
+        // Get the final description and cost
+        System.out.println("Description: " + pepperoniPizza.getDescription());
+        System.out.println("Cost: $" + pepperoniPizza.getCost());
+    }
+}
+
+In this example, the Pizza interface represents the component, which is the base pizza. 
+The PlainPizza class is the concrete component that provides the basic pizza functionality.
+
+The PizzaDecorator class is the abstract decorator, which implements the Pizza interface and 
+holds a reference to the decorated pizza. It acts as a base class for concrete decorators.
+
+The CheeseDecorator and PepperoniDecorator classes are the concrete decorators. They extend 
+the PizzaDecorator class and add cheese and pepperoni toppings to the decorated pizza.
+
+In the Main class, we create a plain pizza object. Then, we decorate it by adding cheese using 
+the CheeseDecorator and further decorate it by adding pepperoni using the PepperoniDecorator. 
+Finally, we obtain the description and cost of the decorated pizza.
+----------------------------------------------------------
+The output will be:
+Description: Plain Pizza, with Cheese, with Pepperoni
+Cost: $10.0
+-----------------------------------------------------------
  
 ________________________________________Strutural Design Pattern ends________________________________________
 ______________________________________________________________________________________________________________
@@ -1615,175 +1785,7 @@ interface, and the "AmazonProduct" class replaces the previous "Product" class.
 The functionality and usage of the classes/interfaces remain the same.
 
 
-*************************************************************************************************************
-*************************************************************************************************************
-Decorator Design Pattern:-
-__________________________
-The Decorator pattern is a structural design pattern that allows adding new behaviors or functionalities 
-to an existing object dynamically without modifying its structure. It provides a flexible alternative to 
-subclassing for extending the functionality of an object.
 
-Intent:
--------
-Attach additional responsibilities to an object dynamically.
-Provide a flexible alternative to subclassing for extending functionality.
-Allow behavior to be added or removed at runtime.
-Keep the class hierarchy as lean as possible.
-
-
-The Decorator pattern is a structural design pattern that allows adding new behaviors or functionalities to an 
-existing object dynamically without modifying its structure. 
-It provides a flexible alternative to subclassing for extending the functionality of an object.
-
-Intent:
-
-Attach additional responsibilities to an object dynamically.
-Provide a flexible alternative to subclassing for extending functionality.
-Allow behavior to be added or removed at runtime.
-Keep the class hierarchy as lean as possible.
-
-
-Structure:
-----------
-The Decorator pattern consists of the following components:
-
-Component: It is the base interface or abstract class that defines the common interface for both the 
-concrete component and decorators.
-Concrete Component: It is the original object to which new behaviors can be added.
-Decorator: It is the abstract class that implements the component interface and has a reference to 
-the component object. It acts as a base class for concrete decorators.
-Concrete Decorator: It is the concrete implementation of the decorator. It adds new behaviors or 
-functionalities to the component.
-Implementation:
-To implement the Decorator pattern, follow these steps:
-
-Define the component interface or abstract class that represents the common interface for 
-both the concrete component and decorators.
-Implement the concrete component class that provides the base functionality.
-Create an abstract decorator class that implements the component interface and contains 
-a reference to the component object.
-Implement concrete decorator classes by extending the abstract decorator class. 
-Each concrete decorator adds new behaviors or functionalities to the component.
-The concrete decorators can wrap the component multiple times, adding multiple layers of functionalities.
-The client interacts with the component through the decorator, which can dynamically add or remove behaviors at runtime.
-
-Benefits:
----------
-Allows for the dynamic addition of new behaviors or functionalities to objects without modifying their structure.
-Supports the open-closed principle by allowing the addition of new decorators without modifying existing code.
-Provides a flexible and modular approach to extend object functionality at runtime.
-Allows for the combination of multiple decorators to create various combinations of behaviors.
-Promotes the single responsibility principle by separating the concerns of object functionality into individual decorators.
-
-example of the Decorator pattern applied to a pizza ordering system:
-
-// Component interface
-interface Pizza {
-    String getDescription();
-    double getCost();
-}
-
-// Concrete component
-class PlainPizza implements Pizza {
-    @Override
-    public String getDescription() {
-        return "Plain Pizza";
-    }
-
-    @Override
-    public double getCost() {
-        return 5.0;
-    }
-}
-
-// Decorator
-abstract class PizzaDecorator implements Pizza {
-    protected Pizza decoratedPizza;
-
-    public PizzaDecorator(Pizza decoratedPizza) {
-        this.decoratedPizza = decoratedPizza;
-    }
-
-    @Override
-    public String getDescription() {
-        return decoratedPizza.getDescription();
-    }
-
-    @Override
-    public double getCost() {
-        return decoratedPizza.getCost();
-    }
-}
-
-// Concrete decorator
-class CheeseDecorator extends PizzaDecorator {
-    public CheeseDecorator(Pizza decoratedPizza) {
-        super(decoratedPizza);
-    }
-
-    @Override
-    public String getDescription() {
-        return super.getDescription() + ", with Cheese";
-    }
-
-    @Override
-    public double getCost() {
-        return super.getCost() + 2.0;
-    }
-}
-
-// Concrete decorator
-class PepperoniDecorator extends PizzaDecorator {
-    public PepperoniDecorator(Pizza decoratedPizza) {
-        super(decoratedPizza);
-    }
-
-    @Override
-    public String getDescription() {
-        return super.getDescription() + ", with Pepperoni";
-    }
-
-    @Override
-    public double getCost() {
-        return super.getCost() + 3.0;
-    }
-}
-
-// Usage
-public class Main {
-    public static void main(String[] args) {
-        // Create a plain pizza
-        Pizza pizza = new PlainPizza();
-
-        // Add cheese to the pizza
-        Pizza cheesePizza = new CheeseDecorator(pizza);
-
-        // Add pepperoni to the pizza
-        Pizza pepperoniPizza = new PepperoniDecorator(cheesePizza);
-
-        // Get the final description and cost
-        System.out.println("Description: " + pepperoniPizza.getDescription());
-        System.out.println("Cost: $" + pepperoniPizza.getCost());
-    }
-}
-
-In this example, the Pizza interface represents the component, which is the base pizza. 
-The PlainPizza class is the concrete component that provides the basic pizza functionality.
-
-The PizzaDecorator class is the abstract decorator, which implements the Pizza interface and 
-holds a reference to the decorated pizza. It acts as a base class for concrete decorators.
-
-The CheeseDecorator and PepperoniDecorator classes are the concrete decorators. They extend 
-the PizzaDecorator class and add cheese and pepperoni toppings to the decorated pizza.
-
-In the Main class, we create a plain pizza object. Then, we decorate it by adding cheese using 
-the CheeseDecorator and further decorate it by adding pepperoni using the PepperoniDecorator. 
-Finally, we obtain the description and cost of the decorated pizza.
-----------------------------------------------------------
-The output will be:
-Description: Plain Pizza, with Cheese, with Pepperoni
-Cost: $10.0
------------------------------------------------------------
 
 *************************************************************************************************************
 *************************************************************************************************************
