@@ -1631,7 +1631,9 @@ Allow behavior to be added or removed at runtime.
 Keep the class hierarchy as lean as possible.
 
 
-The Decorator pattern is a structural design pattern that allows adding new behaviors or functionalities to an existing object dynamically without modifying its structure. It provides a flexible alternative to subclassing for extending the functionality of an object.
+The Decorator pattern is a structural design pattern that allows adding new behaviors or functionalities to an 
+existing object dynamically without modifying its structure. 
+It provides a flexible alternative to subclassing for extending the functionality of an object.
 
 Intent:
 
@@ -1785,3 +1787,161 @@ Cost: $10.0
 
 *************************************************************************************************************
 *************************************************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+Here is an example of using factory design pattern first and subsequently implement the (factory & strategy design pattern)
+____________________________________________________________________________________________________________________________
+
+// PaymentStrategy interface
+interface PaymentStrategy {
+    void pay(double amount);
+}
+
+// Concrete payment strategies implementing the PaymentStrategy interface
+class AmazonPay implements PaymentStrategy {
+    @Override
+    public void pay(double amount) {
+        System.out.println("Payment of $" + amount + " processed through Amazon Pay");
+        // Logic for processing payment through Amazon Pay
+    }
+}
+
+class AmazonGiftcard implements PaymentStrategy {
+    @Override
+    public void pay(double amount) {
+        System.out.println("Payment of $" + amount + " processed through Amazon Giftcard");
+        // Logic for processing payment through Amazon Giftcard
+    }
+}
+
+// AmazonFactory for creating instances of Amazon
+class AmazonFactory {
+    public static Amazon createAmazon() {
+        return new Amazon();
+    }
+}
+
+// Amazon class
+class Amazon {
+    private PaymentStrategy paymentStrategy;
+
+    public void setPaymentStrategy(PaymentStrategy paymentStrategy) {
+        this.paymentStrategy = paymentStrategy;
+    }
+
+    public void processPayment(double amount) {
+        if (paymentStrategy == null) {
+            throw new IllegalStateException("Payment strategy is not set");
+        }
+        paymentStrategy.pay(amount);
+    }
+}
+
+// Client code
+public class Main {
+    public static void main(String[] args) {
+        // Create an instance of Amazon using the AmazonFactory
+        Amazon amazon = AmazonFactory.createAmazon();
+
+        // Set the payment strategy to Amazon Pay
+        PaymentStrategy amazonPay = new AmazonPay();
+        amazon.setPaymentStrategy(amazonPay);
+        amazon.processPayment(100.0); // Output: Payment of $100.0 processed through Amazon Pay
+
+        // Set the payment strategy to Amazon Giftcard
+        PaymentStrategy amazonGiftcard = new AmazonGiftcard();
+        amazon.setPaymentStrategy(amazonGiftcard);
+        amazon.processPayment(50.0); // Output: Payment of $50.0 processed through Amazon Giftcard
+    }
+}
+
+
+-------------------------------------------------------------------------------------------------------
+Now, 
+
+// SortingStrategy interface
+interface SortingStrategy {
+    void sort(int[] array);
+}
+
+// Concrete sorting strategies implementing the SortingStrategy interface
+class BubbleSort implements SortingStrategy {
+    @Override
+    public void sort(int[] array) {
+        System.out.println("Sorting array using Bubble Sort");
+        // Logic for Bubble Sort algorithm
+    }
+}
+
+class MergeSort implements SortingStrategy {
+    @Override
+    public void sort(int[] array) {
+        System.out.println("Sorting array using Merge Sort");
+        // Logic for Merge Sort algorithm
+    }
+}
+
+// Context class that utilizes the sorting strategy
+class SortContext {
+    private SortingStrategy sortingStrategy;
+
+    public void setSortingStrategy(SortingStrategy sortingStrategy) {
+        this.sortingStrategy = sortingStrategy;
+    }
+
+    public void performSort(int[] array) {
+        if (sortingStrategy == null) {
+            throw new IllegalStateException("Sorting strategy is not set");
+        }
+        sortingStrategy.sort(array);
+    }
+}
+
+// Client code
+public class Main {
+    public static void main(String[] args) {
+        int[] array = {5, 2, 8, 6, 1, 3};
+
+        SortContext context = new SortContext();
+
+        // Set the sorting strategy to Bubble Sort
+        SortingStrategy bubbleSort = new BubbleSort();
+        context.setSortingStrategy(bubbleSort);
+        context.performSort(array); // Output: Sorting array using Bubble Sort
+
+        // Set the sorting strategy to Merge Sort
+        SortingStrategy mergeSort = new MergeSort();
+        context.setSortingStrategy(mergeSort);
+        context.performSort(array); // Output: Sorting array using Merge Sort
+    }
+}
+
+
+In this example, we have a SortingStrategy interface that defines the sort(int[] array) method, 
+which is implemented by the concrete sorting strategies such as BubbleSort and MergeSort. 
+Each sorting strategy encapsulates a different sorting algorithm.
+
+The SortContext class serves as the context that utilizes the sorting strategy. 
+It has a setSortingStrategy() method to set the desired sorting strategy, and the 
+performSort() method uses the selected strategy to sort the given array.
+
+In the client code, an instance of SortContext is created. 
+The sorting strategy is then set to either Bubble Sort or Merge Sort using the setSortingStrategy() 
+method. Finally, the performSort() method is called to perform the sorting operation using the selected strategy.
