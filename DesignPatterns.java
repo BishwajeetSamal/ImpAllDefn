@@ -93,7 +93,7 @@ Make the constructor of the class private, preventing direct instantiation of th
 
 Declare a static variable within the class to hold the single instance of the class.
 
-Provide a static method that acts as a global access point to the single instance. This method is responsible for 
+Provide a public static method that acts as a global access point to the single instance. This method is responsible for 
 creating the instance if it doesn't exist and returning the existing instance otherwise.
 
 Here's an example of implementing the Singleton pattern in Java:
@@ -1188,6 +1188,142 @@ payment to the Cash object.
 The PaymentExample class demonstrates the usage of the payment system. It creates instances of the 
 payment proxies (credit card, debit card, UPI) and performs payments using the pay() method.
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+I have anathor example:-
+ Here's another example of a Proxy design pattern that performs authentication and authorization 
+ using a simplified banking system scenario:
+
+ // Subject interface
+public interface BankAccount {
+    void deposit(double amount);
+    void withdraw(double amount);
+    double getBalance();
+}
+
+// RealSubject class
+public class ConcreteBankAccount implements BankAccount {
+    private double balance;
+
+    public ConcreteBankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+
+    @Override
+    public void deposit(double amount) {
+        balance += amount;
+        System.out.println("Deposited: " + amount);
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            System.out.println("Withdrawn: " + amount);
+        } else {
+            System.out.println("Insufficient balance.");
+        }
+    }
+
+    @Override
+    public double getBalance() {
+        return balance;
+    }
+}
+
+// Proxy class
+public class SecureBankAccountProxy implements BankAccount {
+    private String username;
+    private String password;
+    private ConcreteBankAccount realAccount;
+
+    public SecureBankAccountProxy(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    private boolean authenticateUser() {
+        // Authentication logic
+        return username.equals("admin") && password.equals("password");
+    }
+
+    private boolean authorizeUser() {
+        // Authorization logic
+        return true;
+    }
+
+    private void connectToRealAccount() {
+        if (realAccount == null) {
+            realAccount = new ConcreteBankAccount(0.0);
+        }
+    }
+
+    @Override
+    public void deposit(double amount) {
+        if (authenticateUser()) {
+            if (authorizeUser()) {
+                connectToRealAccount();
+                realAccount.deposit(amount);
+            } else {
+                System.out.println("Authorization failed.");
+            }
+        } else {
+            System.out.println("Authentication failed.");
+        }
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        if (authenticateUser()) {
+            if (authorizeUser()) {
+                connectToRealAccount();
+                realAccount.withdraw(amount);
+            } else {
+                System.out.println("Authorization failed.");
+            }
+        } else {
+            System.out.println("Authentication failed.");
+        }
+    }
+
+    @Override
+    public double getBalance() {
+        if (authenticateUser()) {
+            if (authorizeUser()) {
+                connectToRealAccount();
+                return realAccount.getBalance();
+            } else {
+                System.out.println("Authorization failed.");
+            }
+        } else {
+            System.out.println("Authentication failed.");
+        }
+        return 0.0;
+    }
+}
+
+// Client
+public class Main {
+    public static void main(String[] args) {
+        BankAccount account = new SecureBankAccountProxy("admin", "password");
+
+        account.deposit(1000.0);
+        account.withdraw(500.0);
+        System.out.println("Current Balance: " + account.getBalance());
+    }
+}
+
+In this example, we have a BankAccount interface that represents the subject. 
+The ConcreteBankAccount class is the implementation of the subject and handles 
+the deposit, withdrawal, and balance retrieval operations.
+
+The SecureBankAccountProxy class acts as a proxy for the bank account and performs 
+authentication and authorization checks before allowing the operations to be executed 
+on the real account. It maintains a reference to the real account object and creates it lazily when needed.
+
+The SecureBankAccountProxy class authenticates the user using the provided username and 
+password and authorizes the user if needed. The proxy then connects to the real account 
+and delegates the operations to it, performing the necessary checks along the way.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ********************************************************************************************************
 ********************************************************************************************************
 Flyweight Design Pattern :-
