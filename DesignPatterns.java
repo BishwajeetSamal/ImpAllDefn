@@ -198,8 +198,8 @@ components as Singletons allows for centralized control and consistent access.
 *************************************************************************************************************
 Factory Design Pattern :-
 ________________________
-# In factory design pattern, we dont expose the creation logic to the client and 
-refer to the client and refer the created object using a standard object.
+# In factory design pattern, we dont expose the creation logic to the client 
+and refer the created object using a standard object.
 It is also known as Virtual Constrctor.
 
 # It provides a way to delegate the responsibility of object creation to a separate factory class.
@@ -210,14 +210,14 @@ Instead, you want a factory class to handle the object creation based on certain
 
 Here an example of implementing the Factory Design Pattern using the Engineer, Doctor, and Teacher scenario:
 =================================================================================================================
-1.Create the Product Interface:
---------------------------------
+1.Create the Profession Interface:
+-----------------------------------
 public interface Profession {
     void introduce();
 }
 
-2.Implement the Concrete Products:
------------------------------------
+2.Implement the Concrete Proffession:
+--------------------------------------
 public class Engineer implements Profession {
     @Override
     public void introduce() {
