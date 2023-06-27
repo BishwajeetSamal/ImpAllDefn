@@ -14,19 +14,20 @@ So that we just focus on the logic part rather than writing repetitve code and f
 * Hibernate supports caching for bettern performance.
 
 
-Important Interface used in HIbernate
+Important Interface used in Hibernate
 =====================================
 *SessionFactory (org.hibernate.SessionFactory) - Instance of this is used to retrieve Session objects for
-the database operations. We need to initialize that ince and can cache it to reuse it again and again.
+the database operations. We need to initialize that once and can cache it to reuse it again and again.
 Its like one SessionFactory object per database connection.
 Like One for Mysql, one for oracle.
 
 * Session (org.hibernate.Session)  - Its factory for transaction, it's used for connecting appication with
 persistent store like hibernate framework /DB. It is used to get a physicall connection with the database.
 It also provides methods for CRUD oprations.
-
 * Transaction (org.hibernate.Tranaction) - This specifies single / atomic units of work.
------------------------------------------------------------------------------------------------------------
+
+                                                (OR)
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 SessionFactory: The SessionFactory interface is responsible for creating and managing Hibernate sessions. 
 It is typically created during the application's initialization and serves as a factory for obtaining Session instances.
 
@@ -1279,3 +1280,7 @@ List<Object[]> result = entityManager.createNativeQuery(nativeQuery)
     .setParameter("firstName", firstName)
     .setParameter("age", age)
     .getResultList();
+
+
+Spring Data JPA repository interface
+--------------------------------------

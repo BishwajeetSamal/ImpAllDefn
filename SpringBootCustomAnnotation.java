@@ -1,7 +1,7 @@
 											🔥🔥SpringBoot Annotations🔥🔥
 											==============================
 
-How Springboot Autoconfiguratio works internally ?
+How Springboot Autoconfiguration works internally ?
 ==================================================
 +------------------------------------------------------+
 |                  Classpath Scanning                   |
