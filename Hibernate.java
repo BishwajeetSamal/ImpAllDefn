@@ -70,7 +70,7 @@ public class HibernateExample {
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
 
         // Build the SessionFactory using the SessionFactoryBuilder
-        SessionFactoryBuilder sessionFactoryBuilder = configuration.buildSessionFactoryBuilder();
+        SessionFactoryBuilder sessionFactoryBuilder = configuration.buildSessionFactory();
         SessionFactory sessionFactory = sessionFactoryBuilder.build();
 
         // Open a session
@@ -654,8 +654,8 @@ Session session = sessionFactory.getCurrentSession();
 The choice between openSession() and getCurrentSession() depends on the specific 
 requirements of your application and the environment you are working with. 
 
-difference between Session get and load method
-==============================================
+difference between Session get() and load() method
+===================================================
 In Hibernate, both the get() and load() methods are used to retrieve an object from the 
 database based on its identifier. However, they have some differences in behavior:
 
@@ -692,10 +692,13 @@ session.close();
 In summary, the main differences between get() and load() are:
 
 get() returns the actual object or null, while load() returns a proxy object.
-get() immediately hits the database, while load() defers the database query until the 
-object is accessed.
+
+get() immediately hits the database, while load() defers("defers" in this context means that the execution of the
+database query is delayed until the object is accessed) the database query until the object is accessed.
+
 get() is suitable when you need to check for the existence of an object or when you 
 want to work with a detached object.
+
 load() is useful when you expect the object to exist in the database and you want to lazily 
 load it.
 
@@ -934,8 +937,146 @@ With these configurations in place, Spring Boot will use Ehcache as the caching
 provider, and the specified methods will be cached according to the defined cache 
 settings in ehcache.xml.
 
+What first level cache do and what 2nd level cache do, why we need 2nd level cache if already we have 1st level cache?
+=======================================================================================================================
+The first-level cache and the second-level cache in Hibernate serve different purposes and provide different levels of caching.
+
+First-level cache (Session cache):
+---------------------------------
+* The first-level cache in Hibernate is a cache that is associated with a specific session object. 
+It is a per-session cache, which means that each session object has its own cache.
+
+* When an entity is loaded from the database, it is stored in the first-level cache of the session object that loaded it.
+
+*  If the same entity is loaded again from the database by the same session object, the entity will be loaded from the 
+cache instead of the database. 
+
+* This can improve performance by reducing the number of database queries that need to be executed.
+
+*The first-level cache is flushed when the session object is closed. This means that all of the entities that are cached in 
+the session object are written back to the database.
+
+Que-> What happens if cached object is in 1st level cache and then I update something into the table then
+ how 1st level cache going to work ???
+ Ans-> 1. If a cached object is in the first-level cache and then you update something in the table, the first-level cache will 
+ not be updated automatically. 
+
+ 2. You will need to flush the first-level cache manually or use the evict() method to evict the cached object from the cache.
+
+ 3. When you flush the first-level cache, all of the entities that are cached in the session object are written back to the 
+database. This will include the updated entity.
+
+4.When you evict an entity from the first-level cache, the entity is removed from the cache and it is not written back to the database. 
+This means that the next time you try to access the entity, it will be loaded from the database.
+
+Session session = ...;
+
+// Load the entity from the database.
+User user = session.get(User.class, 1);
+
+// Update the entity in the database.
+user.setName("New Name");
+
+// Flush the first-level cache.
+session.flush(); //flush() method does not remove the second-level cache. It simply synchronizes the state of the second-level cache with the database.
+//(or we can use this, but here is the difference) 
+session.evict();//evict() method does not remove the second-level cache either. However, it removes the entity from the second-level cache. 
+//This means that the next time you access the entity from the second-level cache, you will see the old data from the database
+
+Imp**)).The flush() method is typically used when you want to make sure that the changes that you have made to an entity are persisted 
+to the database. i.e. whatever the data in entity should reflect to the database table.
+For example, if you update an entity and then you flush the cache, the updated entity will be written back to the database.
+****flush() method does not remove the second-level cache. It simply synchronizes the state of the second-level cache with the database.
+
+Imp**)). The evict() method is typically used when you want to remove an entity from the cache for some reason. 
+For example, if you are no longer using an entity, you can evict it from the cache to free up memory.
+
+Second-level cache:
+--------------------
+*The second-level cache is a shared cache that can be used by multiple sessions or entity managers in a Hibernate application.
+The second-level cache in Hibernate is a cache that is shared across all sessions. 
+
+* It is a global cache, which means that it is not associated with a specific session object. 
+The second-level cache is not enabled by default in Hibernate.
+
+*The second-level cache stores entities or query results that are commonly accessed across different sessions.
+
+*It helps in reducing the database load and improves performance by caching frequently accessed data that is shared 
+among multiple sessions.
+
+*The second-level cache is typically configured to use a more scalable and distributed caching solution 
+such as Ehcache, Hazelcast, or Memcached.
+
+*The second-level cache is flushed when the session factory is closed. 
+This means that all of the entities that are cached in the second-level cache are written back to the database.
+
+Now, Question comes that, Why do we need the second-level cache if we already have the first-level cache?
+----------------------------------------------------------------------------------------------------------
+*The first-level cache (session cache) is limited to a specific session or entity manager and holds 
+entities within that session only.
+
+*The second-level cache provides a shared cache across multiple sessions, allowing entities or query results 
+to be shared and reused across different sessions.
+
+*The second-level cache is useful in scenarios where the same entities or query results are accessed by different 
+sessions, reducing the need for redundant database queries.
+
+*It can significantly improve performance by reducing the number of database hits and improving overall application scalability.
+
+*The second-level cache is particularly beneficial in clustered or distributed environments where multiple 
+application instances or servers access the same data.
+
+In summary, the first-level cache (session cache) provides session-specific entity caching, while the second-level cache offers 
+shared caching for commonly accessed entities or query results across multiple sessions or entity managers.
+The second-level cache helps in optimizing performance, reducing database load, and improving scalability in scenarios 
+where data is shared among multiple sessions.
+
+
+
 Note -> Query Level Cache always used conjunction with Second Level Cache, not 
 with First Level Cache.
+Query level cache is a feature of Hibernate that allows you to store the results of queries in memory. 
+This can improve performance by reducing the number of times that the database has to be accessed.
+
+For example, let's say you have a query that fetches all of the employees from the database. 
+If you cache the results of this query, the next time you run the query, the results will be retrieved 
+from the cache instead of the database. This can save a lot of time, especially if the query is complex or 
+if the database is large.
+
+Query level cache is a feature of Hibernate that allows you to cache the results of queries. 
+This can improve performance by reducing the number of times that the database has to be accessed.
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+
+public class QueryLevelCacheExample {
+
+    public static void main(String[] args) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        // Create a query
+        Query query = session.createQuery("SELECT * FROM Employee");
+
+        // Set the cacheable property to true
+        query.setCacheable(true);
+
+        // Execute the query
+        List<Employee> employees = query.list();
+
+        // Close the session
+        session.close();
+
+        // Print the employees
+        for (Employee employee : employees) {
+            System.out.println(employee);
+        }
+    }
+}
+
+The benefit of query.setCacheable(true); is that it tells Hibernate to cache the results of the query in memory. 
+This can improve performance if the query is frequently executed.
 
 Ques-> How can we see Hibernate generated SQL on console ?
 -----------------------------------------------------------
