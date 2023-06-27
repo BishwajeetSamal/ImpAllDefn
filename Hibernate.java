@@ -633,10 +633,8 @@ Ques-> Difference between openSession and getCurrentSession ?
 In Hibernate, openSession() and getCurrentSession() are two methods used to obtain a session object 
 for interacting with the database. However, they differ in how they manage the lifecycle of the session.
 
-openSession(): This method is used to create a new session every time it is invoked. 
-It is typically used in standalone applications or non-managed environments where you need 
-explicit control over the session's lifecycle. You are responsible for managing the opening 
-and closing of the session yourself.
+openSession(): This method is used to create a new session every time it is invoked.
+You are responsible for managing the opening and closing of the session yourself.
 
 SessionFactory sessionFactory = // obtain the SessionFactory
 Session session = sessionFactory.openSession();
