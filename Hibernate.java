@@ -158,7 +158,7 @@ the database connection, mapping files, caching, and other Hibernate-specific co
 
 If I want to use Oracle db instead of Mysql then I need to create anathor Session-Factory in Hibernate Configuration.
 
-ere's an example of complete code showing how to configure Hibernate for Oracle and MySQL
+Here's an example of complete code showing how to configure Hibernate for Oracle and MySQL
  databases using separate configuration files:
 
 "hibernate.cfg.xml"
@@ -344,7 +344,7 @@ in your Hibernate application.
 What are hibernate Mapping file
 ===============================
 This is second important anathor file in hibernate. Now we map table to objects.
-Conventianlly it is named as - (class_name.hbm.xml)
+Conventionally it is named as - (class_name.hbm.xml)
 
 In Hibernate, a mapping file is used to define the mapping between Java objects (entities) and database tables. 
 It specifies how the fields and relationships of an entity class are mapped to the corresponding columns and 
@@ -460,6 +460,142 @@ The com.example.model package inside the resources directory contains the Hibern
 The src/test/java directory can contain any test classes if you're implementing unit tests for your application.
 
 The pom.xml file is the Maven project configuration file, if you're using Maven as your build tool.
+
+
+According to above structure, the code can be like this:-
+
+HibernateUtil.java
+-------------------
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class HibernateUtil {
+
+    private static final SessionFactory sessionFactory;
+
+    static {
+        try {
+            // Create a Hibernate Configuration instance
+            Configuration configuration = new Configuration();
+
+            // Load the Hibernate configuration file
+            configuration.configure("hibernate.cfg.xml");
+
+            // Build the SessionFactory
+            sessionFactory = configuration.buildSessionFactory();
+        } catch (Throwable ex) {
+            // Handle any exceptions
+            System.err.println("Failed to initialize Hibernate SessionFactory: " + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public static void shutdown() {
+        // Close the SessionFactory when your application shuts down
+        getSessionFactory().close();
+    }
+}
+
+Employee.java:
+--------------
+import javax.persistence.*;
+
+@Entity
+@Table(name = "employees")
+public class Employee {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    // Constructors, getters, setters, and other methods
+}
+
+EmployeeDAO.java:
+------------------
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import com.example.model.Employee;
+import com.example.util.HibernateUtil;
+
+public class EmployeeDAO {
+
+    public void save(Employee employee) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.save(employee);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public List<Employee> findAll() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Employee> query = session.createQuery("FROM Employee", Employee.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    
+
+    public Employee findById(Long id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Employee.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+      public void update(Employee employee) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.update(employee);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+     public void delete(Employee employee) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.delete(employee);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    // Other CRUD operations and methods
+}
+
 
 Ques-> Difference between openSession and getCurrentSession ?
 ==============================================================
