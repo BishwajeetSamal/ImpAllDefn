@@ -554,7 +554,7 @@ public class EmployeeDAO {
         }
     }
 
-    
+
 
     public Employee findById(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -595,6 +595,37 @@ public class EmployeeDAO {
 
     // Other CRUD operations and methods
 }
+
+EmployeeServiceImpl.java
+-------------------------
+package com.example.service;
+
+import com.example.dao.EmployeeDAO;
+import com.example.model.Employee;
+
+public class EmployeeServiceImpl implements EmployeeService {
+    private EmployeeDAO employeeDAO;
+
+    public EmployeeServiceImpl() {
+        // Initialize the employeeDAO object
+        this.employeeDAO = new EmployeeDAO();
+    }
+
+    @Override
+    public void saveEmployee(Employee employee) {
+        // Delegate the save operation to the employeeDAO
+        employeeDAO.save(employee);
+    }
+
+    @Override
+    public Employee getEmployeeById(int id) {
+        // Delegate the get operation to the employeeDAO
+        return employeeDAO.getById(id);
+    }
+
+    // Implement other methods from the EmployeeService interface
+}
+
 
 
 Ques-> Difference between openSession and getCurrentSession ?
