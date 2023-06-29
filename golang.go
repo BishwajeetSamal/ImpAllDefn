@@ -928,3 +928,58 @@ panic
 able to handle that and its not able to recover it. Hence it will through an exception.
 
 *Panic is used send the signal to the compiler that is an unrecoverable condition.
+
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+
+How Rest APIs works with golang. We will solve all the details into the database.
+So we will use the go-orm (gorm) using mux. 
+
+Creating Golang REST API with MUX and GORM
+============================================
+Package gorilla/mux -> we will use to create http request which cerate our Restful APIs.
+So will install the gorilla mux and also the GORM.
+
+1. install gorilla mux -> go get -u github.com/gorilla/mux
+2.install gorm -> go get -u gorm.io/gorm 
+3. istall postgres -> go get -u gorm.io/driver/postgres 
+4. create main.go file (run as administrator vscode due to permission issue (*if occured))
+5.create a method that initialize the router
+
+Note : - if this problem (go: cannot determine module path for source directory 
+	C:\Program Files\Go\src\projects\CRUDRESTAPI (outside GOPATH, module path must be specified)) occurs then, 
+*******************************************************************************************************
+	Open the command prompt or terminal.
+Navigate to the C:\Program Files\Go\src\projects\CRUDRESTAPI directory using the cd command.
+Run the following command to initialize a module with a specific module path:
+go mod init example.com/myproject
+Replace example.com/myproject with your desired module path. It's recommended to use a valid domain 
+name followed by the project name.
+
+After running the command, Go will create a go.mod file in the current directory, and the module
+ will be initialized with the specified module path. You should be able to use Go module commands 
+ such as go mod tidy without encountering the previous error.
+
+ **Note: If you're working with an existing Go project and it already has a go.mod file, you can 
+ simply navigate to the project directory and run go mod tidy to synchronize the dependencies based 
+ on the existing module configuration.
+ ********************************************************************************************************
+
+ * create Methods, and define the gorm,struct now
+
+ *once we have defined the struct then we have to send and receive data in form of JSON when we are working with REST APIs
+type User struct {
+	gorm.Model        //now this strut will be treated as model
+	FirstName  string `json:"firstname"`
+	LastName   string `json:"lastname"`
+	Email      string `json:"email"`
+} //Now we need to use the struct in our ORM object, so that we can use that model to save or get the data from the db
+
+Once the model is created then go ahead to initialize the database.
+Now we will create one method to initialize the db and we will enable the automigration (means gorm will check with the db, 
+it will check that will this is available or not), if not then it will create the table. If its already available then
+it won't create the table.
+
+
+
