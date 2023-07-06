@@ -285,3 +285,129 @@ developers to integrate changes to the project, and making it easier for users t
 
 =======================================================================================================
 
+Springboot Docker
+=================
+Install docker in your machine 
+--------------------------------
+
+1. create springboot application, build rest apis
+
+2. create a jar 
+
+3. create dockerfile inside project named "DockerFile"
+
+4. Inside docker file, add necessary things
+**********************************************************************************|
+     // # base docker images                                                      |
+     FROM openjdk:1521                                                            |
+                                                                                  |
+      // # add label                                                              |
+     LABEL maintainer = "javaguides.net" //some metadata for the docker image     |
+                                                                                  |
+      // # add jar file                                                           |
+     ADD target/abc-demo-0.0.1-SNAPSHOT.jar  springboot-docker-demo.jar           |
+                                                                                  |
+     ENTRYPOINT ["java", "-jar", "springboot-docker-demo.jar"]                    |
+***********************************************************************************
+
+Now, we have docker file, now run
+* docker build -t springboot-docker-demo:latest .  -> This command will cerate a docker image
+
+* docker images -> This command helps to show all the images
+
+* To run the image in a container -> docker run -p 8081:8080 springboot-docker-demo 
+
+Now it will run the project in our container
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+KUBERNETES (Container management tool)
+======================================
+KUBERNETES is an opensource container-orchestration engine or container management tool, it automates
+deploying, scaling and managing containerized application. (It will manages our containers at runtime.)
+
+It is also known as "k8s"
+It was initailly designed by google, and now its manintaining by "Cloud Native Computing Foundation (CNCF)"
+It is open-source and written in go language.
+
+container -> Docker, we can run any application in this docker container.
+
+
+Management ->  K8S manages the "deploying", "Scheduling", "scaling" and "load balancing"  your application.
+Tool
+
+USECASE (Why k8s came into picture)
+===================================
+__________________________
+Microservice 1 -> DB     |
+     ↓                   |
+   kafka                 | -> Dockerize Microservice-1 into container-1
+     ↓                   |  same Dockerize Microservice-2 into container-2, pull kafka image and I can run this in container-3
+Microservice 2 -> DB     |  , I can take pull of DB image from Dockerhub and run in container-4, Thus I can deploy on multiple
+_________________________|    containers
+
+Because here is very less number of containers, so I can manage it.
+But practically we are not managing the 4-5 containers, but it can have nth numbers of containers for each application.
+
+Like walmart, amazon we saw rare downtime because they have multiple containers to achieve the sacalability, and it is not
+easy to manage the container manually.
+
+Manually managing is not easy means, Deploying, Scheduling, Scaling, Load Balancing, Batch Execution, Roll Back, Monitoring. 
+Thats why KUBERNETES came into picture
+
+Write your code and pushed it to the container then everytime will be taken care by k8s.
+We have other container mgmgt tool aswell, DOCKER COMPOSE, MARATHON etc.
+
+K8S Components
+==============
+
+POD -In K8S we don't interact to the container directly. The container is wrapped to a functional unit called Pods.
+     It can have single container or multiple containers as well. And Each pod is associated to the single IP address.
+So that Pod-1 can talk to anathor Pod, like Pod-2.
+
+NODE -> Pods are wrapped by node. It can have single Pod or can have multiple pod.
+
+CLUSTER -> Nodes are wrapped by Cluster. It can have single Node or can have multiple node.
+
+Replication Controller / Replica Set -> It act as a replica or backup of the pod. If a single pod get crashed due to 
+     certain condition then it can lead to loss, so to handle this we use Replica set.
+     We can create as many as repica set I want.
+   -If any pod get crashed then it will bring the new replica set of that pod and will assign an ip to that pod.
+
+Service -> As we know inside a node we can have multiple pods, lets name this as a frontend pod(where angular is running) 
+and anathor pod named Backend pod.
+* Each pod is assigned to a unique address. Because of this they can communicate to each other.
+* If any pod will get crashed then immediately replica set will bring up a new pod with new IP address.
+* But what if this will be keep going :-
+ Then frontend will need  to connect to backend with new IP address again and again thus, Service came into picture.
+ Now each pod will be associate to one service or multiple can group together to a single service with label and selector.
+
+* Lets assume one pod associate to one service where service will provide a static ip and dns name.
+Thus, each pod can communicate by DNS name instead of using the IP address.
+
+* Service also play the role of load balancer where traffic coming to pods are handled by the service .
+
+Deployment -> Deployments are kubernetes objects that are used for managing pods.
+
+* You can scale you application by increasing the number of running pods or update the running application 
+using Deployment object.
+
+kubectl cerate deployment first-deployment - 
+image=<DOCKER_IMAGE_NAME> --port = 8080 --replicas=4
+
+Secrets, Config Map - Both secrets and config map used to store sensitive information like passwords, secret key, api key.
+* These two are placed outside of pods.
+* If inside node there is multiple pods, they can point to the same secrets and configMap. 
+* In Secret we can add sensitive information with encrypted format, however in ConfigMap it stored as a plain text.
+Lets say you are configuring your datasource properties then only the password you can configure in the secret and rest 
+other details like url, driver-class name etc will be stored in Config map . 
+
+ETCD -> *Kubernetes uses etcd as a key-value database store. It stores the configuration of the kubernetes cluster in etcd.
+* It stores all the secret and configMap data inside etcd database.
+* Max limit is 1mb to store secrets.
+
+
+Basics and Architechture
+========================

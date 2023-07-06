@@ -983,3 +983,31 @@ it won't create the table.
 
 
 
+
+
+Interview Questions 
+====================
+Que1. What is statically typed language, like golang is?
+
+Ans->A statically typed language is a programming language in which the type of a variable is known at compile time.
+This means that the compiler can check the types of variables and expressions to ensure that they are compatible.
+This can help to prevent errors at runtime.
+Some examples of statically typed languages include:
+
+C
+C++
+Java
+Go
+Haskell
+Pascal
+
+In contrast, a dynamically typed language is a programming language in which the type of a variable is not known at compile time. 
+This means that the compiler cannot check the types of variables and expressions, and errors may not be detected until runtime.
+
+Some examples of dynamically typed languages include:
+
+Python
+JavaScript
+Ruby
+PHP
+Perl

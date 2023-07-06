@@ -54,6 +54,60 @@ How Springboot Autoconfiguration works internally ?
 |                                                      |
 +------------------------------------------------------+
 
+Springboot Autoconfiguration attempts to automatically configure your spring application based on the jar 
+dependencies that you have added.
+
+*Where Springboot Autoconfiguration implemented ?
+Ans-> All auto configuration logic is implemented in spring-boot-autoconfigure.jar
+@ConditionalOnClass : The configuration is enabled only when these classes are available in the classpath.
+@ConditionalOnMissingBean : This bean is configured only if there is no other bean configured with the same 
+
+_____________________________________________________________________________________________________________
+to see all the matched and non matched autoconfiguration - then add in application.properties					|
+																																				|
+logging.level.org.springframework.web = debug (so we are going to see the debug statement of this package)	|
+____________________________________________________________________________________________________________|
+
+Go to spring-boot-autoconfigure-2.5.0.jar -> You can see all the dependencies packages and classes inside it.
+
+Go to spring-boot-autoconfigure-2.5.0.jar -> META-INF file -> spring.factories
+This spring.factories file contain all spring autoconfiguration classes. 
+
+@ConditionalOnClass is responsible for the enable of the autoconfiguration in the classpath.
+
+**Note-> By default springboot uses Jackson library to convert java objects into json.
+
+Now, How run method runs the springboot
+=======================================
+Spring Boot Application Execution Process
+
+1. Spring booot application execution will start from main() method
+
+2. The main() method internally call SpringApplication.run() method
+
+3. SpringApplication.run() method performs bootstraping for our spring boot application
+
+4. Starts StopWatch to indetify time taken to bootstrap the spring booot application
+
+5. Prepares environment to run our spring booot application (dev, prod, qa, uat)
+
+6. Print banner (Spring Boot Logo prints on console)
+
+7. Start the IOC container (ApplicationContext) based on the classspath (default, Web servlet/ Reactive)
+
+
+Type of Spring boot application
+===============================
+
+spring-boot-starter -> If we have spring-boot-starter dependency in a classspath then the spring boot 
+application comes under default category
+
+spring-boot-starter-web -> If we have spring-boot-starter-web dependency in a classspath then the spring boot 
+application comes under servlet category
+
+spring-boot-starter-webflux -> If we have spring-boot-starter-webflux dependency in a classspath then the spring boot 
+application comes under reactive category
+
 What is classpath in springboot ? 
 ----------------------------------
 In Spring Boot, the classpath refers to the set of directories and JAR files that contain the 
