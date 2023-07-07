@@ -299,7 +299,7 @@ Install docker in your machine
 4. Inside docker file, add necessary things
 **********************************************************************************|
      // # base docker images                                                      |
-     FROM openjdk:1521                                                            |
+     FROM openjdk:11                                                            |
                                                                                   |
       // # add label                                                              |
      LABEL maintainer = "javaguides.net" //some metadata for the docker image     |
@@ -387,14 +387,14 @@ and anathor pod named Backend pod.
 * Lets assume one pod associate to one service where service will provide a static ip and dns name.
 Thus, each pod can communicate by DNS name instead of using the IP address.
 
-* Service also play the role of load balancer where traffic coming to pods are handled by the service .
+* Service also play the role of load balancer where traffic coming to pods are handled by the service.
 
 Deployment -> Deployments are kubernetes objects that are used for managing pods.
 
 * You can scale you application by increasing the number of running pods or update the running application 
 using Deployment object.
 
-kubectl cerate deployment first-deployment - 
+kubectl create deployment first-deployment - 
 image=<DOCKER_IMAGE_NAME> --port = 8080 --replicas=4
 
 Secrets, Config Map - Both secrets and config map used to store sensitive information like passwords, secret key, api key.
@@ -411,3 +411,128 @@ ETCD -> *Kubernetes uses etcd as a key-value database store. It stores the confi
 
 Basics and Architechture
 ========================
+
+Lets say we have a Organization, here we have manager -> this manages multiple projects and each project assigned with multiple developers.
+Manager will monitor all projexts running smoothly or not. Manager will check whether all developers working or not.
+If any developer left the project, immediately he will assign a new resource.
+* This organization can be considered as a cluster. Manager as a master node.
+* Projects as a worker node. We can considered employees as pods.
+* Master node will monitor all the nodes whether it is running smoothly or not. It will monitor their health, memory and resources.
+* Master node check that if any pod is down in a node then immediately it will assign a pod with new IP address.
+* If there will any problem with node then immediately it will tag all the pods to a new node.
+
+**In k8s there should be a minimum single cluster and inside a cluster there should be atleast one master node and one worker node. 
+
+Master node -> It manages the cluster, and it manages the pods and nodes inside a cluster.
+
+How many components contained by the master node?
+=================================================
+The master node typically contains multiple components that work together to manage the cluster.
+
+1. Cluster Manager
+2. Resource Manager
+3. Scheduler
+4. Metadata Store
+5. High Availability (HA) Manager
+6. Cluster-wide Monitoring
+7. Cluster Configuration Manager
+
+The API server, scheduler, controller manager, and etcd are the main components of the Kubernetes master node.
+
++---------------------------------------------------+
+|                   Master Node                      |
++---------------------------------------------------+
+|          +------------------------+                |
+|          |     API Server         |                |
+|          +------------------------+                |
+|                      |                             |
+|                      |                             |
+|                      |                             |
+|            +-------------------+                   |
+|            |  Scheduler         |                  |
+|            +-------------------+                   |
+|                      |                             |
+|                      |                             |
+|                      |                             |
+|        +-----------------------+                   |
+|        |  Controller Manager   |                   |
+|        +-----------------------+                   |
+|                      |                             |
+|                      |                             |
+|                      |                             |
+|      +-----------------------+                     |
+|      |         etcd          |                     |
+|      +-----------------------+                     |
+|                      |                             |
+|                      |                             |
+|                      |                             |
+|      +-----------------------+                     |
+|      |    Cluster DNS        |                     |
+|      +-----------------------+                     |
+|                      |                             |
+|                      |                             |
+|                      |                             |
+|     +---------------------------+                  |
+|     |   Cluster-wide Add-ons    |                  |
+|     +---------------------------+                  |
+|                                                    |
++----------------------------------------------------+
+
+*   API Server 
+    ==========
+    It act as a cluster gateway. Each request coming to the cluster will first serve by API server.
+    Basically API server expose few API to access all the operations going inside a cluster.
+    You can access API Server using command-line tool (Kubectl) or by K8s UI
+
+    * If I want to check health of my pods or nodes. then I can get it by cmd like-
+    1.  kubectl get nodes
+    2. kubectl get pods
+
+Once I run this command, request will not go directly to your worker node. Firstly it will be intercepted by the 
+API server. 
+Then API server will check all the worker node and pod running inside it. Then it will give the status of pods and nodes.
+
+Scheduler
+=========
+It scedules pods across multiple nodes.
+Lets say we have two worker nodes. 
+1. W1 having 5 pods and it uses 90% of memory 
+2. W2 having 3 pods and it uses 30% of memory 
+
+But due to scalability I need more pods. Then Scheduler checks memory and cpu and for each worker node and 
+where it get the details of having more convinient memory and cpu then it will create pod for it.
+
+Now Question is -> How does the scheduler know all the information about pod or node.
+--------------------------------------------------------------------------------------
+Kubernetes uses etcd (key value pair distributed database). It stores all the information about the cluster and its states.
+From ETCD API server fetch all the cluster info and it shares the information to the scheduler. Thats how the scheduler works.
+
+
+Controller Manager
+==================
+It detects cluster change like pod crashing or node crashing.
+When pod get crashed then k8s immediately brings up a new pod from replica set and then controller manager talks to the 
+Scheduler to schedule a new pod to the node.
+Controller Manager manages the multiple controllers like Node Controller, Replicaion Controller, Endpoints Controller,
+Service account and token controller.
+
+
+How many components contained by the worker node?
+=================================================
+In a worker node we can have multiple pod and each pod can have single or multiple containers inside it.
+
+Worker node contain three main components-
+
+1. kubelet - It is an agent running on each node, and kubelet communicate with master node usinbg API server.
+The kubelet works in terms of a PodSpec. A PodSpec is a YAML or JSON object that describes about your pods.
+The kubelet manage containers which were cerated by Kubernetes.
+
+2. kube-proxy - It is a network agent which runs on each node and it is responsible for manintaining network configuration
+and rules. 
+These rules allow network communication to your pods from inside or outside of your cluster.
+
+
+3. container-runtime - It is also known as container engine and it helps to run container inside pods.
+
+In k8s we can directly access the containers. All the containers are wrapped inside a functional unit called pods. 
+Thats why our appliucation is running.
