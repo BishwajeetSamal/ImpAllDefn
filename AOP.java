@@ -183,6 +183,20 @@ Lets say EmployeeAspect.java
 					throw new RuntimeException(e);
 				}
 			}
+
+			//we can also return the Object, whatever we want to return
+			@Around(value = "execution(* fully_qualified_service_class_name.Service_class_name.addEmployee(..)")
+			public void aroundAdviceForAddEmpService(ProceedingJoinPoint proceedingJoinPoint){
+				System.out.println("Inside Around Advice in Aspect : Business logic to save employee started at "+new Date());
+				try{
+
+					Employee emp = (Employee) proceedingJoinPoint.proceed(); // its return Object type, thats why we need to 
+					//typecast over here.
+					return emp;
+				}catch(Throwable e){
+					throw new RuntimeException(e);
+				}
+			}
 		}
 
 All the methods inside the Aspect becomes the "Advice".
