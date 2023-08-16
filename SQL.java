@@ -39,7 +39,6 @@ _____________________________________________________________________
 
 Window Function (It also known as analytical function)
 ---------------
-
 *In PostgreSQL, a window function is a type of function that performs calculations across a set of rows that
  are related to the current row. These functions are executed in conjunction with the OVER clause and allow you
   to perform calculations and aggregations over a specified window or frame of rows.
@@ -186,3 +185,103 @@ case when e.salary > lag(salary) over(partition by dept_name order by emp_id) th
 	 end sal_range
 from employee e; 
 //It will output accrding the comparision.
+
+==========================================================================================================
+SQL - Structured Query Language
+
+Oracle
+Mysql
+Postgresql
+IBM DB2
+SQLite
+MariaDB
+Teradata
+Hive
+
+
+With clause (CTE -> Common Table Expression) or (SubQuery Factoring)
+====================================================================
+with clause should comeup before the main query
+
+---------------------------------------------
+with alias (list of column names) as (query)
+---------------------------------------------
+
+//Fetch the employees who earn more than average salary of all employees
+
+with average_salary (avg_sal) as 
+        (select avg(salary) from employee)
+
+Select * from employee e, average_salary av 
+where e.salary > av.avg_sal;
+
+here the first query will be performed is with clause query then main query will going to execute.
+We can cast decimal to int by using 
+      select cast(avg(salary) as int) from employee  
+
+
+
+//Find stires who's sales where better than the average sales accross all stores
+=================================================================================
+We need to find 
+1. The total sales per each store -- Total_Sales
+
+2. Find the average sales with respect to  all the stores. -- Avg_Sales
+
+3. Find the stores where Total_Sales > Avg_Sales of all the stores.
+
+
+Select * from sales;
+
+
+
+
+
+
+SubQueries
+==========
+Subquery is an sql query which is placed inside anathor subquery.
+
+Different types of SubQueries
+----------------------------
+3 types of SubQueries
+
+1. Scalar Subquery
+2. Multiple row Subquery
+3. Correlated Subquery
+
+
+1. Scalar Subquery
+-------------------
+Scalar Subquery is a Subquery which will always return just one row and one column.
+
+
+2. Multiple row Subquery
+------------------------
+Multiple Subquery is a Subquery which will always return more than one row.
+--multiple row Subquery
+--subquery which returns multiple column and multiple row
+--subquery which returns one column and multiple rows.
+
+
+Correlated SubQuery (Syncronized Query)
+=======================================
+* It is a subquery that uses values from outer query.
+* Top to Down Approach (Outer Query to Inner Query executes)
+* There is a outer query and inner query.
+
+How it executes ?
+------------------
+In a query, Outer query 1st row will get compared with all the rows of inner query.
+
+
+Find the nth salary from the sql
+================================
+        ______________________________________________________________________________
+        |Select id, salary from Emp e1 where N-1 = (Select count(distinct salary)    |
+        |from Emp e2 where e2.salary > e1.salary)                                    |
+        |____________________________________________________________________________|
+
+
+
+
