@@ -1,6 +1,6 @@
 🔥🔥AMAZON SES
 ---------------
-Search SES (Amazon Simple Email Service) //Highly Scalable inbound and outbound emial Service
+SES (Amazon Simple Email Service) //Highly Scalable inbound and outbound emial Service
 It is a cloud based email service that provides cost-effective, flexible and scalable way for businesses of 
 all sizes to keep in contact with their customers through email.
 
@@ -21,13 +21,13 @@ public class SesConfiguration {
 	private String region;
 
 @Bean
-public MailSender(AmazonSimpleEmailService amazonSimpleEmailService) {
-	return new SimpleEmailServiceSender(amazonSimpleEmailService);
+public MailSender mailSender(AmazonSimpleEmailService amazonSimpleEmailService) {
+	return new SimpleEmailServiceMailSender(amazonSimpleEmailService);
 
 }
 
 @Bean
-public AmazonSimpleEmailService AmazonSimpleEmailService(){
+public AmazonSimpleEmailService amazonSimpleEmailService(){
 	BasicAWSCredentials credentials = new BasicAWSCredentials(accessKey,secretKey);
 	return AmazonSimpleEmailServiceClientBuilder
 			.standard()

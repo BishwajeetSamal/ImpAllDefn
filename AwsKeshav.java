@@ -6,7 +6,7 @@
 Basic steps to deploy project
     Create ec2 instance 
     download pem file and do ssh
-    setUp Engenix
+    setUp Nginx
     install java
     install database
     clone project from git 
@@ -36,7 +36,7 @@ creating an ec2 instance
      launch instance here 
      here 7 steps are there
      select operating system.........which are we using
-     chose instance type (configurarion of application)t2nano t2.microo....?? 
+     chose instance type (configurarion of application)t2nano t2.micro....?? 
      configure instance details here select custom cunfiguration like number of instance   
      select storage in gb 
      add tags like spring boot or micro service or react helps in idntifiynong projects easily
